@@ -38,7 +38,7 @@ class Constants {
   }
 
   // Routing name
-  static const String pageHome = '/home';
+  static const String pageUrlList = '/url_list';
 
   static const bool isDebugMode = kDebugMode;
 
