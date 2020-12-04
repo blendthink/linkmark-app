@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AppBarPainter extends CustomPainter {
+class SearchAppBarPainter extends CustomPainter {
   final Offset center;
   final double radius, containerHeight;
   final BuildContext context;
@@ -8,7 +8,7 @@ class AppBarPainter extends CustomPainter {
   final Color color;
   double statusBarHeight, screenWidth;
 
-  AppBarPainter(
+  SearchAppBarPainter(
       {this.context,
       this.containerHeight,
       this.center,
