@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linkmark_app/ui/drawer/drawer_page.dart';
+import 'package:linkmark_app/ui/page/drawer/drawer_page.dart';
 
 const urls = [
   'https://qiita.com/popy1017/items/732229abc14e73933269',
