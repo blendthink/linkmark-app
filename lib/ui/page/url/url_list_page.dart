@@ -16,27 +16,14 @@ class UrlListPage extends StatelessWidget {
         title: const Text('Linkmark'),
         elevation: 0,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Ink(
-            color: Theme.of(context).primaryColor,
-            child: SizedBox(
-              height: 60,
-            ),
-          ),
-          Expanded(
-            child: ListView(
-              children: urls.map(
-                    (url) {
-                  return ListTile(
-                    title: Text(url),
-                  );
-                },
-              ).toList(),
-            ),
-          ),
-        ],
+      body: ListView(
+        children: urls.map(
+          (url) {
+            return ListTile(
+              title: Text(url),
+            );
+          },
+        ).toList(),
       ),
     );
   }
