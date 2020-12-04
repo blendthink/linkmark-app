@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:linkmark_app/ui/component/appbar/search_app_bar.dart';
 import 'package:linkmark_app/ui/page/drawer/drawer_page.dart';
 
 const urls = [
@@ -12,10 +13,7 @@ class UrlListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const DrawerPage(),
-      appBar: AppBar(
-        title: const Text('Linkmark'),
-        elevation: 0,
-      ),
+      appBar: SearchAppBar(),
       body: ListView(
         children: urls.map(
           (url) {
