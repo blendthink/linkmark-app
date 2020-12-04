@@ -41,6 +41,9 @@ dependencies:
   # For Share URL
   receive_sharing_intent: ^1.4.2
 
+  # For Fetch Metadata
+  metadata_fetch: ^0.3.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
