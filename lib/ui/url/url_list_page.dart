@@ -3,8 +3,8 @@ import 'package:linkmark_app/ui/drawer/drawer_page.dart';
 
 const urls = [
   'https://qiita.com/popy1017/items/732229abc14e73933269',
-  'http://google.com',
-  'http://twitter.com',
+  'https://google.com',
+  'https://twitter.com',
 ];
 
 class UrlListPage extends StatelessWidget {
