@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linkmark_app/ui/component/appbar/search_pp_bar_painter.dart';
+import 'package:linkmark_app/ui/component/appbar/search_app_bar_painter.dart';
 
 class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
   @override
