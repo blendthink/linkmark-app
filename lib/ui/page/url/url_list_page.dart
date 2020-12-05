@@ -9,11 +9,17 @@ const urls = [
 ];
 
 class UrlListPage extends StatelessWidget {
+  void _onTextChanged(String text) {
+    print(text);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const DrawerPage(),
-      appBar: SearchAppBar(),
+      appBar: SearchAppBar(
+        onTextChanged: _onTextChanged,
+      ),
       body: ListView(
         children: urls.map(
           (url) {

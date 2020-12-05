@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:linkmark_app/ui/component/appbar/search_app_bar_painter.dart';
+import 'package:linkmark_app/ui/component/appbar/search_widget.dart';
 
 class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
+  final ValueChanged<String> onTextChanged;
+
+  const SearchAppBar({
+    Key key,
+    @required this.onTextChanged,
+  }) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _SearchAppBarState();
 
@@ -27,6 +35,11 @@ class _SearchAppBarState extends State<SearchAppBar>
       begin: 0.0,
       end: 1.0,
     ).animate(_animationController);
+    _animationController.addStatusListener((status) {
+      setState(() {
+        _isInSearchMode = status == AnimationStatus.completed;
+      });
+    });
   }
 
   @override
@@ -108,6 +121,13 @@ class _SearchAppBarState extends State<SearchAppBar>
   }
 
   Widget _buildSearchWidget(bool isInSearchMode, BuildContext context) {
-    return isInSearchMode ? AppBar() : Container();
+    return isInSearchMode
+        ? SearchWidget(
+            onTextChanged: widget.onTextChanged,
+            onCancelSearch: cancelSearch,
+            iconColor: Theme.of(context).primaryColor,
+            hintText: '検索する文字',
+          )
+        : Container();
   }
 }
