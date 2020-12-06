@@ -37,61 +37,38 @@ class _SearchWidgetState extends State<SearchWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: true,
-      child: GestureDetector(
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _buildBackButton(),
-                  _buildTextField(),
-                  _buildClearButton(),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildClearButton() {
-    return IconButton(
-      icon: Icon(
-        Icons.close,
-        color: widget.iconColor,
-      ),
-      onPressed: _textEditingController.clear,
-    );
-  }
-
-  Widget _buildBackButton() {
-    return IconButton(
-      icon: Icon(
-        Icons.arrow_back,
-        color: widget.iconColor,
-      ),
-      onPressed: widget.onCancelSearch,
-    );
-  }
-
-  Widget _buildTextField() {
-    return Expanded(
-      child: TextField(
+    return AppBar(
+      backgroundColor: Colors.white,
+      centerTitle: true,
+      title: TextField(
         controller: _textEditingController,
         autofocus: true,
         decoration: InputDecoration(
           border: InputBorder.none,
-          contentPadding: const EdgeInsets.only(top: 12.0),
           hintText: widget.hintText,
         ),
         textCapitalization: TextCapitalization.none,
-        style: TextStyle(fontSize: 18.0),
+        style: Theme.of(context)
+            .primaryTextTheme
+            .headline6
+            .copyWith(color: Colors.black),
       ),
+      leading: IconButton(
+        icon: Icon(
+          Icons.arrow_back,
+          color: widget.iconColor,
+        ),
+        onPressed: widget.onCancelSearch,
+      ),
+      actions: [
+        IconButton(
+          icon: Icon(
+            Icons.close,
+            color: widget.iconColor,
+          ),
+          onPressed: _textEditingController.clear,
+        ),
+      ],
     );
   }
 }
