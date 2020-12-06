@@ -48,9 +48,9 @@ class _SearchAppBarState extends State<SearchAppBar>
     super.dispose();
   }
 
-  void onSearchTapUp(TapUpDetails details) {
-    _rippleStartX = details.globalPosition.dx;
-    _rippleStartY = details.globalPosition.dy;
+  void onSearchTapUp(PointerUpEvent event) {
+    _rippleStartX = event.position.dx;
+    _rippleStartY = event.position.dy;
     _animationController.forward();
   }
 
@@ -88,16 +88,16 @@ class _SearchAppBarState extends State<SearchAppBar>
       title: Text('Linkmark'),
       centerTitle: true,
       actions: [
-        GestureDetector(
+        Listener(
+          onPointerUp: onSearchTapUp,
           child: IconButton(
-            onPressed: null,
+            onPressed: () {},
             icon: Icon(
               Icons.search,
               color: Theme.of(context).primaryIconTheme.color,
             ),
           ),
-          onTapUp: onSearchTapUp,
-        )
+        ),
       ],
     );
   }
