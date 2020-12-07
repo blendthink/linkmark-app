@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linkmark_app/ui/component/appbar/search_app_bar_painter.dart';
 import 'package:linkmark_app/ui/component/appbar/search_widget.dart';
+import 'package:linkmark_app/ui/component/appbar/tag_filter_widget.dart';
 
 class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
   final ValueChanged<String> onTextChanged;
@@ -14,7 +15,7 @@ class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
   State<StatefulWidget> createState() => _SearchAppBarState();
 
   @override
-  Size get preferredSize => Size.fromHeight(56.0);
+  Size get preferredSize => Size.fromHeight(112.0);
 }
 
 class _SearchAppBarState extends State<SearchAppBar>
@@ -87,6 +88,7 @@ class _SearchAppBarState extends State<SearchAppBar>
     return AppBar(
       title: Text('Linkmark'),
       centerTitle: true,
+      bottom: TagFilterWidget(),
       actions: [
         Listener(
           onPointerUp: onSearchTapUp,
@@ -108,7 +110,7 @@ class _SearchAppBarState extends State<SearchAppBar>
       builder: (context, child) {
         return CustomPaint(
           painter: SearchAppBarPainter(
-            containerHeight: widget.preferredSize.height,
+            containerHeight: 56.0,
             center: Offset(_rippleStartX ?? 0, _rippleStartY ?? 0),
             // increase radius in % from 0% to 100% of screenWidth
             radius: _animation.value * screenWidth,
@@ -121,13 +123,17 @@ class _SearchAppBarState extends State<SearchAppBar>
   }
 
   Widget _buildSearchWidget(bool isInSearchMode, BuildContext context) {
-    return isInSearchMode
-        ? SearchWidget(
-            onTextChanged: widget.onTextChanged,
-            onCancelSearch: cancelSearch,
-            iconColor: Theme.of(context).primaryColor,
-            hintText: '検索する文字',
-          )
-        : Container();
+    double statusBarHeight = MediaQuery.of(context).padding.top;
+    return SizedBox(
+      height: 56.0 + statusBarHeight,
+      child: isInSearchMode
+          ? SearchWidget(
+              onTextChanged: widget.onTextChanged,
+              onCancelSearch: cancelSearch,
+              iconColor: Theme.of(context).primaryColor,
+              hintText: '検索する文字',
+            )
+          : Container(),
+    );
   }
 }
