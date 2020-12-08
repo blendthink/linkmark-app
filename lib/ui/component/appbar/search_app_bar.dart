@@ -14,7 +14,7 @@ class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
   State<StatefulWidget> createState() => _SearchAppBarState();
 
   @override
-  Size get preferredSize => Size.fromHeight(112.0);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight * 2);
 }
 
 class _SearchAppBarState extends State<SearchAppBar>
@@ -85,11 +85,11 @@ class _SearchAppBarState extends State<SearchAppBar>
           SafeArea(
             top: true,
             child: PreferredSize(
-              preferredSize: Size.fromHeight(112.0),
+              preferredSize: Size.fromHeight(kToolbarHeight * 2),
               child: Container(
                 color: Colors.transparent,
                 width: screenWidth,
-                height: 112.0,
+                height: kToolbarHeight * 2,
                 child: Column(
                   children: [
                     Row(
@@ -193,11 +193,11 @@ class _SearchAppBarState extends State<SearchAppBar>
       builder: (context, child) {
         return Container(
           color: Theme.of(context).primaryColor,
-          height: 112.0 + statusBarHeight,
+          height: kToolbarHeight * 2 + statusBarHeight,
           width: screenWidth,
           child: CustomPaint(
             painter: SearchAppBarPainter(
-              containerHeight: 112.0,
+              containerHeight: kToolbarHeight * 2,
               center: Offset(_rippleStartX ?? 0, _rippleStartY ?? 0),
               // increase radius in % from 0% to 100% of screenWidth
               radius: _animation.value * screenWidth,
