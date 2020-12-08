@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:linkmark_app/ui/component/appbar/search_app_bar_painter.dart';
-import 'package:linkmark_app/ui/component/appbar/search_widget.dart';
 import 'package:linkmark_app/ui/component/appbar/tag_filter_widget.dart';
 
 class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -20,6 +19,8 @@ class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
 
 class _SearchAppBarState extends State<SearchAppBar>
     with SingleTickerProviderStateMixin<SearchAppBar> {
+  final TextEditingController _textEditingController = TextEditingController();
+
   bool _isInSearchMode = false;
   double _rippleStartX, _rippleStartY;
   AnimationController _animationController;
@@ -41,10 +42,14 @@ class _SearchAppBarState extends State<SearchAppBar>
         _isInSearchMode = status == AnimationStatus.completed;
       });
     });
+    _textEditingController.addListener(() {
+      widget.onTextChanged(_textEditingController.text);
+    });
   }
 
   @override
   void dispose() {
+    _textEditingController.dispose();
     _animationController.dispose();
     super.dispose();
   }
@@ -76,64 +81,132 @@ class _SearchAppBarState extends State<SearchAppBar>
       onWillPop: _onWillPop,
       child: Stack(
         children: [
-          _buildAppBar(context),
           _buildAnimation(screenWidth),
-          _buildSearchWidget(_isInSearchMode, context),
+          SafeArea(
+            top: true,
+            child: PreferredSize(
+              preferredSize: Size.fromHeight(112.0),
+              child: Container(
+                color: Colors.transparent,
+                width: screenWidth,
+                height: 112.0,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: _buildLeading(context),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: _buildTitle(context),
+                        ),
+                        Expanded(
+                          child: _buildAction(context),
+                        ),
+                      ],
+                    ),
+                    TagFilterWidget(),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildAppBar(BuildContext context) {
-    return AppBar(
-      title: Text('Linkmark'),
-      centerTitle: true,
-      bottom: TagFilterWidget(),
-      actions: [
-        Listener(
-          onPointerUp: onSearchTapUp,
-          child: IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.search,
-              color: Theme.of(context).primaryIconTheme.color,
+  Widget _buildTitle(BuildContext context) {
+    return _isInSearchMode
+        ? TextField(
+            controller: _textEditingController,
+            autofocus: true,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintText: '検索する文字',
             ),
-          ),
-        ),
-      ],
-    );
+            textCapitalization: TextCapitalization.none,
+            style: Theme.of(context)
+                .primaryTextTheme
+                .subtitle1
+                .copyWith(color: Colors.black),
+          )
+        : Text(
+            'Linkmark',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).primaryTextTheme.headline6,
+          );
+  }
+
+  Widget _buildLeading(BuildContext context) {
+    return _isInSearchMode
+        ? IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Theme.of(context).primaryColor,
+            ),
+            onPressed: cancelSearch,
+          )
+        : Builder(
+            builder: (BuildContext context) {
+              return IconButton(
+                icon: Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  Scaffold.of(context).openDrawer();
+                },
+                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+              );
+            },
+          );
+  }
+
+  Widget _buildAction(BuildContext context) {
+    return _isInSearchMode
+        ? IconButton(
+            icon: Icon(
+              Icons.close,
+              color: Theme.of(context).primaryColor,
+            ),
+            onPressed: _textEditingController.clear,
+          )
+        : Listener(
+            onPointerUp: onSearchTapUp,
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.search,
+                color: Theme.of(context).primaryIconTheme.color,
+              ),
+            ),
+          );
   }
 
   AnimatedBuilder _buildAnimation(double screenWidth) {
+    final statusBarHeight = MediaQuery.of(context).padding.top;
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, child) {
-        return CustomPaint(
-          painter: SearchAppBarPainter(
-            containerHeight: 56.0,
-            center: Offset(_rippleStartX ?? 0, _rippleStartY ?? 0),
-            // increase radius in % from 0% to 100% of screenWidth
-            radius: _animation.value * screenWidth,
-            context: context,
-            color: Colors.white,
+        return Container(
+          color: Theme.of(context).primaryColor,
+          height: 112.0 + statusBarHeight,
+          width: screenWidth,
+          child: CustomPaint(
+            painter: SearchAppBarPainter(
+              containerHeight: 112.0,
+              center: Offset(_rippleStartX ?? 0, _rippleStartY ?? 0),
+              // increase radius in % from 0% to 100% of screenWidth
+              radius: _animation.value * screenWidth,
+              context: context,
+              color: Colors.white,
+            ),
           ),
         );
       },
-    );
-  }
-
-  Widget _buildSearchWidget(bool isInSearchMode, BuildContext context) {
-    double statusBarHeight = MediaQuery.of(context).padding.top;
-    return SizedBox(
-      height: 56.0 + statusBarHeight,
-      child: isInSearchMode
-          ? SearchWidget(
-              onTextChanged: widget.onTextChanged,
-              onCancelSearch: cancelSearch,
-              iconColor: Theme.of(context).primaryColor,
-              hintText: '検索する文字',
-            )
-          : Container(),
     );
   }
 }
