@@ -21,12 +21,12 @@ class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
 
 class _SearchAppBarState extends State<SearchAppBar>
     with SingleTickerProviderStateMixin<SearchAppBar> {
-
   void _handleDrawerButton() {
     Scaffold.of(context).openDrawer();
   }
-  
-  final TextEditingController _textEditingController = TextEditingController();
+
+  final _keySearchIcon = GlobalKey();
+  final _textEditingController = TextEditingController();
 
   bool _isInSearchMode = false;
   double _rippleStartX, _rippleStartY;
@@ -61,9 +61,16 @@ class _SearchAppBarState extends State<SearchAppBar>
     super.dispose();
   }
 
-  void onSearchTapUp(PointerUpEvent event) {
-    _rippleStartX = event.position.dx;
-    _rippleStartY = event.position.dy;
+  void _startSearch() {
+    final RenderBox renderBox =
+        _keySearchIcon.currentContext.findRenderObject();
+
+    final size = renderBox.size;
+    final position = renderBox.localToGlobal(Offset.zero);
+
+    _rippleStartX = position.dx + size.width / 2;
+    _rippleStartY = position.dy + size.height / 2;
+
     _animationController.forward();
   }
 
@@ -154,34 +161,35 @@ class _SearchAppBarState extends State<SearchAppBar>
   }
 
   Widget _buildLeading(BuildContext context) {
+    final themeData = Theme.of(context);
     return IconButton(
       icon: AnimatedIcon(
         icon: AnimatedIcons.menu_arrow,
-        color: _isInSearchMode ? Theme.of(context).primaryColor : Colors.white,
+        color: _isInSearchMode
+            ? themeData.primaryColor
+            : themeData.primaryIconTheme.color,
         progress: _animationController,
       ),
-      onPressed:
-          _isInSearchMode ? _cancelSearch : _handleDrawerButton,
+      onPressed: _isInSearchMode ? _cancelSearch : _handleDrawerButton,
     );
   }
 
   Widget _buildAction(BuildContext context) {
+    final themeData = Theme.of(context);
     return _isInSearchMode
         ? IconButton(
             icon: Icon(
               Icons.close,
-              color: Theme.of(context).primaryColor,
+              color: themeData.primaryColor,
             ),
             onPressed: _textEditingController.clear,
           )
-        : Listener(
-            onPointerUp: onSearchTapUp,
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.search,
-                color: Theme.of(context).primaryIconTheme.color,
-              ),
+        : IconButton(
+            key: _keySearchIcon,
+            onPressed: _startSearch,
+            icon: Icon(
+              Icons.search,
+              color: themeData.primaryIconTheme.color,
             ),
           );
   }
