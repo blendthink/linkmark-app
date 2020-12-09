@@ -159,7 +159,6 @@ class _SearchAppBarState extends State<SearchAppBar>
                 onPressed: () {
                   Scaffold.of(context).openDrawer();
                 },
-                tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
               );
             },
           );
