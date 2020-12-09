@@ -8,7 +8,7 @@ const tags = [
 
 class TagFilterWidget extends StatefulWidget implements PreferredSizeWidget {
   @override
-  Size get preferredSize => Size.fromHeight(56.0);
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   @override
   State<StatefulWidget> createState() => _TagFilterState();
@@ -29,7 +29,7 @@ class _TagFilterState extends State<TagFilterWidget> {
   Widget build(BuildContext context) {
 
     return SizedBox(
-      height: 56.0,
+      height: kToolbarHeight,
       child: ListView.builder(
         itemCount: tags.length,
         scrollDirection: Axis.horizontal,
