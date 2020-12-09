@@ -93,16 +93,14 @@ class _SearchAppBarState extends State<SearchAppBar>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ConstrainedBox(
-                    constraints:
-                    BoxConstraints.tightFor(width: _kLeadingWidth),
+                    constraints: BoxConstraints.tightFor(width: _kLeadingWidth),
                     child: _buildLeading(context),
                   ),
                   Expanded(
                     child: _buildTitle(context),
                   ),
                   ConstrainedBox(
-                    constraints:
-                    BoxConstraints.tightFor(width: _kLeadingWidth),
+                    constraints: BoxConstraints.tightFor(width: _kLeadingWidth),
                     child: _buildAction(context),
                   ),
                 ],
@@ -151,23 +149,15 @@ class _SearchAppBarState extends State<SearchAppBar>
   }
 
   Widget _buildLeading(BuildContext context) {
-    return _isInSearchMode
-        ? IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Theme.of(context).primaryColor,
-            ),
-            onPressed: cancelSearch,
-          )
-        : IconButton(
-            icon: Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-          );
+    return IconButton(
+      icon: AnimatedIcon(
+        icon: AnimatedIcons.menu_arrow,
+        color: _isInSearchMode ? Theme.of(context).primaryColor : Colors.white,
+        progress: _animationController,
+      ),
+      onPressed:
+          _isInSearchMode ? cancelSearch : Scaffold.of(context).openDrawer,
+    );
   }
 
   Widget _buildAction(BuildContext context) {
