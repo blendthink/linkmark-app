@@ -176,22 +176,27 @@ class _SearchAppBarState extends State<SearchAppBar>
 
   Widget _buildAction(BuildContext context) {
     final themeData = Theme.of(context);
-    return _isInSearchMode
-        ? IconButton(
-            icon: Icon(
-              Icons.close,
-              color: themeData.primaryColor,
-            ),
-            onPressed: _textEditingController.clear,
-          )
-        : IconButton(
-            key: _keySearchIcon,
-            onPressed: _startSearch,
-            icon: Icon(
-              Icons.search,
-              color: themeData.primaryIconTheme.color,
-            ),
-          );
+    return AnimatedCrossFade(
+      firstChild: IconButton(
+        onPressed: _textEditingController.clear,
+        icon: Icon(
+          Icons.clear,
+          color: themeData.primaryColor,
+        ),
+      ),
+      secondChild: IconButton(
+        key: _keySearchIcon,
+        onPressed: _startSearch,
+        icon: Icon(
+          Icons.search,
+          color: themeData.primaryIconTheme.color,
+        ),
+      ),
+      duration: Duration(milliseconds: 300),
+      crossFadeState: _isInSearchMode
+          ? CrossFadeState.showFirst
+          : CrossFadeState.showSecond,
+    );
   }
 
   AnimatedBuilder _buildAnimation(double screenWidth) {
