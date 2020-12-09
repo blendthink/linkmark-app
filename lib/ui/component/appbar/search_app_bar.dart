@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:linkmark_app/ui/component/appbar/search_app_bar_painter.dart';
 import 'package:linkmark_app/ui/component/appbar/tag_filter_widget.dart';
 
+const double _kLeadingWidth = kToolbarHeight;
+
 class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
   final ValueChanged<String> onTextChanged;
 
@@ -95,14 +97,15 @@ class _SearchAppBarState extends State<SearchAppBar>
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Expanded(
+                        ConstrainedBox(
+                          constraints: BoxConstraints.tightFor(width: _kLeadingWidth),
                           child: _buildLeading(context),
                         ),
                         Expanded(
-                          flex: 2,
                           child: _buildTitle(context),
                         ),
-                        Expanded(
+                        ConstrainedBox(
+                          constraints: BoxConstraints.tightFor(width: _kLeadingWidth),
                           child: _buildAction(context),
                         ),
                       ],
