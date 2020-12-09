@@ -79,43 +79,49 @@ class _SearchAppBarState extends State<SearchAppBar>
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
+    Widget appBar = SafeArea(
+      bottom: true,
+      top: true,
+      child: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight * 2),
+        child: Container(
+          width: screenWidth,
+          height: kToolbarHeight * 2,
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ConstrainedBox(
+                    constraints:
+                    BoxConstraints.tightFor(width: _kLeadingWidth),
+                    child: _buildLeading(context),
+                  ),
+                  Expanded(
+                    child: _buildTitle(context),
+                  ),
+                  ConstrainedBox(
+                    constraints:
+                    BoxConstraints.tightFor(width: _kLeadingWidth),
+                    child: _buildAction(context),
+                  ),
+                ],
+              ),
+              TagFilterWidget(),
+            ],
+          ),
+        ),
+      ),
+    );
+
     return WillPopScope(
       onWillPop: _onWillPop,
       child: Stack(
         children: [
           _buildAnimation(screenWidth),
-          SafeArea(
-            top: true,
-            child: PreferredSize(
-              preferredSize: Size.fromHeight(kToolbarHeight * 2),
-              child: Container(
-                width: screenWidth,
-                height: kToolbarHeight * 2,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ConstrainedBox(
-                          constraints:
-                              BoxConstraints.tightFor(width: _kLeadingWidth),
-                          child: _buildLeading(context),
-                        ),
-                        Expanded(
-                          child: _buildTitle(context),
-                        ),
-                        ConstrainedBox(
-                          constraints:
-                              BoxConstraints.tightFor(width: _kLeadingWidth),
-                          child: _buildAction(context),
-                        ),
-                      ],
-                    ),
-                    TagFilterWidget(),
-                  ],
-                ),
-              ),
-            ),
+          Material(
+            type: MaterialType.transparency,
+            child: appBar,
           ),
         ],
       ),
