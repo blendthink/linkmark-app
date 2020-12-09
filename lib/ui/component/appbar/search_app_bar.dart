@@ -21,6 +21,11 @@ class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
 
 class _SearchAppBarState extends State<SearchAppBar>
     with SingleTickerProviderStateMixin<SearchAppBar> {
+
+  void _handleDrawerButton() {
+    Scaffold.of(context).openDrawer();
+  }
+  
   final TextEditingController _textEditingController = TextEditingController();
 
   bool _isInSearchMode = false;
@@ -62,13 +67,13 @@ class _SearchAppBarState extends State<SearchAppBar>
     _animationController.forward();
   }
 
-  void cancelSearch() {
+  void _cancelSearch() {
     _animationController.reverse();
   }
 
   Future<bool> _onWillPop() async {
     if (_isInSearchMode) {
-      cancelSearch();
+      _cancelSearch();
       return false;
     } else {
       return true;
@@ -156,7 +161,7 @@ class _SearchAppBarState extends State<SearchAppBar>
         progress: _animationController,
       ),
       onPressed:
-          _isInSearchMode ? cancelSearch : Scaffold.of(context).openDrawer,
+          _isInSearchMode ? _cancelSearch : _handleDrawerButton,
     );
   }
 
