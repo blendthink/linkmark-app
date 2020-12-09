@@ -4,6 +4,22 @@ const tags = [
   'Android',
   'iOS',
   'Mobile',
+  'Mobile',
+  'Mobile',
+  'Mobile',
+  'Mobile',
+  'Mobile',
+  'Mobile',
+  'Mobile',
+  'Mobile',
+  'Mobile',
+  'Mobile',
+  'Mobile',
+  'Mobile',
+  'Mobile',
+  'Mobile',
+  'Mobile',
+  'Mobile',
 ];
 
 class TagFilterWidget extends StatefulWidget implements PreferredSizeWidget {
@@ -30,23 +46,27 @@ class _TagFilterState extends State<TagFilterWidget> {
 
     return SizedBox(
       height: kToolbarHeight,
-      child: ListView.builder(
-        itemCount: tags.length,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          final tag = tags[index];
-          return FilterChip(
-            selected: _listSelected[index],
-            selectedColor: Theme.of(context).primaryColor,
-            showCheckmark: false,
-            label: Text(tag),
-            onSelected: (bool value) {
-              setState(() {
-                _listSelected[index] = value;
-              });
-            },
-          );
-        },
+      child: Padding(
+        padding: EdgeInsets.all(4.0),
+        child: ListView.separated(
+          itemCount: tags.length,
+          scrollDirection: Axis.horizontal,
+          itemBuilder: (context, index) {
+            final tag = tags[index];
+            return FilterChip(
+              selected: _listSelected[index],
+              label: Text(tag),
+              onSelected: (bool value) {
+                setState(() {
+                  _listSelected[index] = value;
+                });
+              },
+            );
+          },
+          separatorBuilder: (context, index) {
+            return SizedBox(width: 4,);
+          },
+        ),
       ),
     );
   }
