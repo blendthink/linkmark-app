@@ -89,7 +89,6 @@ class _SearchAppBarState extends State<SearchAppBar>
             child: PreferredSize(
               preferredSize: Size.fromHeight(kToolbarHeight * 2),
               child: Container(
-                color: Colors.transparent,
                 width: screenWidth,
                 height: kToolbarHeight * 2,
                 child: Column(
@@ -98,14 +97,16 @@ class _SearchAppBarState extends State<SearchAppBar>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         ConstrainedBox(
-                          constraints: BoxConstraints.tightFor(width: _kLeadingWidth),
+                          constraints:
+                              BoxConstraints.tightFor(width: _kLeadingWidth),
                           child: _buildLeading(context),
                         ),
                         Expanded(
                           child: _buildTitle(context),
                         ),
                         ConstrainedBox(
-                          constraints: BoxConstraints.tightFor(width: _kLeadingWidth),
+                          constraints:
+                              BoxConstraints.tightFor(width: _kLeadingWidth),
                           child: _buildAction(context),
                         ),
                       ],
@@ -152,17 +153,13 @@ class _SearchAppBarState extends State<SearchAppBar>
             ),
             onPressed: cancelSearch,
           )
-        : Builder(
-            builder: (BuildContext context) {
-              return IconButton(
-                icon: Icon(
-                  Icons.menu,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  Scaffold.of(context).openDrawer();
-                },
-              );
+        : IconButton(
+            icon: Icon(
+              Icons.menu,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
             },
           );
   }
