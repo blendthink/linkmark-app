@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
 class SearchAppBarPainter extends CustomPainter {
+  static const double _defaultElevation = 4.0;
+  static Color _defaultShadowColor = Color(0xFF000000).withAlpha(40);
+
+  static double convertRadiusToSigma(double radius) {
+    return radius * 0.57735 + 0.5;
+  }
+
   final Offset center;
   final double radius, containerHeight;
   final BuildContext context;
@@ -21,10 +28,23 @@ class SearchAppBarPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint circlePainter = Paint();
-    circlePainter.color = color;
+    canvas.drawPath(
+        Path()
+          ..addRect(Rect.fromPoints(Offset(0, 0),
+              Offset(size.width, size.height + _defaultElevation)))
+          ..addRect(
+              Rect.fromPoints(Offset(0, 0), Offset(size.width, size.height)))
+          ..fillType = PathFillType.evenOdd,
+        Paint()
+          ..color = _defaultShadowColor
+          ..maskFilter =
+              MaskFilter.blur(BlurStyle.normal, convertRadiusToSigma(3)));
+
     canvas.clipRect(
         Rect.fromLTWH(0, 0, screenWidth, containerHeight + statusBarHeight));
+
+    Paint circlePainter = Paint();
+    circlePainter.color = color;
     canvas.drawCircle(center, radius, circlePainter);
   }
 
