@@ -170,26 +170,6 @@ class _SearchAppBarState extends State<SearchAppBar>
           ? CrossFadeState.showFirst
           : CrossFadeState.showSecond,
     );
-
-    return _isInSearchMode
-        ? TextField(
-            controller: _textEditingController,
-            autofocus: true,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintText: '検索する文字',
-            ),
-            textCapitalization: TextCapitalization.none,
-            style: Theme.of(context)
-                .primaryTextTheme
-                .subtitle1
-                .copyWith(color: Colors.black),
-          )
-        : Text(
-            'Linkmark',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).primaryTextTheme.headline6,
-          );
   }
 
   Widget _buildLeading(BuildContext context) {
