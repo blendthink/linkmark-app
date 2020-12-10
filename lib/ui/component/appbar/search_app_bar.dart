@@ -139,6 +139,38 @@ class _SearchAppBarState extends State<SearchAppBar>
   }
 
   Widget _buildTitle(BuildContext context) {
+
+    final textField = TextField(
+      controller: _textEditingController,
+      autofocus: true,
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        hintText: '検索する文字',
+      ),
+      textCapitalization: TextCapitalization.none,
+      style: Theme.of(context)
+          .primaryTextTheme
+          .subtitle1
+          .copyWith(color: Colors.black),
+    );
+
+    final text = Center(
+      child: Text(
+       'Linkmark',
+       textAlign: TextAlign.center,
+       style: Theme.of(context).primaryTextTheme.headline6,
+     ),
+    );
+
+    return AnimatedCrossFade(
+      firstChild: textField,
+      secondChild: text,
+      duration: Duration(milliseconds: 300),
+      crossFadeState: _isInSearchMode
+          ? CrossFadeState.showFirst
+          : CrossFadeState.showSecond,
+    );
+
     return _isInSearchMode
         ? TextField(
             controller: _textEditingController,
