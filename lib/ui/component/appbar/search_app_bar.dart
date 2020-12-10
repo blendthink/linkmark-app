@@ -27,6 +27,7 @@ class _SearchAppBarState extends State<SearchAppBar>
 
   final _keySearchIcon = GlobalKey();
   final _textEditingController = TextEditingController();
+  final _animationDuration = const Duration(milliseconds: 300);
 
   bool _isInSearchMode = false;
   double _rippleStartX, _rippleStartY;
@@ -38,7 +39,7 @@ class _SearchAppBarState extends State<SearchAppBar>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
+      duration: _animationDuration,
     );
     _animation = Tween(
       begin: 0.0,
@@ -165,7 +166,7 @@ class _SearchAppBarState extends State<SearchAppBar>
     return AnimatedCrossFade(
       firstChild: textField,
       secondChild: text,
-      duration: Duration(milliseconds: 300),
+      duration: _animationDuration,
       crossFadeState: _isInSearchMode
           ? CrossFadeState.showFirst
           : CrossFadeState.showSecond,
@@ -204,7 +205,7 @@ class _SearchAppBarState extends State<SearchAppBar>
           color: themeData.primaryIconTheme.color,
         ),
       ),
-      duration: Duration(milliseconds: 300),
+      duration: _animationDuration,
       crossFadeState: _isInSearchMode
           ? CrossFadeState.showFirst
           : CrossFadeState.showSecond,
