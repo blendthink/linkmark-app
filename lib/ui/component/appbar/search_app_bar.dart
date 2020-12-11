@@ -146,7 +146,7 @@ class _SearchAppBarState extends State<SearchAppBar>
       autofocus: true,
       decoration: InputDecoration(
         border: InputBorder.none,
-        hintText: '検索する文字',
+        hintText: 'Filter by character',
       ),
       textCapitalization: TextCapitalization.none,
       style: Theme.of(context)
