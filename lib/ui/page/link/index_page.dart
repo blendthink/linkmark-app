@@ -38,7 +38,7 @@ class LinkData {
   });
 }
 
-class UrlListPage extends StatelessWidget {
+class IndexPage extends StatelessWidget {
   void _onTextChanged(String text) {
     print(text);
   }
