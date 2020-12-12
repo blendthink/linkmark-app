@@ -76,6 +76,7 @@ class _SearchAppBarState extends State<SearchAppBar>
   }
 
   void _cancelSearch() {
+    _textEditingController.clear();
     _animationController.reverse();
   }
 
