@@ -1,6 +1,8 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:linkmark_app/ui/component/appbar/search_app_bar.dart';
 import 'package:linkmark_app/ui/page/drawer/drawer_page.dart';
+import 'package:linkmark_app/ui/page/url/add_url_page.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final linkDataList = [
@@ -51,7 +53,23 @@ class UrlListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fab = OpenContainer(
+      transitionType: ContainerTransitionType.fade,
+      transitionDuration: const Duration(milliseconds: 800),
+      closedBuilder: (context, openContainer) => FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: openContainer,
+      ),
+      openBuilder: (context, closeContainer) => AddUrlPage(
+        closeContainer: closeContainer,
+      ),
+      closedShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(100),
+      ),
+    );
+
     return Scaffold(
+      floatingActionButton: fab,
       drawer: const DrawerPage(),
       appBar: SearchAppBar(
         onTextChanged: _onTextChanged,
