@@ -47,7 +47,7 @@ class _EditPageState extends State<EditPage> {
           onPressed: () {
             _submit(context: context);
           },
-          icon: Icon(Icons.check),
+          icon: Icon(Icons.done),
         ),
       ],
     );
