@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:validators/validators.dart';
 
-class EditPage extends StatelessWidget {
-  void _close({
+class EditPage extends StatefulWidget {
+  const EditPage({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _EditPageState();
+}
+
+class _EditPageState extends State<EditPage> {
+  final _formKey = GlobalKey<FormFieldState>();
+  final _textEditingController = TextEditingController();
+
+  void _cancel({
     @required BuildContext context,
   }) {
     Navigator.of(context).pop();
@@ -10,10 +22,14 @@ class EditPage extends StatelessWidget {
 
   void _submit({
     @required BuildContext context,
-    @required String url,
   }) {
+    final isValid = _formKey.currentState.validate();
+    if (!isValid) return;
+
     // TODO(okayama): Link の保存処理を実装する
-    _close(context: context);
+    final url = _textEditingController.text;
+    print('url: $url');
+    _cancel(context: context);
   }
 
   @override
@@ -21,7 +37,7 @@ class EditPage extends StatelessWidget {
     final appBar = AppBar(
       leading: IconButton(
         onPressed: () {
-          _close(context: context);
+          _cancel(context: context);
         },
         icon: Icon(Icons.close),
       ),
@@ -29,7 +45,7 @@ class EditPage extends StatelessWidget {
       actions: [
         IconButton(
           onPressed: () {
-            // _submit(context: context, url: value);
+            _submit(context: context);
           },
           icon: Icon(Icons.check),
         ),
@@ -39,6 +55,8 @@ class EditPage extends StatelessWidget {
     final urlForm = Padding(
       padding: const EdgeInsets.all(16),
       child: TextFormField(
+        key: _formKey,
+        controller: _textEditingController,
         decoration: const InputDecoration(
           icon: Icon(Icons.link),
           border: OutlineInputBorder(),
@@ -52,8 +70,8 @@ class EditPage extends StatelessWidget {
               ? 'Please enter URL'
               : null;
         },
-        onSaved: (value) {
-          _submit(context: context, url: value);
+        onFieldSubmitted: (_) {
+          _submit(context: context);
         },
       ),
     );

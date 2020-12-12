@@ -59,7 +59,7 @@ class IndexPage extends StatelessWidget {
         onPressed: () {
           showCupertinoModalBottomSheet(
             context: context,
-            builder: (context) => EditPage(),
+            builder: (context) => const EditPage(),
           );
         },
       ),
