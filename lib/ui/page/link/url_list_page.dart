@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linkmark_app/ui/component/appbar/search_app_bar.dart';
 import 'package:linkmark_app/ui/page/drawer/drawer_page.dart';
-import 'package:linkmark_app/ui/page/url/edit_page.dart';
+import 'package:linkmark_app/ui/page/link/edit_page.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 
