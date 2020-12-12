@@ -15,7 +15,7 @@ class EditPage extends StatelessWidget {
           },
           icon: Icon(Icons.close),
         ),
-        title: Text('Edit URL'),
+        title: Text('Edit Link'),
         actions: [
           IconButton(
             onPressed: () {
