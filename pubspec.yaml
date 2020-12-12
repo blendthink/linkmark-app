@@ -44,6 +44,9 @@ dependencies:
   # For Fetch Metadata
   metadata_fetch: ^0.3.3
 
+  # For Launch URL
+  url_launcher: ^5.7.10
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
