@@ -2,17 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:validators/validators.dart';
 
 class EditPage extends StatelessWidget {
-  void _close(BuildContext context) {
+  void _close({
+    @required BuildContext context,
+  }) {
     Navigator.of(context).pop();
+  }
+
+  void _submit({
+    @required BuildContext context,
+    @required String url,
+  }) {
+    // TODO(okayama): Link の保存処理を実装する
+    _close(context: context);
   }
 
   @override
   Widget build(BuildContext context) {
-
     final appBar = AppBar(
       leading: IconButton(
         onPressed: () {
-          _close(context);
+          _close(context: context);
         },
         icon: Icon(Icons.close),
       ),
@@ -20,7 +29,7 @@ class EditPage extends StatelessWidget {
       actions: [
         IconButton(
           onPressed: () {
-            _close(context);
+            // _submit(context: context, url: value);
           },
           icon: Icon(Icons.check),
         ),
@@ -42,6 +51,9 @@ class EditPage extends StatelessWidget {
           return !isURL(value, allowUnderscore: true)
               ? 'Please enter URL'
               : null;
+        },
+        onSaved: (value) {
+          _submit(context: context, url: value);
         },
       ),
     );
