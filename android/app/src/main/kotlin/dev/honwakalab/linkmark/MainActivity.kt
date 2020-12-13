@@ -1,4 +1,4 @@
-package dev.honwakalab.linkmark_app
+package dev.honwakalab.linkmark
 
 import io.flutter.embedding.android.FlutterActivity
 
