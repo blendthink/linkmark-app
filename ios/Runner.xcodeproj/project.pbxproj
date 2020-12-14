@@ -16,6 +16,7 @@
 		9D3D790C25729892008F7ED5 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D3D790B25729892008F7ED5 /* ShareViewController.swift */; };
 		9D3D790F25729892008F7ED5 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D3D790D25729892008F7ED5 /* MainInterface.storyboard */; };
 		9D3D791325729892008F7ED5 /* Share Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9D3D790925729892008F7ED5 /* Share Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9DA79BB325866E2900BE18A8 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9DA79BB225866E2900BE18A8 /* GoogleService-Info.plist */; };
 		CFA711F9E56AEAAB1A1EC937 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2849E6EF6F965F6740F1771F /* Pods_Runner.framework */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +77,7 @@
 		9D3D791025729892008F7ED5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D3D791A257299C7008F7ED5 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		9D3D791B25729A51008F7ED5 /* Share Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Share Extension.entitlements"; sourceTree = "<group>"; };
+		9DA79BB225866E2900BE18A8 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FE8439890FF956692552731E /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -151,6 +153,7 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				9DA79BB225866E2900BE18A8 /* GoogleService-Info.plist */,
 				9D3D791A257299C7008F7ED5 /* Runner.entitlements */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
@@ -264,6 +267,7 @@
 			files = (
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
+				9DA79BB325866E2900BE18A8 /* GoogleService-Info.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 			);

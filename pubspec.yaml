@@ -52,6 +52,13 @@ dependencies:
   # For Validate
   validators: ^2.0.1
 
+  # For Firebase
+  firebase_core: ^0.5.3
+  firebase_analytics: ^6.3.0
+  firebase_auth: ^0.18.4+1
+  firebase_crashlytics: ^0.2.4
+  firebase_database: ^4.4.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
