@@ -96,7 +96,6 @@ unlinked_spec.ds
 **/ios/Flutter/flutter_export_environment.sh
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
-**/ios/Runner/GoogleService-Info.plist
 
 # macOS
 **/macos/Flutter/GeneratedPluginRegistrant.swift
@@ -117,3 +116,7 @@ app.*.symbols
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
+
+# My rules.
+**/ios/Runner/GoogleService-Info.plist
+**/android/**/google-services.json
