@@ -144,7 +144,7 @@ class _SearchAppBarState extends State<SearchAppBar>
 
     final textField = TextField(
       controller: _textEditingController,
-      autofocus: true,
+      autofocus: false,
       decoration: InputDecoration(
         border: InputBorder.none,
         hintText: 'Filter by character',
