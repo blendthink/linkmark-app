@@ -28,6 +28,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>ShareMedia</string>
+    			<string>com.googleusercontent.apps.821684468744-pf3uod3i9pcgm8qkg3n18ks56t08ku30</string>
 			</array>
 		</dict>
 		<dict/>
