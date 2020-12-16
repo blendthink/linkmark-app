@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class AuthPage extends StatelessWidget {
+class SignInPage extends StatelessWidget {
   static final googleSignIn = GoogleSignIn(scopes: [
     'email',
     'https://www.googleapis.com/auth/contacts.readonly',
   ]);
 
-  void _login() async {
+  void _signIn() async {
 
     final signInAccount = await googleSignIn.signIn();
     if (signInAccount == null) return;
@@ -30,7 +30,7 @@ class AuthPage extends StatelessWidget {
     return Center(
       child: SignInButton(
         Buttons.Google,
-        onPressed: _login,
+        onPressed: _signIn,
       ),
     );
   }
