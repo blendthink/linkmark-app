@@ -36,6 +36,7 @@ dependencies:
   flutter_svg: ^0.19.2+1
   animations: ^1.1.2
   modal_bottom_sheet: ^1.0.0+1
+  flutter_signin_button: ^1.1.0
 
   # For Utilities
   get: ^3.17.1
