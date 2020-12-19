@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:linkmark_app/ui/component/appbar/search_app_bar.dart';
 import 'package:linkmark_app/ui/page/drawer/drawer_page.dart';
@@ -39,6 +41,8 @@ class LinkData {
 }
 
 class IndexPage extends StatelessWidget {
+  final _databaseReference = FirebaseDatabase.instance.reference();
+
   void _onTextChanged(String text) {
     print(text);
   }
@@ -53,6 +57,13 @@ class IndexPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final uid = FirebaseAuth.instance.currentUser.uid;
+
+    _databaseReference.child('users').child(uid).child('links').once().then((value) => {
+      print('Data: ${value.value}')
+    });
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
