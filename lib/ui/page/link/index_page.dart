@@ -57,11 +57,16 @@ class IndexPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final uid = FirebaseAuth.instance.currentUser.uid;
 
-    _databaseReference.child('users').child(uid).child('links').once().then((value) => {
-      print('Data: ${value.value}')
+    final uidRef = _databaseReference.child('users').child(uid);
+    uidRef.push();
+
+    final linksRef = uidRef.child('links');
+
+    linksRef.once().then((value) {
+      final map = Map<String, dynamic>.from(value.value);
+      print('MapData: $map');
     });
 
     return Scaffold(
