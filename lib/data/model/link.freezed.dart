@@ -19,8 +19,8 @@ class _$LinkTearOff {
 // ignore: unused_element
   _Link call(
       {@required String url,
-      String title,
-      String description,
+      String title = '',
+      String description = '',
       String imageUrl}) {
     return _Link(
       url: url,
@@ -121,16 +121,24 @@ class __$LinkCopyWithImpl<$Res> extends _$LinkCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_Link implements _Link {
-  _$_Link({@required this.url, this.title, this.description, this.imageUrl})
-      : assert(url != null);
+  _$_Link(
+      {@required this.url,
+      this.title = '',
+      this.description = '',
+      this.imageUrl})
+      : assert(url != null),
+        assert(title != null),
+        assert(description != null);
 
   factory _$_Link.fromJson(Map<String, dynamic> json) =>
       _$_$_LinkFromJson(json);
 
   @override
   final String url;
+  @JsonKey(defaultValue: '')
   @override
   final String title;
+  @JsonKey(defaultValue: '')
   @override
   final String description;
   @override
