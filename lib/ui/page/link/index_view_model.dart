@@ -13,9 +13,9 @@ class IndexViewModel extends ChangeNotifier {
 
   final LinksRepository _repository;
 
-  Result<List<Link>> _links;
+  Result<Map<String, Link>> _links;
 
-  Result<List<Link>> get links => _links;
+  Result<Map<String, Link>> get links => _links;
 
   Future<void> fetchLinks() async {
     return _repository

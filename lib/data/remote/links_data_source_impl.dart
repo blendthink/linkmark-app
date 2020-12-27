@@ -14,7 +14,7 @@ class LinksDataSourceImpl implements LinksDataSource {
   final FirebaseDatabase _firebaseDatabase;
 
   @override
-  Future<List<Link>> getLinks() async {
+  Future<Map<String, Link>> getLinks() async {
     final uid = _firebaseAuth.currentUser.uid;
 
     final uidRef = _firebaseDatabase.reference().child('users').child(uid);
@@ -24,7 +24,10 @@ class LinksDataSourceImpl implements LinksDataSource {
     return linksRef.once().then(
       (snapshot) {
         final linksMap = Map<String, dynamic>.from(snapshot.value);
-        return linksMap.values.map((e) => Link.fromJson(e)).toList();
+        return linksMap.map((key, value) {
+          final linkMap = Map<String, dynamic>.from(value);
+          return MapEntry(key, Link.fromJson(linkMap));
+        });
       },
     ).catchError(
       (error) {
