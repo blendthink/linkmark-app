@@ -8,8 +8,8 @@ part 'link.g.dart';
 abstract class Link with _$Link {
   factory Link({
     @required String url,
-    String title,
-    String description,
+    @Default('') String title,
+    @Default('') String description,
     String imageUrl,
   }) = _Link;
 

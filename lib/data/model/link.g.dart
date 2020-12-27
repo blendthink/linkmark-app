@@ -9,8 +9,8 @@ part of 'link.dart';
 _$_Link _$_$_LinkFromJson(Map<String, dynamic> json) {
   return _$_Link(
     url: json['url'] as String,
-    title: json['title'] as String,
-    description: json['description'] as String,
+    title: json['title'] as String ?? '',
+    description: json['description'] as String ?? '',
     imageUrl: json['imageUrl'] as String,
   );
 }
