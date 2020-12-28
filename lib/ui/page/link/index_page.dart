@@ -1,4 +1,5 @@
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:linkmark_app/data/model/link.dart';
 import 'package:linkmark_app/ui/component/container_with_loading.dart';
@@ -109,14 +110,38 @@ class LinkItem extends HookWidget {
     Widget listTile;
 
     if (!snapshotDetail.isDone) {
+      final screenWidth = MediaQuery.of(context).size.width;
+      final textWidth = screenWidth - (80 + 48);
+
+      const gapTextVerticalTitle = const Gap(4);
+      final containerInfinityWidthTitle = Container(
+        width: double.infinity,
+        height: 12.0,
+        color: Colors.white,
+      );
+      final containerHalfwayWidthTitle = Container(
+        width: textWidth * 2 / 5,
+        height: 12.0,
+        color: Colors.white,
+      );
+
+      const gapTextVerticalSubTitle = const Gap(2);
+      final containerInfinityWidthSubTitle = Container(
+        width: double.infinity,
+        height: 8.0,
+        color: Colors.white,
+      );
+      final containerHalfwayWidthSubTitle = Container(
+        width: textWidth / 5,
+        height: 8.0,
+        color: Colors.white,
+      );
+
       listTile = Shimmer.fromColors(
         baseColor: Colors.grey[300],
         highlightColor: Colors.grey[100],
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 8.0,
-            horizontal: 16.0,
-          ),
+          padding: const EdgeInsets.all(16.0),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -124,33 +149,19 @@ class LinkItem extends HookWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
-                      width: double.infinity,
-                      height: 8.0,
-                      color: Colors.white,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 2.0),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: 8.0,
-                      color: Colors.white,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 2.0),
-                    ),
-                    Container(
-                      width: 40.0,
-                      height: 8.0,
-                      color: Colors.white,
-                    ),
+                    containerInfinityWidthTitle,
+                    gapTextVerticalTitle,
+                    containerHalfwayWidthTitle,
+                    gapTextVerticalTitle,
+                    containerInfinityWidthSubTitle,
+                    gapTextVerticalSubTitle,
+                    containerInfinityWidthSubTitle,
+                    gapTextVerticalSubTitle,
+                    containerHalfwayWidthSubTitle,
                   ],
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
-              ),
+              const Gap(16),
               Container(
                 width: 80.0,
                 height: 56.0,
