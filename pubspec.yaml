@@ -42,6 +42,7 @@ dependencies:
   animations: ^1.1.2
   modal_bottom_sheet: ^1.0.0+1
   flutter_signin_button: ^1.1.0
+  shimmer: ^1.1.2
 
   # For Utilities
   get: ^3.17.1

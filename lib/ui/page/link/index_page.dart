@@ -1,124 +1,60 @@
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:linkmark_app/data/model/link.dart';
+import 'package:linkmark_app/ui/component/container_with_loading.dart';
+import 'package:linkmark_app/ui/component/loading/loading_state_view_model.dart';
+import 'package:linkmark_app/ui/page/link/index_view_model.dart';
+import 'package:linkmark_app/util/ext/async_snapshot.dart';
 import 'package:linkmark_app/util/ext/string.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:linkmark_app/ui/component/appbar/search_app_bar.dart';
 import 'package:linkmark_app/ui/page/drawer/drawer_page.dart';
 import 'package:linkmark_app/ui/page/link/edit_page.dart';
-import 'package:metadata_fetch/metadata_fetch.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class IndexPage extends StatelessWidget {
-  final _databaseReference = FirebaseDatabase.instance.reference();
-
   void _onTextChanged(String text) {
     print(text);
   }
 
-  _launchURL({@required String url}) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      print('Could not launch $url');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final uid = FirebaseAuth.instance.currentUser.uid;
+    final hookBuilder = HookBuilder(builder: (context) {
+      final indexViewModel = context.read(indexViewModelProvider);
+      final links =
+          useProvider(indexViewModelProvider.select((value) => value.links));
 
-    final uidRef = _databaseReference.child('users').child(uid);
-    uidRef.push();
+      final snapshot = useFuture(useMemoized(() {
+        return context
+            .read(loadingStateProvider)
+            .whileLoading(indexViewModel.fetchLinks);
+      }, [links.toString()]));
 
-    final linksRef = uidRef.child('links');
+      if (!snapshot.isDone) return Container();
 
-    final animatedList = FirebaseAnimatedList(
-      query: linksRef.orderByKey(),
-      padding: const EdgeInsets.all(8.0),
-      itemBuilder: (_, snapshot, animation, x) {
-        // TODO(okayama): model に変換する
-        final linkData = snapshot.value;
-        final url = linkData['url'];
-        // final linkId = snapshot.key;
-        // final tags = linkData['tags'] ?? [];
+      return links.when(success: (data) {
+        if (data.isEmpty) {
+          return const Text('Empty screen');
+        }
 
-        return FutureBuilder(
-          future: extract(url),
-          builder: (context, snapshot) {
-            Widget listChild;
-
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                listChild = Center(
-                  child: CircularProgressIndicator(),
-                );
-                break;
-              case ConnectionState.done:
-                if (snapshot.hasError) {
-                  listChild = Center(
-                    child: Text(snapshot.error.toString()),
-                  );
-                  break;
-                }
-
-                if (!snapshot.hasData) {
-                  listChild = Center(
-                    child: Text('データが存在しません'),
-                  );
-                  break;
-                }
-
-                final linkData = snapshot.data;
-                final String title = linkData.title;
-                final String description = linkData.description;
-                final String imageUrl = linkData.image;
-                listChild = ListTile(
-                  title: Text(
-                    title.trimNewline(),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.subtitle2,
-                  ),
-                  subtitle: Text(
-                    description.trimNewline(),
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.caption,
-                  ),
-                  trailing: imageUrl == null
-                      ? null
-                      : Image.network(
-                          imageUrl,
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.fitHeight,
-                        ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 16,
-                  ),
-                );
-                break;
-              default:
-                break;
-            }
-
-            return Card(
-              child: InkWell(
-                onTap: () {
-                  _launchURL(url: url);
-                },
-                child: SizedBox(
-                  child: listChild,
-                ),
-              ),
-            );
-          },
+        return RefreshIndicator(
+          onRefresh: () async => indexViewModel.fetchLinks(),
+          child: ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (_, index) {
+              return LinkItem(
+                linksMap: data,
+                index: index,
+              );
+            },
+          ),
         );
-      },
-    );
+      }, failure: (e) {
+        return Text('Error Screen: $e');
+      });
+    });
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -134,7 +70,131 @@ class IndexPage extends StatelessWidget {
       appBar: SearchAppBar(
         onTextChanged: _onTextChanged,
       ),
-      body: animatedList,
+      body: ContainerWithLoading(
+        child: hookBuilder,
+      ),
+    );
+  }
+}
+
+class LinkItem extends HookWidget {
+  LinkItem({
+    this.linksMap,
+    this.index,
+    Key key,
+  }) : super(key: key);
+
+  final Map<String, Link> linksMap;
+  final int index;
+
+  _launchURL({@required String url}) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      print('Could not launch $url');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final indexViewModel = context.read(indexViewModelProvider);
+
+    final linkMap = linksMap.entries.elementAt(index);
+    final link = linkMap.value;
+
+    final snapshotDetail = useFuture(useMemoized(() {
+      return indexViewModel.fetchLinkMetadata(index: index);
+    }));
+
+    Widget listTile;
+
+    if (!snapshotDetail.isDone) {
+      listTile = Shimmer.fromColors(
+        baseColor: Colors.grey[300],
+        highlightColor: Colors.grey[100],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 8.0,
+            horizontal: 16.0,
+          ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      width: double.infinity,
+                      height: 8.0,
+                      color: Colors.white,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2.0),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 8.0,
+                      color: Colors.white,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 2.0),
+                    ),
+                    Container(
+                      width: 40.0,
+                      height: 8.0,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.0),
+              ),
+              Container(
+                width: 80.0,
+                height: 56.0,
+                color: Colors.white,
+              ),
+            ],
+          ),
+        ),
+      );
+    } else {
+      listTile = ListTile(
+        title: Text(
+          link.title.trimNewline(),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.subtitle2,
+        ),
+        subtitle: Text(
+          link.description.trimNewline(),
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.caption,
+        ),
+        trailing: link.imageUrl == null
+            ? null
+            : Image.network(
+                link.imageUrl,
+                width: 80,
+                height: 56,
+                fit: BoxFit.fitHeight,
+              ),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 8,
+          horizontal: 16,
+        ),
+      );
+    }
+    return Card(
+      child: InkWell(
+        onTap: () {
+          _launchURL(url: link.url);
+        },
+        child: listTile,
+      ),
     );
   }
 }
