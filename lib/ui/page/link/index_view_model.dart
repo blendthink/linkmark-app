@@ -33,18 +33,6 @@ class IndexViewModel extends ChangeNotifier {
     final key = linkMap.key;
     final link = linkMap.value;
 
-    return Future.delayed(const Duration(seconds: 2),)
-    .then((value) {
-      return extract(link.url).then((value) {
-        final newLink = link.copyWith.call(
-          title: value.title,
-          description: value.description,
-          imageUrl: value.image,
-        );
-        _links.dataOrThrow[key] = newLink;
-      }).whenComplete(notifyListeners);
-    });
-
     return extract(link.url).then((value) {
       final newLink = link.copyWith.call(
         title: value.title,
