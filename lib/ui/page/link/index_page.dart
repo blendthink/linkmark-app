@@ -105,7 +105,7 @@ class LinkItem extends HookWidget {
 
     final snapshotDetail = useFuture(useMemoized(() {
       return indexViewModel.fetchLinkMetadata(index: index);
-    }));
+    }, [link.toString()]));
 
     Widget listTile;
 
