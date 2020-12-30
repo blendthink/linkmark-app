@@ -11,6 +11,7 @@ abstract class Link with _$Link {
     @Default('') String title,
     @Default('') String description,
     String imageUrl,
+    List<String> tagIds,
   }) = _Link;
 
   factory Link.fromJson(Map<String, dynamic> json) => _$LinkFromJson(json);

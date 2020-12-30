@@ -21,12 +21,14 @@ class _$LinkTearOff {
       {@required String url,
       String title = '',
       String description = '',
-      String imageUrl}) {
+      String imageUrl,
+      List<String> tagIds}) {
     return _Link(
       url: url,
       title: title,
       description: description,
       imageUrl: imageUrl,
+      tagIds: tagIds,
     );
   }
 
@@ -46,6 +48,7 @@ mixin _$Link {
   String get title;
   String get description;
   String get imageUrl;
+  List<String> get tagIds;
 
   Map<String, dynamic> toJson();
   $LinkCopyWith<Link> get copyWith;
@@ -55,7 +58,12 @@ mixin _$Link {
 abstract class $LinkCopyWith<$Res> {
   factory $LinkCopyWith(Link value, $Res Function(Link) then) =
       _$LinkCopyWithImpl<$Res>;
-  $Res call({String url, String title, String description, String imageUrl});
+  $Res call(
+      {String url,
+      String title,
+      String description,
+      String imageUrl,
+      List<String> tagIds});
 }
 
 /// @nodoc
@@ -72,6 +80,7 @@ class _$LinkCopyWithImpl<$Res> implements $LinkCopyWith<$Res> {
     Object title = freezed,
     Object description = freezed,
     Object imageUrl = freezed,
+    Object tagIds = freezed,
   }) {
     return _then(_value.copyWith(
       url: url == freezed ? _value.url : url as String,
@@ -79,6 +88,7 @@ class _$LinkCopyWithImpl<$Res> implements $LinkCopyWith<$Res> {
       description:
           description == freezed ? _value.description : description as String,
       imageUrl: imageUrl == freezed ? _value.imageUrl : imageUrl as String,
+      tagIds: tagIds == freezed ? _value.tagIds : tagIds as List<String>,
     ));
   }
 }
@@ -88,7 +98,12 @@ abstract class _$LinkCopyWith<$Res> implements $LinkCopyWith<$Res> {
   factory _$LinkCopyWith(_Link value, $Res Function(_Link) then) =
       __$LinkCopyWithImpl<$Res>;
   @override
-  $Res call({String url, String title, String description, String imageUrl});
+  $Res call(
+      {String url,
+      String title,
+      String description,
+      String imageUrl,
+      List<String> tagIds});
 }
 
 /// @nodoc
@@ -106,6 +121,7 @@ class __$LinkCopyWithImpl<$Res> extends _$LinkCopyWithImpl<$Res>
     Object title = freezed,
     Object description = freezed,
     Object imageUrl = freezed,
+    Object tagIds = freezed,
   }) {
     return _then(_Link(
       url: url == freezed ? _value.url : url as String,
@@ -113,6 +129,7 @@ class __$LinkCopyWithImpl<$Res> extends _$LinkCopyWithImpl<$Res>
       description:
           description == freezed ? _value.description : description as String,
       imageUrl: imageUrl == freezed ? _value.imageUrl : imageUrl as String,
+      tagIds: tagIds == freezed ? _value.tagIds : tagIds as List<String>,
     ));
   }
 }
@@ -125,7 +142,8 @@ class _$_Link implements _Link {
       {@required this.url,
       this.title = '',
       this.description = '',
-      this.imageUrl})
+      this.imageUrl,
+      this.tagIds})
       : assert(url != null),
         assert(title != null),
         assert(description != null);
@@ -143,10 +161,12 @@ class _$_Link implements _Link {
   final String description;
   @override
   final String imageUrl;
+  @override
+  final List<String> tagIds;
 
   @override
   String toString() {
-    return 'Link(url: $url, title: $title, description: $description, imageUrl: $imageUrl)';
+    return 'Link(url: $url, title: $title, description: $description, imageUrl: $imageUrl, tagIds: $tagIds)';
   }
 
   @override
@@ -162,7 +182,9 @@ class _$_Link implements _Link {
                     .equals(other.description, description)) &&
             (identical(other.imageUrl, imageUrl) ||
                 const DeepCollectionEquality()
-                    .equals(other.imageUrl, imageUrl)));
+                    .equals(other.imageUrl, imageUrl)) &&
+            (identical(other.tagIds, tagIds) ||
+                const DeepCollectionEquality().equals(other.tagIds, tagIds)));
   }
 
   @override
@@ -171,7 +193,8 @@ class _$_Link implements _Link {
       const DeepCollectionEquality().hash(url) ^
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(imageUrl);
+      const DeepCollectionEquality().hash(imageUrl) ^
+      const DeepCollectionEquality().hash(tagIds);
 
   @override
   _$LinkCopyWith<_Link> get copyWith =>
@@ -188,7 +211,8 @@ abstract class _Link implements Link {
       {@required String url,
       String title,
       String description,
-      String imageUrl}) = _$_Link;
+      String imageUrl,
+      List<String> tagIds}) = _$_Link;
 
   factory _Link.fromJson(Map<String, dynamic> json) = _$_Link.fromJson;
 
@@ -200,6 +224,8 @@ abstract class _Link implements Link {
   String get description;
   @override
   String get imageUrl;
+  @override
+  List<String> get tagIds;
   @override
   _$LinkCopyWith<_Link> get copyWith;
 }
