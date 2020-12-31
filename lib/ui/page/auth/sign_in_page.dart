@@ -5,6 +5,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:linkmark_app/constants.dart';
 
 class SignInPage extends StatelessWidget {
+  const SignInPage() : super();
+
   static final googleSignIn = GoogleSignIn(scopes: [
     'email',
     'https://www.googleapis.com/auth/contacts.readonly',
