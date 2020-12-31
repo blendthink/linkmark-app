@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -10,14 +9,13 @@ import 'package:linkmark_app/ui/page/link/index_page.dart';
 class App extends HookWidget {
   @override
   Widget build(BuildContext context) {
-
     final user = FirebaseAuth.instance.currentUser;
 
     Widget home;
     if (user == null) {
-      home = SignInPage();
+      home = const SignInPage();
     } else {
-      home = IndexPage();
+      home = const IndexPage();
     }
 
     return GetMaterialApp(
@@ -26,7 +24,7 @@ class App extends HookWidget {
       darkTheme: ThemeData.dark(),
       home: home,
       routes: {
-        Constants.pageLinkIndex: (context) => IndexPage(),
+        Constants.pageLinkIndex: (context) => const IndexPage(),
       },
     );
   }
