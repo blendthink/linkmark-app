@@ -14,14 +14,17 @@ class IndexViewModel extends ChangeNotifier {
 
   final LinksRepository _repository;
 
+  List<String> _filterTagIds = ['-MPsdCRZrTt9Ag8N6vHt', '-MPse-lWtO6cifkpimVc'];
+
   Result<List<Link>> _links;
 
   Result<List<Link>> get filteredLinks {
     if (_links == null) return Result.guard(() => List.empty());
     final filtered = _links.dataOrThrow.where((element) {
       final tagIds = element.tagIds;
+      if (_filterTagIds.isEmpty) return true;
       if (tagIds == null) return false;
-      return tagIds.contains('-MPsdCRZrTt9Ag8N6vHt');
+      return _filterTagIds.every((element) => tagIds.contains(element));
     }).toList();
     return Result.guard(() => filtered);
   }
