@@ -5,6 +5,8 @@ import 'package:linkmark_app/ui/component/appbar/tagfilter/tag_filter_view_model
 import 'package:linkmark_app/util/ext/async_snapshot.dart';
 
 class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
+  const TagFilterWidget({Key key}) : super(key: key);
+
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
