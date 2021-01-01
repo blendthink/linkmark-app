@@ -18,12 +18,14 @@ class _$LinkTearOff {
 
 // ignore: unused_element
   _Link call(
-      {@required String url,
+      {@required String id,
+      @required String url,
       String title = '',
       String description = '',
       String imageUrl,
       List<String> tagIds}) {
     return _Link(
+      id: id,
       url: url,
       title: title,
       description: description,
@@ -44,6 +46,7 @@ const $Link = _$LinkTearOff();
 
 /// @nodoc
 mixin _$Link {
+  String get id;
   String get url;
   String get title;
   String get description;
@@ -59,7 +62,8 @@ abstract class $LinkCopyWith<$Res> {
   factory $LinkCopyWith(Link value, $Res Function(Link) then) =
       _$LinkCopyWithImpl<$Res>;
   $Res call(
-      {String url,
+      {String id,
+      String url,
       String title,
       String description,
       String imageUrl,
@@ -76,6 +80,7 @@ class _$LinkCopyWithImpl<$Res> implements $LinkCopyWith<$Res> {
 
   @override
   $Res call({
+    Object id = freezed,
     Object url = freezed,
     Object title = freezed,
     Object description = freezed,
@@ -83,6 +88,7 @@ class _$LinkCopyWithImpl<$Res> implements $LinkCopyWith<$Res> {
     Object tagIds = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed ? _value.id : id as String,
       url: url == freezed ? _value.url : url as String,
       title: title == freezed ? _value.title : title as String,
       description:
@@ -99,7 +105,8 @@ abstract class _$LinkCopyWith<$Res> implements $LinkCopyWith<$Res> {
       __$LinkCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String url,
+      {String id,
+      String url,
       String title,
       String description,
       String imageUrl,
@@ -117,6 +124,7 @@ class __$LinkCopyWithImpl<$Res> extends _$LinkCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object id = freezed,
     Object url = freezed,
     Object title = freezed,
     Object description = freezed,
@@ -124,6 +132,7 @@ class __$LinkCopyWithImpl<$Res> extends _$LinkCopyWithImpl<$Res>
     Object tagIds = freezed,
   }) {
     return _then(_Link(
+      id: id == freezed ? _value.id : id as String,
       url: url == freezed ? _value.url : url as String,
       title: title == freezed ? _value.title : title as String,
       description:
@@ -139,18 +148,22 @@ class __$LinkCopyWithImpl<$Res> extends _$LinkCopyWithImpl<$Res>
 /// @nodoc
 class _$_Link implements _Link {
   _$_Link(
-      {@required this.url,
+      {@required this.id,
+      @required this.url,
       this.title = '',
       this.description = '',
       this.imageUrl,
       this.tagIds})
-      : assert(url != null),
+      : assert(id != null),
+        assert(url != null),
         assert(title != null),
         assert(description != null);
 
   factory _$_Link.fromJson(Map<String, dynamic> json) =>
       _$_$_LinkFromJson(json);
 
+  @override
+  final String id;
   @override
   final String url;
   @JsonKey(defaultValue: '')
@@ -166,13 +179,15 @@ class _$_Link implements _Link {
 
   @override
   String toString() {
-    return 'Link(url: $url, title: $title, description: $description, imageUrl: $imageUrl, tagIds: $tagIds)';
+    return 'Link(id: $id, url: $url, title: $title, description: $description, imageUrl: $imageUrl, tagIds: $tagIds)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Link &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.url, url) ||
                 const DeepCollectionEquality().equals(other.url, url)) &&
             (identical(other.title, title) ||
@@ -190,6 +205,7 @@ class _$_Link implements _Link {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(url) ^
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(description) ^
@@ -208,7 +224,8 @@ class _$_Link implements _Link {
 
 abstract class _Link implements Link {
   factory _Link(
-      {@required String url,
+      {@required String id,
+      @required String url,
       String title,
       String description,
       String imageUrl,
@@ -216,6 +233,8 @@ abstract class _Link implements Link {
 
   factory _Link.fromJson(Map<String, dynamic> json) = _$_Link.fromJson;
 
+  @override
+  String get id;
   @override
   String get url;
   @override
