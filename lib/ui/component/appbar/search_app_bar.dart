@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:linkmark_app/ui/component/appbar/search_app_bar_painter.dart';
-import 'package:linkmark_app/ui/component/appbar/tag_filter_widget.dart';
+import 'package:linkmark_app/ui/component/appbar/tagfilter/tag_filter_widget.dart';
 
 const double _kLeadingWidth = kMinInteractiveDimension;
 
@@ -141,7 +141,6 @@ class _SearchAppBarState extends State<SearchAppBar>
   }
 
   Widget _buildTitle(BuildContext context) {
-
     final textField = TextField(
       controller: _textEditingController,
       autofocus: false,
@@ -158,10 +157,10 @@ class _SearchAppBarState extends State<SearchAppBar>
 
     final text = Center(
       child: Text(
-       'Linkmark',
-       textAlign: TextAlign.center,
-       style: Theme.of(context).primaryTextTheme.headline6,
-     ),
+        'Linkmark',
+        textAlign: TextAlign.center,
+        style: Theme.of(context).primaryTextTheme.headline6,
+      ),
     );
 
     return AnimatedCrossFade(
