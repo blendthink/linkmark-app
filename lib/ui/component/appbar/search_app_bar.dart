@@ -119,7 +119,7 @@ class _SearchAppBarState extends State<SearchAppBar>
                   ),
                 ],
               ),
-              TagFilterWidget(),
+              const TagFilterWidget(),
             ],
           ),
         ),
