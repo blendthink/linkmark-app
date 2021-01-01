@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:linkmark_app/data/model/link.dart';
 import 'package:linkmark_app/ui/component/link/list/link_list_item_shimmer.dart';
 import 'package:linkmark_app/ui/page/link/index_view_model.dart';
 import 'package:linkmark_app/util/ext/async_snapshot.dart';
@@ -10,12 +9,10 @@ import 'package:url_launcher/url_launcher.dart';
 
 class LinkListItem extends HookWidget {
   LinkListItem({
-    this.linksMap,
     this.index,
     Key key,
   }) : super(key: key);
 
-  final Map<String, Link> linksMap;
   final int index;
 
   _launchURL({@required String url}) async {
@@ -30,8 +27,8 @@ class LinkListItem extends HookWidget {
   Widget build(BuildContext context) {
     final indexViewModel = context.read(indexViewModelProvider);
 
-    final linkMap = linksMap.entries.elementAt(index);
-    final link = linkMap.value;
+    final link = useProvider(indexViewModelProvider
+        .select((value) => value.filteredLinks.dataOrThrow[index]));
 
     final snapshotDetail = useFuture(useMemoized(() {
       return indexViewModel.fetchLinkMetadata(index: index);

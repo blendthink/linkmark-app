@@ -22,14 +22,14 @@ class IndexPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final hookBuilder = HookBuilder(builder: (context) {
       final indexViewModel = context.read(indexViewModelProvider);
-      final links =
-          useProvider(indexViewModelProvider.select((value) => value.links));
+      final links = useProvider(
+          indexViewModelProvider.select((value) => value.filteredLinks));
 
       final snapshot = useFuture(useMemoized(() {
         return context
             .read(loadingStateProvider)
             .whileLoading(indexViewModel.fetchLinks);
-      }, [links.toString()]));
+      }));
 
       if (!snapshot.isDone) return Container();
 
@@ -44,7 +44,6 @@ class IndexPage extends StatelessWidget {
             itemCount: data.length,
             itemBuilder: (_, index) {
               return LinkListItem(
-                linksMap: data,
                 index: index,
               );
             },
