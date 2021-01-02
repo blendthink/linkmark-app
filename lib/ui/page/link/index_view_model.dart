@@ -4,6 +4,7 @@ import 'package:linkmark_app/data/model/link.dart';
 import 'package:linkmark_app/data/model/result.dart';
 import 'package:linkmark_app/data/provider/links_repository_provider.dart';
 import 'package:linkmark_app/data/repository/links_repository.dart';
+import 'package:linkmark_app/util/logger.dart';
 import 'package:metadata_fetch/metadata_fetch.dart';
 
 final indexViewModelProvider = ChangeNotifierProvider(
@@ -58,7 +59,7 @@ class IndexViewModel extends ChangeNotifier {
   }
 
   void updateFilterTagIds(List<String> filterTagIds) {
-    print('TagIds: $filterTagIds');
+    logger.info('TagIds: $filterTagIds');
     _filterTagIds = filterTagIds;
     notifyListeners();
   }

@@ -46,6 +46,7 @@ dependencies:
 
   # For Utilities
   get: ^3.17.1
+  simple_logger: ^1.7.0
 
   # For Share URL
   receive_sharing_intent: ^1.4.2
