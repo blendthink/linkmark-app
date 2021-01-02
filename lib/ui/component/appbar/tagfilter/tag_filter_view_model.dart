@@ -17,6 +17,14 @@ class TagFilterViewModel extends ChangeNotifier {
 
   Result<List<TagFilterData>> get tags => _tags;
 
+  List<String> get filterTagIds {
+    if (_tags == null) return List.empty();
+    return _tags.dataOrThrow
+        .where((element) => element.selected)
+        .map((e) => e.tag.id)
+        .toList();
+  }
+
   Future<void> fetchTags() async {
     return _repository.getTags().then((value) {
       final tagsMap = value.dataOrThrow;

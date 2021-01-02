@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:linkmark_app/ui/component/appbar/tagfilter/tag_filter_view_model.dart';
+import 'package:linkmark_app/ui/page/link/index_view_model.dart';
 import 'package:linkmark_app/util/ext/async_snapshot.dart';
 
 class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
-  const TagFilterWidget({Key key}) : super(key: key);
+  const TagFilterWidget({
+    Key key,
+  }) : super(key: key);
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
+    final indexViewModel = context.read(indexViewModelProvider);
     final tagFilterViewModel = context.read(tagFilterViewModelProvider);
 
     final tagsResult =
@@ -51,6 +55,8 @@ class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
                       index: index,
                       selected: value,
                     );
+                    final newFilterTagIds = tagFilterViewModel.filterTagIds;
+                    indexViewModel.updateFilterTagIds(newFilterTagIds);
                   },
                 );
               });
