@@ -14,7 +14,7 @@ class IndexViewModel extends ChangeNotifier {
 
   final LinksRepository _repository;
 
-  List<String> _filterTagIds = ['-MPsdCRZrTt9Ag8N6vHt', '-MPse-lWtO6cifkpimVc'];
+  List<String> _filterTagIds = List.empty();
 
   Result<List<Link>> _links;
 
@@ -55,5 +55,11 @@ class IndexViewModel extends ChangeNotifier {
       final updateIndex = _links.dataOrThrow.indexOf(link);
       _links.dataOrThrow[updateIndex] = newLink;
     }).whenComplete(notifyListeners);
+  }
+
+  void updateFilterTagIds(List<String> filterTagIds) {
+    print('TagIds: $filterTagIds');
+    _filterTagIds = filterTagIds;
+    notifyListeners();
   }
 }
