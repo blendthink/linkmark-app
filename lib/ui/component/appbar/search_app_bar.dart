@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:linkmark_app/ui/component/appbar/search_app_bar_painter.dart';
 import 'package:linkmark_app/ui/component/appbar/tagfilter/tag_filter_widget.dart';
+import 'package:linkmark_app/ui/page/link/index_view_model.dart';
 
 const double _kLeadingWidth = kMinInteractiveDimension;
 
-class SearchAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final ValueChanged<String> onTextChanged;
-
+class SearchAppBar extends StatefulHookWidget implements PreferredSizeWidget {
   const SearchAppBar({
     Key key,
-    @required this.onTextChanged,
   }) : super(key: key);
 
   @override
@@ -50,8 +50,10 @@ class _SearchAppBarState extends State<SearchAppBar>
         _isInSearchMode = status == AnimationStatus.completed;
       });
     });
+
+    final indexViewModel = context.read(indexViewModelProvider);
     _textEditingController.addListener(() {
-      widget.onTextChanged(_textEditingController.text);
+      indexViewModel.updateFilterText(_textEditingController.text);
     });
   }
 

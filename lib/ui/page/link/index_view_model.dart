@@ -15,19 +15,32 @@ class IndexViewModel extends ChangeNotifier {
 
   final LinksRepository _repository;
 
+  String _filterText = '';
   List<String> _filterTagIds = List.empty();
 
   Result<List<Link>> _links;
 
   Result<List<Link>> get filteredLinks {
     if (_links == null) return Result.guard(() => List.empty());
-    final filtered = _links.dataOrThrow.where((element) {
+    final originalLinks = _links.dataOrThrow;
+
+    List<Link> textFiltered;
+    if (_filterText.isEmpty) {
+      textFiltered = originalLinks;
+    } else {
+      textFiltered = originalLinks.where((element) {
+        return element.title.contains(_filterText) ||
+            element.description.contains(_filterText);
+      }).toList();
+    }
+
+    final tagFiltered = textFiltered.where((element) {
       final tagIds = element.tagIds;
       if (_filterTagIds.isEmpty) return true;
       if (tagIds == null) return false;
       return _filterTagIds.every((element) => tagIds.contains(element));
     }).toList();
-    return Result.guard(() => filtered);
+    return Result.guard(() => tagFiltered);
   }
 
   Future<void> fetchLinks() async {
@@ -56,6 +69,12 @@ class IndexViewModel extends ChangeNotifier {
       final updateIndex = _links.dataOrThrow.indexOf(link);
       _links.dataOrThrow[updateIndex] = newLink;
     }).whenComplete(notifyListeners);
+  }
+
+  void updateFilterText(String filterText) {
+    logger.info('FilterText: $filterText');
+    _filterText = filterText;
+    notifyListeners();
   }
 
   void updateFilterTagIds(List<String> filterTagIds) {
