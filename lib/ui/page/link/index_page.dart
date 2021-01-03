@@ -14,10 +14,6 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 class IndexPage extends StatelessWidget {
   const IndexPage() : super();
 
-  void _onTextChanged(String text) {
-    print(text);
-  }
-
   @override
   Widget build(BuildContext context) {
     final hookBuilder = HookBuilder(builder: (context) {
@@ -65,9 +61,7 @@ class IndexPage extends StatelessWidget {
         },
       ),
       drawer: const DrawerPage(),
-      appBar: SearchAppBar(
-        onTextChanged: _onTextChanged,
-      ),
+      appBar: const SearchAppBar(),
       body: ContainerWithLoading(
         child: hookBuilder,
       ),
