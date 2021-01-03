@@ -28,9 +28,11 @@ class IndexViewModel extends ChangeNotifier {
     if (_filterText.isEmpty) {
       textFiltered = originalLinks;
     } else {
-      textFiltered = originalLinks.where((element) {
-        return element.title.contains(_filterText) ||
-            element.description.contains(_filterText);
+      // 半角スペースでフィルターする文字を分割する
+      final splitTexts = _filterText.split(' ');
+      textFiltered = originalLinks.where((link) {
+        return splitTexts.every((element) =>
+            link.title.contains(element) || link.description.contains(element));
       }).toList();
     }
 
