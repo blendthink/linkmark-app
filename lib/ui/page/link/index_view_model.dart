@@ -80,7 +80,7 @@ class IndexViewModel extends ChangeNotifier {
   }
 
   void updateFilterTagIds(List<String> filterTagIds) {
-    logger.info('TagIds: $filterTagIds');
+    logger.info('FilterTagIds: $filterTagIds');
     _filterTagIds = filterTagIds;
     notifyListeners();
   }
