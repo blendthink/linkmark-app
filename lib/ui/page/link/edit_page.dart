@@ -17,10 +17,11 @@ class _EditPageState extends State<EditPage> {
   final _formKey = GlobalKey<FormFieldState>();
   final _textEditingController = TextEditingController();
 
-  void _cancel({
+  void _onPop({
     @required BuildContext context,
+    @required bool existsUpdate,
   }) {
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(existsUpdate);
   }
 
   void _submit({
@@ -37,7 +38,7 @@ class _EditPageState extends State<EditPage> {
 
     SnackBar snackBar;
     if (result.isSuccess) {
-      _cancel(context: context);
+      _onPop(context: context, existsUpdate: true);
       snackBar = SnackBar(
         content: const Text('New Link has been created.'),
         duration: const Duration(seconds: 3),
@@ -67,7 +68,7 @@ class _EditPageState extends State<EditPage> {
     final appBar = AppBar(
       leading: IconButton(
         onPressed: () {
-          _cancel(context: context);
+          _onPop(context: context, existsUpdate: false);
         },
         icon: Icon(Icons.close),
       ),
