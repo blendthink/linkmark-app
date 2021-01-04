@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:linkmark_app/ui/page/link/edit_view_model.dart';
+import 'package:linkmark_app/util/logger.dart';
 import 'package:validators/validators.dart';
 
 class EditPage extends StatefulWidget {
@@ -22,18 +25,45 @@ class _EditPageState extends State<EditPage> {
 
   void _submit({
     @required BuildContext context,
-  }) {
+    @required EditViewModel editViewModel,
+  }) async {
     final isValid = _formKey.currentState.validate();
     if (!isValid) return;
 
-    // TODO(okayama): Link の保存処理を実装する
     final url = _textEditingController.text;
-    print('url: $url');
-    _cancel(context: context);
+    logger.info('Edit Link: $url');
+
+    final result = await editViewModel.createLink(url: url);
+
+    SnackBar snackBar;
+    if (result.isSuccess) {
+      _cancel(context: context);
+      snackBar = SnackBar(
+        content: const Text('New Link has been created.'),
+        duration: const Duration(seconds: 3),
+      );
+    } else {
+      snackBar = SnackBar(
+        content: const Text('Can‘t create new link. Retry in 5 seconds.'),
+        duration: const Duration(seconds: 5),
+        action: SnackBarAction(
+          label: 'RETRY',
+          onPressed: () {
+            _submit(
+              context: context,
+              editViewModel: editViewModel,
+            );
+          },
+        ),
+      );
+    }
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
   Widget build(BuildContext context) {
+    final editViewModel = context.read(editViewModelProvider);
+
     final appBar = AppBar(
       leading: IconButton(
         onPressed: () {
@@ -45,7 +75,10 @@ class _EditPageState extends State<EditPage> {
       actions: [
         IconButton(
           onPressed: () {
-            _submit(context: context);
+            _submit(
+              context: context,
+              editViewModel: editViewModel,
+            );
           },
           icon: Icon(Icons.done),
         ),
@@ -71,7 +104,10 @@ class _EditPageState extends State<EditPage> {
               : null;
         },
         onFieldSubmitted: (_) {
-          _submit(context: context);
+          _submit(
+            context: context,
+            editViewModel: editViewModel,
+          );
         },
       ),
     );
