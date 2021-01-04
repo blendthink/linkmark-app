@@ -16,7 +16,7 @@ class LinksRepositoryImpl implements LinksRepository {
   }
 
   @override
-  Future<void> createLink({@required String url}) {
-    return Result.guardFuture(_dataSource.createLink);
+  Future<Result<void>> createLink({@required String url}) {
+    return Result.guardFuture(() => _dataSource.createLink(url: url));
   }
 }
