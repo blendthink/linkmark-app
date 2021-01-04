@@ -59,6 +59,7 @@ class LinkListItem extends HookWidget {
                 width: 80,
                 height: 56,
                 fit: BoxFit.fitHeight,
+                errorBuilder: (context, url, error) => new Icon(Icons.error),
               ),
         contentPadding: const EdgeInsets.symmetric(
           vertical: 8,
