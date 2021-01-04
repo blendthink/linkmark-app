@@ -16,8 +16,9 @@ class IndexPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final indexViewModel = context.read(indexViewModelProvider);
+
     final hookBuilder = HookBuilder(builder: (context) {
-      final indexViewModel = context.read(indexViewModelProvider);
       final links = useProvider(
           indexViewModelProvider.select((value) => value.filteredLinks));
 
@@ -57,7 +58,11 @@ class IndexPage extends StatelessWidget {
           showCupertinoModalBottomSheet(
             context: context,
             builder: (context) => const EditPage(),
-          );
+          ).then((existsUpdate) {
+            if (existsUpdate) {
+              indexViewModel.fetchLinks();
+            }
+          });
         },
       ),
       drawer: const DrawerPage(),
