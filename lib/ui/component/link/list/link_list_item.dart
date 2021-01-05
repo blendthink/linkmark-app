@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -39,7 +40,35 @@ class LinkListItem extends HookWidget {
     if (!snapshotDetail.isDone) {
       listTile = const LinkListItemShimmer();
     } else {
-      listTile = ListTile(
+      final previewListItem = ListTile(
+        title: Text(
+          link.title.trimNewline(),
+          maxLines: 4,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.subtitle2,
+        ),
+        subtitle: Text(
+          link.description.trimNewline(),
+          maxLines: 6,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.caption,
+        ),
+        trailing: link.imageUrl == null
+            ? null
+            : Image.network(
+                link.imageUrl,
+                width: 80,
+                height: 56,
+                fit: BoxFit.fitHeight,
+                errorBuilder: (context, url, error) => new Icon(Icons.error),
+              ),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 8,
+          horizontal: 16,
+        ),
+      );
+
+      final contentListItem = ListTile(
         title: Text(
           link.title.trimNewline(),
           maxLines: 2,
@@ -64,6 +93,43 @@ class LinkListItem extends HookWidget {
         contentPadding: const EdgeInsets.symmetric(
           vertical: 8,
           horizontal: 16,
+        ),
+      );
+
+      listTile = CupertinoContextMenu(
+        previewBuilder: (context, animation, widget) {
+          return Material(
+            child: previewListItem,
+          );
+        },
+        actions: [
+          CupertinoContextMenuAction(
+            child: const Text('Share'),
+            trailingIcon: CupertinoIcons.share,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          CupertinoContextMenuAction(
+            child: const Text('Edit'),
+            trailingIcon: CupertinoIcons.pencil,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          CupertinoContextMenuAction(
+            child: const Text(
+              'Delete',
+              style: TextStyle(color: CupertinoColors.destructiveRed),
+            ),
+            trailingIcon: CupertinoIcons.delete,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+        child: Material(
+          child: contentListItem,
         ),
       );
     }
