@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:linkmark_app/constants.dart';
 
 class DrawerPage extends StatelessWidget {
   const DrawerPage({Key key}) : super(key: key);
@@ -37,7 +36,7 @@ class DrawerPage extends StatelessWidget {
               style: Theme.of(context).textTheme.subtitle1,
             ),
             onTap: () {
-              Navigator.of(context).pushNamed(Constants.pageLicenseIndex);
+              showLicensePage(context: context);
             },
           ),
         ],
