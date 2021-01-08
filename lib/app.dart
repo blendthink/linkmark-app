@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:linkmark_app/constants.dart';
 import 'package:linkmark_app/ui/page/auth/sign_in_page.dart';
 import 'package:linkmark_app/ui/page/link/index_page.dart';
+import 'package:linkmark_app/ui/page/tag/index_page.dart';
 
 class App extends HookWidget {
   @override
@@ -25,6 +26,7 @@ class App extends HookWidget {
       home: home,
       routes: {
         Constants.pageLinkIndex: (context) => const IndexPage(),
+        Constants.pageTagIndex: (context) => const TagIndexPage(),
       },
     );
   }

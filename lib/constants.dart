@@ -39,6 +39,7 @@ class Constants {
 
   // Routing name
   static const String pageLinkIndex = '/link_index';
+  static const String pageTagIndex = '/tag_index';
 
   static const bool isDebugMode = kDebugMode;
 
