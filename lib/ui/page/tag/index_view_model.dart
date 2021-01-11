@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:linkmark_app/data/model/result.dart';
 import 'package:linkmark_app/data/model/tag.dart';
@@ -15,7 +16,7 @@ class TagIndexViewModel extends ChangeNotifier {
 
   List<Tag> _tags;
 
-  List<Tag> get tags => _tags;
+  UnmodifiableListView<Tag> get tags => UnmodifiableListView(_tags);
 
   Result<void> _result;
 
@@ -33,6 +34,23 @@ class TagIndexViewModel extends ChangeNotifier {
         },
       );
     }).whenComplete(notifyListeners);
+  }
+
+  void reorder({
+    @required int oldIndex,
+    @required int newIndex,
+  }) {
+    int insertIndex;
+    if (newIndex > oldIndex) {
+      insertIndex = newIndex - 1;
+    } else {
+      insertIndex = newIndex;
+    }
+
+    final item = _tags.removeAt(oldIndex);
+    _tags.insert(insertIndex, item);
+
+    notifyListeners();
   }
 
   Future<void> updateTagName({
