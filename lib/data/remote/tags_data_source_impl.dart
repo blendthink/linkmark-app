@@ -13,15 +13,15 @@ class TagsDataSourceImpl implements TagsDataSource {
   final FirebaseAuth _firebaseAuth;
   final FirebaseDatabase _firebaseDatabase;
 
+  DatabaseReference get _tagsRef {
+    final uid = _firebaseAuth.currentUser.uid;
+    final uidRef = _firebaseDatabase.reference().child('users').child(uid);
+    return uidRef.child('tags');
+  }
+
   @override
   Future<Map<String, Tag>> getTags() {
-    final uid = _firebaseAuth.currentUser.uid;
-
-    final uidRef = _firebaseDatabase.reference().child('users').child(uid);
-
-    final tagsRef = uidRef.child('tags');
-
-    return tagsRef.once().then(
+    return _tagsRef.orderByChild('order').once().then(
       (snapshot) {
         final tagsMap = Map<String, dynamic>.from(snapshot.value);
         return tagsMap.map((key, value) {
@@ -30,6 +30,73 @@ class TagsDataSourceImpl implements TagsDataSource {
         });
       },
     ).catchError(
+      (error) {
+        debugPrint(error.toString());
+        throw error;
+      },
+    );
+  }
+
+  @override
+  Future<void> createTag({
+    @required String name,
+    @required int order,
+  }) {
+    final newTagRef = _tagsRef.push();
+    final newTagKey = newTagRef.key;
+    final newTag = {
+      "id": newTagKey,
+      "name": name,
+      "order": order,
+    };
+    return newTagRef.set(newTag).catchError(
+      (error) {
+        debugPrint(error.toString());
+        throw error;
+      },
+    );
+  }
+
+  @override
+  Future<void> deleteTag({
+    @required String id,
+  }) {
+    return _tagsRef.child(id).remove().catchError(
+      (error) {
+        debugPrint(error.toString());
+        throw error;
+      },
+    );
+  }
+
+  @override
+  Future<void> updateTagName({
+    @required String id,
+    @required String name,
+  }) {
+    return _tagsRef.child(id).child("name").set(name).catchError(
+      (error) {
+        debugPrint(error.toString());
+        throw error;
+      },
+    );
+  }
+
+  @override
+  Future<void> updateTagsOrder({
+    @required List<Tag> orderedTags,
+  }) {
+    final updateData = {};
+
+    orderedTags.asMap().forEach((index, tag) {
+      final tagId = tag.id;
+      final tagMap = {
+        "order": index,
+      };
+      updateData[tagId] = tagMap;
+    });
+
+    return _tagsRef.update(updateData).catchError(
       (error) {
         debugPrint(error.toString());
         throw error;
