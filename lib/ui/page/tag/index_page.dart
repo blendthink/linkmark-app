@@ -7,7 +7,9 @@ class TagIndexPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Tag List'),
+      ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
