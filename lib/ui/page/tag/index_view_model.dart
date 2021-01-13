@@ -65,4 +65,11 @@ class TagIndexViewModel extends ChangeNotifier {
   Future<void> updateTagsOrder() {
     return _repository.updateTagsOrder(orderedTags: _tags);
   }
+
+  void deleteTag({
+    @required int index,
+  }) {
+    _tags.removeAt(index);
+    notifyListeners();
+  }
 }

@@ -36,12 +36,42 @@ class TagIndexPage extends StatelessWidget {
             );
           }
 
-          final children = tags
-              .map((tag) => ListTile(
-                    key: Key(tag.id),
-                    title: Text(tag.name),
-                  ))
-              .toList();
+          final children = tags.asMap().entries.map(
+            (item) {
+              final index = item.key;
+              final tag = item.value;
+
+              return Dismissible(
+                key: Key(tag.id),
+                child: ListTile(
+                  title: Text(tag.name),
+                ),
+                direction: DismissDirection.endToStart,
+                onDismissed: (direction) {
+                  viewModel.deleteTag(index: index);
+                  if (direction == DismissDirection.endToStart) {
+                    final snackBar = SnackBar(
+                      content: const Text('削除しました'),
+                      duration: const Duration(seconds: 1),
+                    );
+
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                },
+                background: Container(
+                  padding: EdgeInsets.only(
+                    right: 10,
+                  ),
+                  alignment: AlignmentDirectional.centerEnd,
+                  color: Colors.red,
+                  child: Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                  ),
+                ),
+              );
+            },
+          ).toList();
 
           return ReorderableListView(
             children: children,
