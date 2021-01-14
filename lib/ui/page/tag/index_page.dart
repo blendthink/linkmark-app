@@ -60,7 +60,7 @@ class TagIndexPage extends StatelessWidget {
                 },
                 background: Container(
                   padding: EdgeInsets.only(
-                    right: 10,
+                    right: 16,
                   ),
                   alignment: AlignmentDirectional.centerEnd,
                   color: Colors.red,
