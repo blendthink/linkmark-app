@@ -1,6 +1,13 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
+import 'package:implicitly_animated_reorderable_list/transitions.dart';
+import 'package:linkmark_app/data/model/tag.dart';
+import 'package:linkmark_app/ui/component/box.dart';
 import 'package:linkmark_app/ui/component/container_with_loading.dart';
 import 'package:linkmark_app/ui/component/loading/loading_state_view_model.dart';
 import 'package:linkmark_app/ui/page/tag/index_view_model.dart';
@@ -8,6 +15,69 @@ import 'package:linkmark_app/util/ext/async_snapshot.dart';
 
 class TagIndexPage extends StatelessWidget {
   const TagIndexPage({Key key}) : super(key: key);
+
+  Widget _buildTile(BuildContext context, double t, Tag tag) {
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+
+    final color = Color.lerp(Colors.white, Colors.grey.shade100, t);
+    final elevation = lerpDouble(0, 8, t);
+
+    final List<Widget> actions = [
+      SlideAction(
+        closeOnTap: true,
+        color: Colors.redAccent,
+        onTap: () {},
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              const Icon(
+                Icons.delete,
+                color: Colors.white,
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'Delete',
+                style: textTheme.bodyText2.copyWith(
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ];
+
+    return Slidable(
+      enabled: true,
+      actionPane: const SlidableBehindActionPane(),
+      secondaryActions: actions,
+      child: Box(
+        height: 80,
+        color: color,
+        elevation: elevation,
+        alignment: Alignment.center,
+        // For testing different size item. You can comment this line
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: ListTile(
+          title: Text(
+            tag.name,
+            style: textTheme.bodyText2.copyWith(
+              fontSize: 16,
+            ),
+          ),
+          trailing: const Handle(
+            delay: Duration(milliseconds: 100),
+            child: Icon(
+              Icons.drag_handle,
+              color: Colors.grey,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,47 +106,63 @@ class TagIndexPage extends StatelessWidget {
             );
           }
 
-          final children = tags.asMap().entries.map(
-            (item) {
-              final index = item.key;
-              final tag = item.value;
+          Widget buildReorderable({
+            Tag tag,
+            Widget Function(Widget tile) transitionBuilder,
+          }) {
+            return Reorderable(
+              key: Key(tag.id),
+              builder: (context, dragAnimation, inDrag) {
+                final t = dragAnimation.value;
+                final tile = _buildTile(context, t, tag);
 
-              return Dismissible(
-                key: Key(tag.id),
-                child: ListTile(
-                  title: Text(tag.name),
-                ),
-                direction: DismissDirection.endToStart,
-                onDismissed: (direction) {
-                  viewModel.deleteTag(index: index);
-                  if (direction == DismissDirection.endToStart) {
-                    final snackBar = SnackBar(
-                      content: const Text('削除しました'),
-                      duration: const Duration(seconds: 1),
-                    );
+                // If the item is in drag, only return the tile as the
+                // SizeFadeTransition would clip the shadow.
+                if (t > 0.0) {
+                  return tile;
+                }
 
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  }
+                return transitionBuilder(
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      tile,
+                      const Divider(height: 0),
+                    ],
+                  ),
+                );
+              },
+            );
+          }
+
+          return ImplicitlyAnimatedReorderableList(
+            items: tags,
+            shrinkWrap: true,
+            itemBuilder: (context, itemAnimation, tag, index) {
+              return buildReorderable(
+                tag: tag,
+                transitionBuilder: (tile) {
+                  return SizeFadeTransition(
+                    sizeFraction: 0.7,
+                    curve: Curves.easeInOut,
+                    animation: itemAnimation,
+                    child: tile,
+                  );
                 },
-                background: Container(
-                  padding: EdgeInsets.only(
-                    right: 16,
-                  ),
-                  alignment: AlignmentDirectional.centerEnd,
-                  color: Colors.red,
-                  child: Icon(
-                    Icons.delete,
-                    color: Colors.white,
-                  ),
-                ),
               );
             },
-          ).toList();
-
-          return ReorderableListView(
-            children: children,
-            onReorder: (oldIndex, newIndex) {
-              viewModel.reorder(oldIndex: oldIndex, newIndex: newIndex);
+            areItemsTheSame: (oldItem, newItem) => oldItem == newItem,
+            onReorderFinished: (movedTag, from, to, newItems) {},
+            updateItemBuilder: (context, itemAnimation, tag) {
+              return buildReorderable(
+                tag: tag,
+                transitionBuilder: (tile) {
+                  return FadeTransition(
+                    opacity: itemAnimation,
+                    child: tile,
+                  );
+                },
+              );
             },
           );
         });

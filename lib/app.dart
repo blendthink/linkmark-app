@@ -21,7 +21,12 @@ class App extends HookWidget {
 
     return GetMaterialApp(
       title: 'Linkmark',
-      theme: ThemeData(),
+      theme: ThemeData().copyWith(
+        dividerTheme: DividerThemeData(
+          thickness: 1,
+          color: Colors.grey.shade300,
+        ),
+      ),
       darkTheme: ThemeData.dark(),
       home: home,
       routes: {
