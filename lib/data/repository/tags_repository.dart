@@ -7,6 +7,7 @@ abstract class TagsRepository {
 
   Future<Result<void>> createTag({
     @required String name,
+    @required int order,
   });
 
   Future<Result<void>> updateTagName({
