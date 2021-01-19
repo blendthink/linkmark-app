@@ -192,13 +192,13 @@ class TagIndexPage extends StatelessWidget {
           if (text.isEmpty) return;
           print(text);
         },
-        suffixMode: OverlayVisibilityMode.editing,
+        suffixMode: OverlayVisibilityMode.always,
         suffix: GestureDetector(
           child: Padding(
             padding: EdgeInsets.all(8.0),
             child: Icon(
               Icons.add_circle,
-              color: Colors.green,
+              color: Theme.of(context).primaryColor,
             ),
           ),
           onTap: () {
