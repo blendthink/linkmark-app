@@ -180,6 +180,7 @@ class TagIndexPage extends StatelessWidget {
       padding: EdgeInsets.all(16),
       width: double.infinity,
       child: CupertinoTextField(
+        controller: viewModel.textEditingController,
         placeholder: "Enter Tag Name.",
         prefix: Padding(
           padding: EdgeInsets.all(8.0),
@@ -189,8 +190,7 @@ class TagIndexPage extends StatelessWidget {
           ),
         ),
         onSubmitted: (text) {
-          if (text.isEmpty) return;
-          print(text);
+          viewModel.onSubmitAddTagButton();
         },
         suffixMode: OverlayVisibilityMode.always,
         suffix: GestureDetector(
@@ -202,7 +202,7 @@ class TagIndexPage extends StatelessWidget {
             ),
           ),
           onTap: () {
-            print("おかやまん");
+            viewModel.onSubmitAddTagButton();
           },
         ),
       ),

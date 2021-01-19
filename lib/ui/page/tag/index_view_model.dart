@@ -5,6 +5,7 @@ import 'package:linkmark_app/data/model/result.dart';
 import 'package:linkmark_app/data/model/tag.dart';
 import 'package:linkmark_app/data/provider/tags_repository_provider.dart';
 import 'package:linkmark_app/data/repository/tags_repository.dart';
+import 'package:linkmark_app/util/logger.dart';
 
 final tagIndexViewModelProvider = ChangeNotifierProvider(
     (ref) => TagIndexViewModel(ref.read(tagsRepositoryProvider)));
@@ -13,6 +14,9 @@ class TagIndexViewModel extends ChangeNotifier {
   TagIndexViewModel(this._repository);
 
   final TagsRepository _repository;
+
+  final _textEditingController = TextEditingController();
+  TextEditingController get textEditingController => _textEditingController;
 
   List<Tag> _tags;
 
@@ -71,5 +75,22 @@ class TagIndexViewModel extends ChangeNotifier {
   }) {
     _tags.removeAt(index);
     notifyListeners();
+  }
+
+  Future<void> onSubmitAddTagButton() {
+    final text = _textEditingController.text;
+    if (text.isEmpty) return Future.value();
+
+    logger.info('Add Tag: $text');
+
+    final result = _repository.createTag(name: text, order: _tags.length);
+    return result.then((snapshot) {
+      // TODO(okayama): 成功時の処理
+      _textEditingController.clear();
+      fetchTags();
+    }).catchError((error) {
+      // TODO(okayama): 失敗時の処理
+      // 特に何もなし
+    });
   }
 }
