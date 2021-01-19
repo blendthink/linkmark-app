@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -175,12 +176,53 @@ class TagIndexPage extends StatelessWidget {
       });
     });
 
+    final footer = Container(
+      padding: EdgeInsets.all(16),
+      width: double.infinity,
+      child: CupertinoTextField(
+        placeholder: "Enter Tag Name.",
+        prefix: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Icon(
+            Icons.tag,
+            color: Colors.blue,
+          ),
+        ),
+        onSubmitted: (text) {
+          if (text.isEmpty) return;
+          print(text);
+        },
+        suffixMode: OverlayVisibilityMode.editing,
+        suffix: GestureDetector(
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.add_circle,
+              color: Colors.green,
+            ),
+          ),
+          onTap: () {
+            print("おかやまん");
+          },
+        ),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Tag List'),
       ),
-      body: ContainerWithLoading(
-        child: hookBuilder,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: ContainerWithLoading(
+                child: hookBuilder,
+              ),
+            ),
+            footer,
+          ],
+        ),
       ),
     );
   }
