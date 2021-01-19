@@ -17,10 +17,11 @@ class _$TagTearOff {
   const _$TagTearOff();
 
 // ignore: unused_element
-  _Tag call({@required String id, @required String name}) {
+  _Tag call({@required String id, @required String name, @required int order}) {
     return _Tag(
       id: id,
       name: name,
+      order: order,
     );
   }
 
@@ -38,6 +39,7 @@ const $Tag = _$TagTearOff();
 mixin _$Tag {
   String get id;
   String get name;
+  int get order;
 
   Map<String, dynamic> toJson();
   $TagCopyWith<Tag> get copyWith;
@@ -47,7 +49,7 @@ mixin _$Tag {
 abstract class $TagCopyWith<$Res> {
   factory $TagCopyWith(Tag value, $Res Function(Tag) then) =
       _$TagCopyWithImpl<$Res>;
-  $Res call({String id, String name});
+  $Res call({String id, String name, int order});
 }
 
 /// @nodoc
@@ -62,10 +64,12 @@ class _$TagCopyWithImpl<$Res> implements $TagCopyWith<$Res> {
   $Res call({
     Object id = freezed,
     Object name = freezed,
+    Object order = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as String,
       name: name == freezed ? _value.name : name as String,
+      order: order == freezed ? _value.order : order as int,
     ));
   }
 }
@@ -75,7 +79,7 @@ abstract class _$TagCopyWith<$Res> implements $TagCopyWith<$Res> {
   factory _$TagCopyWith(_Tag value, $Res Function(_Tag) then) =
       __$TagCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String name});
+  $Res call({String id, String name, int order});
 }
 
 /// @nodoc
@@ -91,10 +95,12 @@ class __$TagCopyWithImpl<$Res> extends _$TagCopyWithImpl<$Res>
   $Res call({
     Object id = freezed,
     Object name = freezed,
+    Object order = freezed,
   }) {
     return _then(_Tag(
       id: id == freezed ? _value.id : id as String,
       name: name == freezed ? _value.name : name as String,
+      order: order == freezed ? _value.order : order as int,
     ));
   }
 }
@@ -103,9 +109,10 @@ class __$TagCopyWithImpl<$Res> extends _$TagCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_Tag with DiagnosticableTreeMixin implements _Tag {
-  const _$_Tag({@required this.id, @required this.name})
+  const _$_Tag({@required this.id, @required this.name, @required this.order})
       : assert(id != null),
-        assert(name != null);
+        assert(name != null),
+        assert(order != null);
 
   factory _$_Tag.fromJson(Map<String, dynamic> json) => _$_$_TagFromJson(json);
 
@@ -113,10 +120,12 @@ class _$_Tag with DiagnosticableTreeMixin implements _Tag {
   final String id;
   @override
   final String name;
+  @override
+  final int order;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Tag(id: $id, name: $name)';
+    return 'Tag(id: $id, name: $name, order: $order)';
   }
 
   @override
@@ -125,7 +134,8 @@ class _$_Tag with DiagnosticableTreeMixin implements _Tag {
     properties
       ..add(DiagnosticsProperty('type', 'Tag'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('name', name));
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('order', order));
   }
 
   @override
@@ -135,14 +145,17 @@ class _$_Tag with DiagnosticableTreeMixin implements _Tag {
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)));
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.order, order) ||
+                const DeepCollectionEquality().equals(other.order, order)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(name);
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(order);
 
   @override
   _$TagCopyWith<_Tag> get copyWith =>
@@ -155,7 +168,10 @@ class _$_Tag with DiagnosticableTreeMixin implements _Tag {
 }
 
 abstract class _Tag implements Tag {
-  const factory _Tag({@required String id, @required String name}) = _$_Tag;
+  const factory _Tag(
+      {@required String id,
+      @required String name,
+      @required int order}) = _$_Tag;
 
   factory _Tag.fromJson(Map<String, dynamic> json) = _$_Tag.fromJson;
 
@@ -163,6 +179,8 @@ abstract class _Tag implements Tag {
   String get id;
   @override
   String get name;
+  @override
+  int get order;
   @override
   _$TagCopyWith<_Tag> get copyWith;
 }
