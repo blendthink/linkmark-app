@@ -80,6 +80,39 @@ class TagIndexPage extends StatelessWidget {
     );
   }
 
+  void _onSubmitAddTagButton({
+    @required BuildContext context,
+    @required TagIndexViewModel viewModel,
+  }) async {
+    final result = await viewModel.createTag();
+    if (result == null) {
+      return;
+    }
+
+    if (result.isSuccess) {
+      viewModel.textEditingController.clear();
+      viewModel.fetchTags();
+    } else {
+      final snackBar = SnackBar(
+        content: const Text('Can‘t create new tag. Retry in 5 seconds.'),
+        duration: const Duration(seconds: 5),
+        action: SnackBarAction(
+          label: 'RETRY',
+          onPressed: () {
+            _onSubmitAddTagButton(context: context, viewModel: viewModel);
+          },
+        ),
+        onVisible: () {
+          viewModel.visibleSnackBar();
+        },
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar).closed.then((value) {
+        if (value == SnackBarClosedReason.action) return;
+        viewModel.invisibleSnackBar();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = context.read(tagIndexViewModelProvider);
@@ -176,37 +209,50 @@ class TagIndexPage extends StatelessWidget {
       });
     });
 
-    final footer = Container(
-      padding: EdgeInsets.all(16),
-      width: double.infinity,
-      child: CupertinoTextField(
-        controller: viewModel.textEditingController,
-        placeholder: "Enter Tag Name.",
-        prefix: Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Icon(
-            Icons.tag,
-            color: Colors.blue,
-          ),
-        ),
-        onSubmitted: (text) {
-          viewModel.onSubmitAddTagButton();
-        },
-        suffixMode: OverlayVisibilityMode.always,
-        suffix: GestureDetector(
-          child: Padding(
+    final footer = Material(
+      child: Container(
+        padding: EdgeInsets.all(16),
+        width: double.infinity,
+        child: CupertinoTextField(
+          controller: viewModel.textEditingController,
+          placeholder: "Enter Tag Name.",
+          prefix: Padding(
             padding: EdgeInsets.all(8.0),
             child: Icon(
-              Icons.add_circle,
-              color: Theme.of(context).primaryColor,
+              Icons.tag,
+              color: Colors.blue,
             ),
           ),
-          onTap: () {
-            viewModel.onSubmitAddTagButton();
+          onSubmitted: (text) {
+            _onSubmitAddTagButton(context: context, viewModel: viewModel);
           },
+          suffixMode: OverlayVisibilityMode.always,
+          suffix: GestureDetector(
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Icon(
+                Icons.add_circle,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            onTap: () {
+              _onSubmitAddTagButton(context: context, viewModel: viewModel);
+            },
+          ),
         ),
       ),
     );
+
+    final animatedBottomContainer = HookBuilder(builder: (context) {
+      final isVisibleSnackBar = useProvider(
+          tagIndexViewModelProvider.select((value) => value.isVisibleSnackBar));
+
+      return AnimatedContainer(
+        margin: EdgeInsets.only(bottom: isVisibleSnackBar ? 50 : 0),
+        child: footer,
+        duration: const Duration(milliseconds: 100),
+      );
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -220,7 +266,7 @@ class TagIndexPage extends StatelessWidget {
                 child: hookBuilder,
               ),
             ),
-            footer,
+            animatedBottomContainer,
           ],
         ),
       ),

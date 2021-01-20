@@ -26,6 +26,10 @@ class TagIndexViewModel extends ChangeNotifier {
 
   Result<void> get result => _result;
 
+  bool _isVisibleSnackBar = false;
+
+  bool get isVisibleSnackBar => _isVisibleSnackBar;
+
   Future<void> fetchTags() async {
     return _repository.getTags().then((value) {
       value.when(
@@ -77,20 +81,22 @@ class TagIndexViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> onSubmitAddTagButton() {
+  Future<Result<void>> createTag() {
     final text = _textEditingController.text;
     if (text.isEmpty) return Future.value();
 
     logger.info('Add Tag: $text');
 
-    final result = _repository.createTag(name: text, order: _tags.length);
-    return result.then((snapshot) {
-      // TODO(okayama): 成功時の処理
-      _textEditingController.clear();
-      fetchTags();
-    }).catchError((error) {
-      // TODO(okayama): 失敗時の処理
-      // 特に何もなし
-    });
+    return _repository.createTag(name: text, order: _tags.length);
+  }
+
+  void visibleSnackBar() {
+    _isVisibleSnackBar = true;
+    notifyListeners();
+  }
+
+  void invisibleSnackBar() {
+    _isVisibleSnackBar = false;
+    notifyListeners();
   }
 }
