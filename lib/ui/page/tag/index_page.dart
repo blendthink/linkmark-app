@@ -107,7 +107,6 @@ class TagIndexPage extends StatelessWidget {
         },
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar).closed.then((value) {
-        if (value == SnackBarClosedReason.action) return;
         viewModel.invisibleSnackBar();
       });
     }
