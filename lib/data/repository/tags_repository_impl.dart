@@ -11,7 +11,7 @@ class TagsRepositoryImpl extends TagsRepository {
   final TagsDataSource _dataSource;
 
   @override
-  Future<Result<Map<String, Tag>>> getTags() {
+  Future<Result<List<Tag>>> getTags() {
     return Result.guardFuture(_dataSource.getTags);
   }
 

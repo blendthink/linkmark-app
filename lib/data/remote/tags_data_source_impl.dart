@@ -20,14 +20,15 @@ class TagsDataSourceImpl implements TagsDataSource {
   }
 
   @override
-  Future<Map<String, Tag>> getTags() {
+  Future<List<Tag>> getTags() async {
     return _tagsRef.orderByChild('order').once().then(
       (snapshot) {
         final tagsMap = Map<String, dynamic>.from(snapshot.value);
-        return tagsMap.map((key, value) {
-          final tagMap = Map<String, dynamic>.from(value);
-          return MapEntry(key, Tag.fromJson(tagMap));
-        });
+        final tags = tagsMap.entries
+            .map((e) => Tag.fromJson(Map<String, dynamic>.from(e.value)))
+            .toList()
+              ..sort((a, b) => a.order.compareTo(b.order));
+        return tags;
       },
     ).catchError(
       (error) {

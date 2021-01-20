@@ -31,7 +31,7 @@ class TagIndexViewModel extends ChangeNotifier {
       value.when(
         success: (tags) {
           _result = Result.success();
-          _tags = tags.entries.map((e) => e.value).toList();
+          _tags = tags;
         },
         failure: (error) {
           _result = Result.failure(error: error);

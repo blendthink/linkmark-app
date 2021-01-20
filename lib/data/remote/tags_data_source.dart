@@ -2,7 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:linkmark_app/data/model/tag.dart';
 
 abstract class TagsDataSource {
-  Future<Map<String, Tag>> getTags();
+  Future<List<Tag>> getTags();
 
   Future<void> createTag({
     @required String name,
