@@ -26,10 +26,6 @@ class TagIndexViewModel extends ChangeNotifier {
 
   Result<void> get result => _result;
 
-  bool _isVisibleSnackBar = false;
-
-  bool get isVisibleSnackBar => _isVisibleSnackBar;
-
   Future<void> fetchTags() async {
     return _repository.getTags().then((value) {
       value.when(
@@ -88,15 +84,5 @@ class TagIndexViewModel extends ChangeNotifier {
     logger.info('Add Tag: $text');
 
     return _repository.createTag(name: text, order: _tags.length);
-  }
-
-  void visibleSnackBar() {
-    _isVisibleSnackBar = true;
-    notifyListeners();
-  }
-
-  void invisibleSnackBar() {
-    _isVisibleSnackBar = false;
-    notifyListeners();
   }
 }

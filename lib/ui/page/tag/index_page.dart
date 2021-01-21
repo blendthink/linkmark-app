@@ -94,6 +94,8 @@ class TagIndexPage extends StatelessWidget {
       viewModel.fetchTags();
     } else {
       final snackBar = SnackBar(
+        margin: const EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 80.0),
+        behavior: SnackBarBehavior.floating,
         content: const Text('Can‘t create new tag. Retry in 5 seconds.'),
         duration: const Duration(seconds: 5),
         action: SnackBarAction(
@@ -102,13 +104,8 @@ class TagIndexPage extends StatelessWidget {
             _onSubmitAddTagButton(context: context, viewModel: viewModel);
           },
         ),
-        onVisible: () {
-          viewModel.visibleSnackBar();
-        },
       );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar).closed.then((value) {
-        viewModel.invisibleSnackBar();
-      });
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
 
@@ -242,17 +239,6 @@ class TagIndexPage extends StatelessWidget {
       ),
     );
 
-    final animatedBottomContainer = HookBuilder(builder: (context) {
-      final isVisibleSnackBar = useProvider(
-          tagIndexViewModelProvider.select((value) => value.isVisibleSnackBar));
-
-      return AnimatedContainer(
-        margin: EdgeInsets.only(bottom: isVisibleSnackBar ? 50 : 0),
-        child: footer,
-        duration: const Duration(milliseconds: 100),
-      );
-    });
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Tag List'),
@@ -265,7 +251,7 @@ class TagIndexPage extends StatelessWidget {
                 child: hookBuilder,
               ),
             ),
-            animatedBottomContainer,
+            footer,
           ],
         ),
       ),
