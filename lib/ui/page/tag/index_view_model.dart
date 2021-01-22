@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:linkmark_app/data/model/error/app_error.dart';
+import 'package:linkmark_app/data/model/exception/tag/create_exception.dart';
 import 'package:linkmark_app/data/model/result.dart';
 import 'package:linkmark_app/data/model/tag.dart';
 import 'package:linkmark_app/data/provider/tags_repository_provider.dart';
@@ -83,7 +84,10 @@ class TagIndexViewModel extends ChangeNotifier {
     if (text.isEmpty) return Future.value();
 
     if (_tags.any((tag) => tag.name.toLowerCase() == text.toLowerCase())) {
-      return Future.value(Result.failure(error: AppError(Exception(''))));
+      final exception =
+          TagCreateException(type: TagCreateExceptionType.existsSameName());
+      return Future.value(
+          Result.failure(error: AppError(exception: exception)));
     }
 
     logger.info('Add Tag: $text');

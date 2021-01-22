@@ -7,6 +7,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:implicitly_animated_reorderable_list/transitions.dart';
+import 'package:linkmark_app/data/model/error/app_error.dart';
 import 'package:linkmark_app/data/model/tag.dart';
 import 'package:linkmark_app/ui/component/box.dart';
 import 'package:linkmark_app/ui/component/container_with_loading.dart';
@@ -93,18 +94,37 @@ class TagIndexPage extends StatelessWidget {
       viewModel.textEditingController.clear();
       viewModel.fetchTags();
     } else {
-      final snackBar = SnackBar(
-        margin: const EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 80.0),
-        behavior: SnackBarBehavior.floating,
-        content: const Text('Can‘t create new tag. Retry in 5 seconds.'),
-        duration: const Duration(seconds: 5),
-        action: SnackBarAction(
-          label: 'RETRY',
-          onPressed: () {
-            _onSubmitAddTagButton(context: context, viewModel: viewModel);
-          },
-        ),
-      );
+      // AppError によって SnackBar を作り分ける
+      SnackBar createSnackBar(AppError error) {
+        String snackBarContent;
+        SnackBarAction snackBarAction;
+        Duration snackBarDuration;
+        if (error.hasSolution) {
+          final message = error.message;
+          final solution = error.solution;
+          snackBarContent = '$message.\n$solution.';
+          snackBarAction = null;
+          snackBarDuration = const Duration(seconds: 3);
+        } else {
+          snackBarContent = 'Can‘t create tag. Retry in 5 seconds.';
+          snackBarAction = SnackBarAction(
+            label: 'RETRY',
+            onPressed: () {
+              _onSubmitAddTagButton(context: context, viewModel: viewModel);
+            },
+          );
+          snackBarDuration = const Duration(seconds: 5);
+        }
+        return SnackBar(
+          margin: const EdgeInsets.fromLTRB(15.0, 5.0, 15.0, 80.0),
+          behavior: SnackBarBehavior.floating,
+          content: Text(snackBarContent),
+          duration: snackBarDuration,
+          action: snackBarAction,
+        );
+      }
+
+      final snackBar = createSnackBar(result.error);
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
