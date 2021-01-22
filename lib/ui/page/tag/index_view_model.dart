@@ -83,9 +83,18 @@ class TagIndexViewModel extends ChangeNotifier {
     final text = _textEditingController.text;
     if (text.isEmpty) return Future.value();
 
-    if (_tags.any((tag) => tag.name.toLowerCase() == text.toLowerCase())) {
-      final exception =
-          TagCreateException(type: TagCreateExceptionType.existsSameName());
+    TagCreateException extractException() {
+      if (text.length > 20) {
+        return const TagCreateException.nameTooLong();
+      }
+      if (_tags.any((tag) => tag.name.toLowerCase() == text.toLowerCase())) {
+        return const TagCreateException.existsSameName();
+      }
+      return null;
+    }
+
+    final exception = extractException();
+    if (exception != null) {
       return Future.value(
           Result.failure(error: AppError(exception: exception)));
     }
