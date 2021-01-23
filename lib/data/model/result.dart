@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import 'error/app_error.dart';
+import 'package:linkmark_app/data/model/exception/app_exception.dart';
+import 'package:linkmark_app/data/model/exception/ext/exception.dart';
 
 part 'result.freezed.dart';
 
@@ -11,13 +11,13 @@ abstract class Result<T> with _$Result<T> {
 
   const factory Result.success({T data}) = Success<T>;
 
-  const factory Result.failure({@required AppError error}) = Failure<T>;
+  const factory Result.failure({@required AppException exception}) = Failure<T>;
 
   static Result<T> guard<T>(T Function() body) {
     try {
       return Result.success(data: body());
     } on Exception catch (e) {
-      return Result.failure(error: AppError(exception: e));
+      return Result.failure(exception: e.toAppException());
     }
   }
 
@@ -25,7 +25,7 @@ abstract class Result<T> with _$Result<T> {
     try {
       return Result.success(data: await future());
     } on Exception catch (e) {
-      return Result.failure(error: AppError(exception: e));
+      return Result.failure(exception: e.toAppException());
     }
   }
 
@@ -42,7 +42,7 @@ abstract class Result<T> with _$Result<T> {
     );
   }
 
-  void ifFailure(Function(AppError e) body) {
+  void ifFailure(Function(AppException e) body) {
     maybeWhen(
       failure: (e) => body(e),
       orElse: () {
@@ -58,12 +58,12 @@ abstract class Result<T> with _$Result<T> {
     );
   }
 
-  AppError get error {
+  AppException get exception {
     try {
       dataOrThrow;
-      return AppError(exception: Exception('Unexpected call'));
-    } on AppError catch (error) {
-      return error;
+      return Exception('Unexpected call').toAppException();
+    } on AppException catch (e) {
+      return e;
     }
   }
 }
@@ -72,5 +72,5 @@ extension ResultObjectExt<T> on T {
   Result<T> get asSuccess => Result.success(data: this);
 
   Result<T> asFailure(Exception e) =>
-      Result.failure(error: AppError(exception: e));
+      Result.failure(exception: e.toAppException());
 }

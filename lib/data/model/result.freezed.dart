@@ -21,9 +21,9 @@ class _$ResultTearOff {
   }
 
 // ignore: unused_element
-  Failure<T> failure<T>({@required AppError error}) {
+  Failure<T> failure<T>({@required AppException exception}) {
     return Failure<T>(
-      error: error,
+      exception: exception,
     );
   }
 }
@@ -37,12 +37,12 @@ mixin _$Result<T> {
   @optionalTypeArgs
   TResult when<TResult extends Object>({
     @required TResult success(T data),
-    @required TResult failure(AppError error),
+    @required TResult failure(AppException exception),
   });
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult success(T data),
-    TResult failure(AppError error),
+    TResult failure(AppException exception),
     @required TResult orElse(),
   });
   @optionalTypeArgs
@@ -139,7 +139,7 @@ class _$Success<T> extends Success<T> with DiagnosticableTreeMixin {
   @optionalTypeArgs
   TResult when<TResult extends Object>({
     @required TResult success(T data),
-    @required TResult failure(AppError error),
+    @required TResult failure(AppException exception),
   }) {
     assert(success != null);
     assert(failure != null);
@@ -150,7 +150,7 @@ class _$Success<T> extends Success<T> with DiagnosticableTreeMixin {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult success(T data),
-    TResult failure(AppError error),
+    TResult failure(AppException exception),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
@@ -198,7 +198,7 @@ abstract class Success<T> extends Result<T> {
 abstract class $FailureCopyWith<T, $Res> {
   factory $FailureCopyWith(Failure<T> value, $Res Function(Failure<T>) then) =
       _$FailureCopyWithImpl<T, $Res>;
-  $Res call({AppError error});
+  $Res call({AppException exception});
 }
 
 /// @nodoc
@@ -212,26 +212,27 @@ class _$FailureCopyWithImpl<T, $Res> extends _$ResultCopyWithImpl<T, $Res>
 
   @override
   $Res call({
-    Object error = freezed,
+    Object exception = freezed,
   }) {
     return _then(Failure<T>(
-      error: error == freezed ? _value.error : error as AppError,
+      exception:
+          exception == freezed ? _value.exception : exception as AppException,
     ));
   }
 }
 
 /// @nodoc
 class _$Failure<T> extends Failure<T> with DiagnosticableTreeMixin {
-  const _$Failure({@required this.error})
-      : assert(error != null),
+  const _$Failure({@required this.exception})
+      : assert(exception != null),
         super._();
 
   @override
-  final AppError error;
+  final AppException exception;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Result<$T>.failure(error: $error)';
+    return 'Result<$T>.failure(exception: $exception)';
   }
 
   @override
@@ -239,20 +240,21 @@ class _$Failure<T> extends Failure<T> with DiagnosticableTreeMixin {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Result<$T>.failure'))
-      ..add(DiagnosticsProperty('error', error));
+      ..add(DiagnosticsProperty('exception', exception));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is Failure<T> &&
-            (identical(other.error, error) ||
-                const DeepCollectionEquality().equals(other.error, error)));
+            (identical(other.exception, exception) ||
+                const DeepCollectionEquality()
+                    .equals(other.exception, exception)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(error);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(exception);
 
   @override
   $FailureCopyWith<T, Failure<T>> get copyWith =>
@@ -262,23 +264,23 @@ class _$Failure<T> extends Failure<T> with DiagnosticableTreeMixin {
   @optionalTypeArgs
   TResult when<TResult extends Object>({
     @required TResult success(T data),
-    @required TResult failure(AppError error),
+    @required TResult failure(AppException exception),
   }) {
     assert(success != null);
     assert(failure != null);
-    return failure(error);
+    return failure(exception);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object>({
     TResult success(T data),
-    TResult failure(AppError error),
+    TResult failure(AppException exception),
     @required TResult orElse(),
   }) {
     assert(orElse != null);
     if (failure != null) {
-      return failure(error);
+      return failure(exception);
     }
     return orElse();
   }
@@ -311,8 +313,8 @@ class _$Failure<T> extends Failure<T> with DiagnosticableTreeMixin {
 
 abstract class Failure<T> extends Result<T> {
   const Failure._() : super._();
-  const factory Failure({@required AppError error}) = _$Failure<T>;
+  const factory Failure({@required AppException exception}) = _$Failure<T>;
 
-  AppError get error;
+  AppException get exception;
   $FailureCopyWith<T, Failure<T>> get copyWith;
 }

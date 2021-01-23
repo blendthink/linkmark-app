@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:linkmark_app/data/model/error/app_error.dart';
 import 'package:linkmark_app/data/model/exception/expected/tag/create_exception.dart';
 import 'package:linkmark_app/data/model/result.dart';
 import 'package:linkmark_app/data/model/tag.dart';
@@ -35,8 +34,8 @@ class TagIndexViewModel extends ChangeNotifier {
           _result = Result.success();
           _tags = tags;
         },
-        failure: (error) {
-          _result = Result.failure(error: error);
+        failure: (e) {
+          _result = Result.failure(exception: e);
         },
       );
     }).whenComplete(notifyListeners);
@@ -95,8 +94,7 @@ class TagIndexViewModel extends ChangeNotifier {
 
     final exception = extractException();
     if (exception != null) {
-      return Future.value(
-          Result.failure(error: AppError(exception: exception)));
+      return Future.value(Result.failure(exception: exception));
     }
 
     logger.info('Add Tag: $text');

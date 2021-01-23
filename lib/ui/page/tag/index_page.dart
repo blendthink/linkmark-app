@@ -7,7 +7,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:implicitly_animated_reorderable_list/transitions.dart';
-import 'package:linkmark_app/data/model/error/app_error.dart';
+import 'package:linkmark_app/data/model/exception/app_exception.dart';
+import 'package:linkmark_app/data/model/exception/expected_exption.dart';
 import 'package:linkmark_app/data/model/tag.dart';
 import 'package:linkmark_app/ui/component/box.dart';
 import 'package:linkmark_app/ui/component/container_with_loading.dart';
@@ -95,13 +96,13 @@ class TagIndexPage extends StatelessWidget {
       viewModel.fetchTags();
     } else {
       // AppError によって SnackBar を作り分ける
-      SnackBar createSnackBar(AppError error) {
+      SnackBar createSnackBar(AppException exception) {
         String snackBarContent;
         SnackBarAction snackBarAction;
         Duration snackBarDuration;
-        if (error.hasSolution) {
-          final message = error.message;
-          final solution = error.solution;
+        if (exception is ExpectedException) {
+          final message = exception.message;
+          final solution = exception.solution;
           snackBarContent = '$message.\n$solution.';
           snackBarAction = null;
           snackBarDuration = const Duration(seconds: 3);
@@ -124,7 +125,7 @@ class TagIndexPage extends StatelessWidget {
         );
       }
 
-      final snackBar = createSnackBar(result.error);
+      final snackBar = createSnackBar(result.exception);
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
