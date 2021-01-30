@@ -2,6 +2,12 @@
 
 It is an application that stores links.
 
+## Documentation
+
+- [Project Authors](docs/AUTHORS.md)
+- [Contributor Guidelines](docs/CONTRIBUTING.md)
+- [Contributor Covenant Code of Conduct](docs/CODE_OF_CONDUCT.md)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
