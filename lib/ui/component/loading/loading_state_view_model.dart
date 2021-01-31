@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/all.dart';
 
 final loadingStateProvider =
-ChangeNotifierProvider((ref) => LoadingStateViewModel());
+    ChangeNotifierProvider((ref) => LoadingStateViewModel());
 
 class LoadingStateViewModel extends ChangeNotifier {
   bool isLoading = false;
