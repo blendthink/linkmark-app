@@ -1,6 +1,6 @@
 # Linkmark
 
-https://github.com/blendthink/linkmark-app/workflows/Flutter%20CI/badge.svg
+![Flutter CI](https://github.com/blendthink/linkmark-app/workflows/Flutter%20CI/badge.svg)
 
 This project is the code of an application that stores links.
 
