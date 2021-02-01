@@ -4,6 +4,16 @@ import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../unexpected_exception.dart';
 
+enum NetworkExceptionType {
+  network,
+  badRequest,
+  unauthorized,
+  cancel,
+  timeout,
+  server,
+  unknown,
+}
+
 class NetworkException implements UnexpectedException {
   final DioError _dioError;
 
@@ -11,49 +21,49 @@ class NetworkException implements UnexpectedException {
     @required DioError dioError,
   }) : _dioError = dioError;
 
-  _ErrorType get errorType {
-    _ErrorType type;
+  NetworkExceptionType get type {
+    NetworkExceptionType type;
     switch (_dioError.type) {
       case DioErrorType.DEFAULT:
         if (_dioError.error is SocketException) {
           // SocketException: Failed host lookup: '***'
           // (OS Error: No address associated with hostname, errno = 7)
-          type = _ErrorType.network;
+          type = NetworkExceptionType.network;
         } else {
-          type = _ErrorType.unknown;
+          type = NetworkExceptionType.unknown;
         }
         break;
       case DioErrorType.CONNECT_TIMEOUT:
       case DioErrorType.RECEIVE_TIMEOUT:
-        type = _ErrorType.timeout;
+        type = NetworkExceptionType.timeout;
         break;
       case DioErrorType.SEND_TIMEOUT:
-        type = _ErrorType.network;
+        type = NetworkExceptionType.network;
         break;
       case DioErrorType.RESPONSE:
         switch (_dioError.response.statusCode) {
           case HttpStatus.badRequest: // 400
-            type = _ErrorType.badRequest;
+            type = NetworkExceptionType.badRequest;
             break;
           case HttpStatus.unauthorized: // 401
-            type = _ErrorType.unauthorized;
+            type = NetworkExceptionType.unauthorized;
             break;
           case HttpStatus.internalServerError: // 500
           case HttpStatus.badGateway: // 502
           case HttpStatus.serviceUnavailable: // 503
           case HttpStatus.gatewayTimeout: // 504
-            type = _ErrorType.server;
+            type = NetworkExceptionType.server;
             break;
           default:
-            type = _ErrorType.unknown;
+            type = NetworkExceptionType.unknown;
             break;
         }
         break;
       case DioErrorType.CANCEL:
-        type = _ErrorType.cancel;
+        type = NetworkExceptionType.cancel;
         break;
       default:
-        type = _ErrorType.unknown;
+        type = NetworkExceptionType.unknown;
     }
     return type;
   }
@@ -63,21 +73,11 @@ class NetworkException implements UnexpectedException {
 
   @override
   String toString() {
-    var msg = 'NetworkException [$errorType]: $message';
+    var msg = 'NetworkException [$type]: $message';
     final error = _dioError.error;
     if (error is Error) {
       msg += '\n${error.stackTrace}';
     }
     return msg;
   }
-}
-
-enum _ErrorType {
-  network,
-  badRequest,
-  unauthorized,
-  cancel,
-  timeout,
-  server,
-  unknown,
 }
