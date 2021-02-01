@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:linkmark_app/data/model/tag.dart';
-import 'package:linkmark_app/data/remote/tags_data_source.dart';
+import '../model/tag.dart';
+import 'tags_data_source.dart';
 
 class TagsDataSourceImpl implements TagsDataSource {
   TagsDataSourceImpl(

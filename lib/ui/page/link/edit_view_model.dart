@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:linkmark_app/data/model/result.dart';
-import 'package:linkmark_app/data/provider/links_repository_provider.dart';
-import 'package:linkmark_app/data/repository/links_repository.dart';
+import '../../../data/model/result.dart';
+import '../../../data/provider/links_repository_provider.dart';
+import '../../../data/repository/links_repository.dart';
 
 final editViewModelProvider = ChangeNotifierProvider(
     (ref) => EditViewModel(ref.read(linksRepositoryProvider)));

@@ -1,4 +1,4 @@
-import 'package:linkmark_app/data/model/exception/expected_exption.dart';
+import '../../expected_exception.dart';
 
 abstract class TagCreateException implements ExpectedException {
   const TagCreateException._();

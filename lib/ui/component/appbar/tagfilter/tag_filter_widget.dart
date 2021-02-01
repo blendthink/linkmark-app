@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:linkmark_app/ui/component/appbar/tagfilter/tag_filter_view_model.dart';
-import 'package:linkmark_app/ui/page/link/index_view_model.dart';
-import 'package:linkmark_app/util/ext/async_snapshot.dart';
+import '../../../../util/ext/async_snapshot.dart';
+import '../../../page/link/index_view_model.dart';
+import 'tag_filter_view_model.dart';
 
 class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
   const TagFilterWidget({
@@ -11,7 +11,7 @@ class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
   }) : super(key: key);
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +21,14 @@ class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
     final tagsResult =
         useProvider(tagFilterViewModelProvider.select((value) => value.tags));
 
-    final snapshot = useFuture(useMemoized(() {
-      return tagFilterViewModel.fetchTags();
-    }, [tagsResult.toString()]));
+    final snapshot = useFuture(
+        useMemoized(tagFilterViewModel.fetchTags, [tagsResult.toString()]));
 
     if (!snapshot.isDone) return Container();
 
     return tagsResult.when(success: (data) {
       if (data.isEmpty) {
-        return SizedBox(
+        return const SizedBox(
           height: kToolbarHeight,
         );
       }
@@ -37,7 +36,7 @@ class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
       return SizedBox(
         height: kToolbarHeight,
         child: Padding(
-          padding: EdgeInsets.all(4.0),
+          padding: const EdgeInsets.all(4.0),
           child: ListView.separated(
             itemCount: data.length,
             scrollDirection: Axis.horizontal,
@@ -50,7 +49,7 @@ class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
                 return FilterChip(
                   selected: filterData.selected,
                   label: Text(tag.name),
-                  onSelected: (bool value) {
+                  onSelected: (value) {
                     tagFilterViewModel.updateTagSelected(
                       index: index,
                       selected: value,
@@ -62,7 +61,7 @@ class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
               });
             },
             separatorBuilder: (context, index) {
-              return SizedBox(
+              return const SizedBox(
                 width: 4,
               );
             },

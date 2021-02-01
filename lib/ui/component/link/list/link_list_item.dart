@@ -2,11 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:linkmark_app/ui/component/link/list/link_list_item_shimmer.dart';
-import 'package:linkmark_app/ui/page/link/index_view_model.dart';
-import 'package:linkmark_app/util/ext/async_snapshot.dart';
-import 'package:linkmark_app/util/ext/string.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../util/ext/async_snapshot.dart';
+import '../../../../util/ext/string.dart';
+import '../../../page/link/index_view_model.dart';
+import 'link_list_item_shimmer.dart';
 
 class LinkListItem extends HookWidget {
   LinkListItem({
@@ -60,7 +61,7 @@ class LinkListItem extends HookWidget {
                 width: 80,
                 height: 56,
                 fit: BoxFit.fitHeight,
-                errorBuilder: (context, url, error) => new Icon(Icons.error),
+                errorBuilder: (context, url, error) => const Icon(Icons.error),
               ),
         contentPadding: const EdgeInsets.symmetric(
           vertical: 8,
@@ -88,7 +89,7 @@ class LinkListItem extends HookWidget {
                 width: 80,
                 height: 56,
                 fit: BoxFit.fitHeight,
-                errorBuilder: (context, url, error) => new Icon(Icons.error),
+                errorBuilder: (context, url, error) => const Icon(Icons.error),
               ),
         contentPadding: const EdgeInsets.symmetric(
           vertical: 8,

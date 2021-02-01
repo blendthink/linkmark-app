@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:linkmark_app/data/model/link.dart';
-import 'package:linkmark_app/data/model/result.dart';
-import 'package:linkmark_app/data/provider/links_repository_provider.dart';
-import 'package:linkmark_app/data/repository/links_repository.dart';
-import 'package:linkmark_app/util/logger.dart';
 import 'package:metadata_fetch/metadata_fetch.dart';
+
+import '../../../data/model/link.dart';
+import '../../../data/model/result.dart';
+import '../../../data/provider/links_repository_provider.dart';
+import '../../../data/repository/links_repository.dart';
+import '../../../util/logger.dart';
 
 final indexViewModelProvider = ChangeNotifierProvider(
     (ref) => IndexViewModel(ref.read(linksRepositoryProvider)));
@@ -40,7 +41,7 @@ class IndexViewModel extends ChangeNotifier {
       final tagIds = element.tagIds;
       if (_filterTagIds.isEmpty) return true;
       if (tagIds == null) return false;
-      return _filterTagIds.every((element) => tagIds.contains(element));
+      return _filterTagIds.every(tagIds.contains);
     }).toList();
     return Result.guard(() => tagFiltered);
   }

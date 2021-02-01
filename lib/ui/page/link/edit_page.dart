@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:linkmark_app/ui/page/link/edit_view_model.dart';
-import 'package:linkmark_app/util/logger.dart';
 import 'package:validators/validators.dart';
+
+import '../../../util/logger.dart';
+import 'edit_view_model.dart';
 
 class EditPage extends StatefulWidget {
   const EditPage({
@@ -39,9 +40,9 @@ class _EditPageState extends State<EditPage> {
     SnackBar snackBar;
     if (result.isSuccess) {
       _onPop(context: context, existsUpdate: true);
-      snackBar = SnackBar(
-        content: const Text('New Link has been created.'),
-        duration: const Duration(seconds: 3),
+      snackBar = const SnackBar(
+        content: Text('New Link has been created.'),
+        duration: Duration(seconds: 3),
       );
     } else {
       snackBar = SnackBar(
@@ -70,9 +71,9 @@ class _EditPageState extends State<EditPage> {
         onPressed: () {
           _onPop(context: context, existsUpdate: false);
         },
-        icon: Icon(Icons.close),
+        icon: const Icon(Icons.close),
       ),
-      title: Text('Edit Link'),
+      title: const Text('Edit Link'),
       actions: [
         IconButton(
           onPressed: () {
@@ -81,7 +82,7 @@ class _EditPageState extends State<EditPage> {
               editViewModel: editViewModel,
             );
           },
-          icon: Icon(Icons.done),
+          icon: const Icon(Icons.done),
         ),
       ],
     );

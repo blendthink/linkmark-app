@@ -1,4 +1,4 @@
-import 'package:linkmark_app/data/model/exception/unexpected_exception.dart';
+import '../unexpected_exception.dart';
 
 class UnknownException implements UnexpectedException {
   const UnknownException();

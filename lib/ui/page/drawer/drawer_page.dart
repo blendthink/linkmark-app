@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:linkmark_app/constants.dart';
+import '../../../constants.dart';
 
 class DrawerPage extends StatelessWidget {
   const DrawerPage({Key key}) : super(key: key);

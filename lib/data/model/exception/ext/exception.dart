@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:linkmark_app/data/model/exception/app_exception.dart';
-import 'package:linkmark_app/data/model/exception/unexpected/network_exception.dart';
-import 'package:linkmark_app/data/model/exception/unexpected/unknown_exception.dart';
-import 'package:linkmark_app/util/logger.dart';
+
+import '../../../../util/logger.dart';
+import '../app_exception.dart';
+import '../unexpected/network_exception.dart';
+import '../unexpected/unknown_exception.dart';
 
 extension ExceptionExt on Exception {
   AppException toAppException() {
-    logger.info(this.toString());
+    logger.info(toString());
     if (this is AppException) {
       return this;
     } else if (this is DioError) {

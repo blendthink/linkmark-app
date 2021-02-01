@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:linkmark_app/data/model/result.dart';
-import 'package:linkmark_app/data/model/tag.dart';
+import '../model/result.dart';
+import '../model/tag.dart';
 
 abstract class TagsRepository {
   Future<Result<List<Tag>>> getTags();

@@ -36,6 +36,7 @@ class Box extends StatelessWidget {
   final Color splashColor;
   final Duration duration;
   final BoxConstraints constraints;
+
   const Box({
     Key key,
     this.child,
@@ -117,7 +118,7 @@ class Box extends StatelessWidget {
       );
     }
 
-    final List<BoxShadow> boxShadow =
+    final boxShadow =
         boxShadows ?? (elevation > 0 && (shadowColor?.opacity ?? 0) > 0)
             ? [
                 BoxShadow(

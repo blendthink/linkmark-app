@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:linkmark_app/data/model/result.dart';
-import 'package:linkmark_app/data/provider/tags_repository_provider.dart';
-import 'package:linkmark_app/data/repository/tags_repository.dart';
-import 'package:linkmark_app/ui/component/appbar/tagfilter/tag_filter_data.dart';
+
+import '../../../../data/model/result.dart';
+import '../../../../data/provider/tags_repository_provider.dart';
+import '../../../../data/repository/tags_repository.dart';
+import 'tag_filter_data.dart';
 
 final tagFilterViewModelProvider = ChangeNotifierProvider(
     (ref) => TagFilterViewModel(ref.read(tagsRepositoryProvider)));

@@ -1,8 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:linkmark_app/data/model/link.dart';
-import 'package:linkmark_app/data/model/result.dart';
-import 'package:linkmark_app/data/remote/links_data_source.dart';
-import 'package:linkmark_app/data/repository/links_repository.dart';
+import '../model/link.dart';
+import '../model/result.dart';
+import '../remote/links_data_source.dart';
+import 'links_repository.dart';
 
 class LinksRepositoryImpl implements LinksRepository {
   LinksRepositoryImpl({@required LinksDataSource dataSource})

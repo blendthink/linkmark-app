@@ -2,8 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:linkmark_app/data/model/link.dart';
-import 'package:linkmark_app/data/remote/links_data_source.dart';
+
+import '../model/link.dart';
+import 'links_data_source.dart';
 
 class LinksDataSourceImpl implements LinksDataSource {
   LinksDataSourceImpl(

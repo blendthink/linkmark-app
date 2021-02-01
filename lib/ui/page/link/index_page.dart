@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:linkmark_app/ui/component/appbar/search_app_bar.dart';
-import 'package:linkmark_app/ui/component/container_with_loading.dart';
-import 'package:linkmark_app/ui/component/link/list/link_list_item.dart';
-import 'package:linkmark_app/ui/component/loading/loading_state_view_model.dart';
-import 'package:linkmark_app/ui/page/drawer/drawer_page.dart';
-import 'package:linkmark_app/ui/page/link/edit_page.dart';
-import 'package:linkmark_app/ui/page/link/index_view_model.dart';
-import 'package:linkmark_app/util/ext/async_snapshot.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
+import '../../../util/ext/async_snapshot.dart';
+import '../../component/appbar/search_app_bar.dart';
+import '../../component/container_with_loading.dart';
+import '../../component/link/list/link_list_item.dart';
+import '../../component/loading/loading_state_view_model.dart';
+import '../drawer/drawer_page.dart';
+import 'edit_page.dart';
+import 'index_view_model.dart';
 
 class IndexPage extends StatelessWidget {
   const IndexPage() : super();
@@ -53,7 +54,7 @@ class IndexPage extends StatelessWidget {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () {
           showCupertinoModalBottomSheet(
             context: context,

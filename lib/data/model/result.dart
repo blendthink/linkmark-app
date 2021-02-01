@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:linkmark_app/data/model/exception/app_exception.dart';
-import 'package:linkmark_app/data/model/exception/ext/exception.dart';
+
+import 'exception/app_exception.dart';
+import 'exception/ext/exception.dart';
 
 part 'result.freezed.dart';
 

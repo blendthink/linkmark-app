@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:linkmark_app/data/model/tag.dart';
+import '../model/tag.dart';
 
 abstract class TagsDataSource {
   Future<List<Tag>> getTags();

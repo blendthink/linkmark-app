@@ -1,8 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:linkmark_app/data/model/result.dart';
-import 'package:linkmark_app/data/model/tag.dart';
-import 'package:linkmark_app/data/remote/tags_data_source.dart';
-import 'package:linkmark_app/data/repository/tags_repository.dart';
+
+import '../model/result.dart';
+import '../model/tag.dart';
+import '../remote/tags_data_source.dart';
+import 'tags_repository.dart';
 
 class TagsRepositoryImpl extends TagsRepository {
   TagsRepositoryImpl({@required TagsDataSource dataSource})

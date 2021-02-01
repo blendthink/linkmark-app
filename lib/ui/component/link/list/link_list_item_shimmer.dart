@@ -6,10 +6,10 @@ class LinkListItemShimmer extends StatelessWidget {
   const LinkListItemShimmer({Key key}) : super(key: key);
 
   static const _titleShimmerHeight = 12.0;
-  static const _titleVerticalGap = const Gap(4);
+  static const _titleVerticalGap = Gap(4);
 
   static const _subTitleShimmerHeight = 8.0;
-  static const _subTitleVerticalGap = const Gap(2);
+  static const _subTitleVerticalGap = Gap(2);
 
   static const _imageWidth = 80.0;
   static const _imageHeight = 56.0;

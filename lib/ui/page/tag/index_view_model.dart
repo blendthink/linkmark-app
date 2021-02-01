@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:linkmark_app/data/model/exception/expected/tag/create_exception.dart';
-import 'package:linkmark_app/data/model/result.dart';
-import 'package:linkmark_app/data/model/tag.dart';
-import 'package:linkmark_app/data/provider/tags_repository_provider.dart';
-import 'package:linkmark_app/data/repository/tags_repository.dart';
-import 'package:linkmark_app/util/logger.dart';
+
+import '../../../data/model/exception/expected/tag/create_exception.dart';
+import '../../../data/model/result.dart';
+import '../../../data/model/tag.dart';
+import '../../../data/provider/tags_repository_provider.dart';
+import '../../../data/repository/tags_repository.dart';
+import '../../../util/logger.dart';
 
 final tagIndexViewModelProvider = ChangeNotifierProvider(
     (ref) => TagIndexViewModel(ref.read(tagsRepositoryProvider)));
@@ -31,7 +32,7 @@ class TagIndexViewModel extends ChangeNotifier {
     return _repository.getTags().then((value) {
       value.when(
         success: (tags) {
-          _result = Result.success();
+          _result = const Result.success();
           _tags = tags;
         },
         failure: (e) {

@@ -7,14 +7,15 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:implicitly_animated_reorderable_list/transitions.dart';
-import 'package:linkmark_app/data/model/exception/app_exception.dart';
-import 'package:linkmark_app/data/model/exception/expected_exption.dart';
-import 'package:linkmark_app/data/model/tag.dart';
-import 'package:linkmark_app/ui/component/box.dart';
-import 'package:linkmark_app/ui/component/container_with_loading.dart';
-import 'package:linkmark_app/ui/component/loading/loading_state_view_model.dart';
-import 'package:linkmark_app/ui/page/tag/index_view_model.dart';
-import 'package:linkmark_app/util/ext/async_snapshot.dart';
+
+import '../../../data/model/exception/app_exception.dart';
+import '../../../data/model/exception/expected_exception.dart';
+import '../../../data/model/tag.dart';
+import '../../../util/ext/async_snapshot.dart';
+import '../../component/box.dart';
+import '../../component/container_with_loading.dart';
+import '../../component/loading/loading_state_view_model.dart';
+import 'index_view_model.dart';
 
 class TagIndexPage extends StatelessWidget {
   const TagIndexPage({Key key}) : super(key: key);
@@ -26,7 +27,7 @@ class TagIndexPage extends StatelessWidget {
     final color = Color.lerp(Colors.white, Colors.grey.shade100, t);
     final elevation = lerpDouble(0, 8, t);
 
-    final List<Widget> actions = [
+    final actions = [
       SlideAction(
         closeOnTap: true,
         color: Colors.redAccent,
@@ -152,8 +153,8 @@ class TagIndexPage extends StatelessWidget {
               tagIndexViewModelProvider.select((value) => value.tags));
 
           if (tags.isEmpty) {
-            return Center(
-              child: const Text('Empty Screen'),
+            return const Center(
+              child: Text('Empty Screen'),
             );
           }
 
@@ -228,12 +229,12 @@ class TagIndexPage extends StatelessWidget {
 
     final footer = Material(
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         width: double.infinity,
         child: CupertinoTextField(
           controller: viewModel.textEditingController,
           placeholder: "Enter Tag Name.",
-          prefix: Padding(
+          prefix: const Padding(
             padding: EdgeInsets.all(8.0),
             child: Icon(
               Icons.tag,
@@ -246,7 +247,7 @@ class TagIndexPage extends StatelessWidget {
           suffixMode: OverlayVisibilityMode.always,
           suffix: GestureDetector(
             child: Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: Icon(
                 Icons.add_circle,
                 color: Theme.of(context).primaryColor,
@@ -262,7 +263,7 @@ class TagIndexPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tag List'),
+        title: const Text('Tag List'),
       ),
       body: SafeArea(
         child: Column(

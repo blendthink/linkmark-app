@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:linkmark_app/ui/component/appbar/search_app_bar_painter.dart';
-import 'package:linkmark_app/ui/component/appbar/tagfilter/tag_filter_widget.dart';
-import 'package:linkmark_app/ui/page/link/index_view_model.dart';
+
+import '../../page/link/index_view_model.dart';
+import 'search_app_bar_painter.dart';
+import 'tagfilter/tag_filter_widget.dart';
 
 const double _kLeadingWidth = kMinInteractiveDimension;
 
@@ -16,7 +17,7 @@ class SearchAppBar extends StatefulHookWidget implements PreferredSizeWidget {
   State<StatefulWidget> createState() => _SearchAppBarState();
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight * 2);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight * 2);
 }
 
 class _SearchAppBarState extends State<SearchAppBar>
@@ -99,7 +100,7 @@ class _SearchAppBarState extends State<SearchAppBar>
       bottom: true,
       top: true,
       child: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight * 2),
+        preferredSize: const Size.fromHeight(kToolbarHeight * 2),
         child: Container(
           width: screenWidth,
           height: kToolbarHeight * 2,
@@ -109,14 +110,16 @@ class _SearchAppBarState extends State<SearchAppBar>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ConstrainedBox(
-                    constraints: BoxConstraints.tightFor(width: _kLeadingWidth),
+                    constraints:
+                        const BoxConstraints.tightFor(width: _kLeadingWidth),
                     child: _buildLeading(context),
                   ),
                   Expanded(
                     child: _buildTitle(context),
                   ),
                   ConstrainedBox(
-                    constraints: BoxConstraints.tightFor(width: _kLeadingWidth),
+                    constraints:
+                        const BoxConstraints.tightFor(width: _kLeadingWidth),
                     child: _buildAction(context),
                   ),
                 ],
@@ -146,7 +149,7 @@ class _SearchAppBarState extends State<SearchAppBar>
     final textField = TextField(
       controller: _textEditingController,
       autofocus: false,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         border: InputBorder.none,
         hintText: 'Filter by character',
       ),
