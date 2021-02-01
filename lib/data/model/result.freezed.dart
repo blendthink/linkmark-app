@@ -131,6 +131,7 @@ class _$Success<T> extends Success<T> with DiagnosticableTreeMixin {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(data);
 
+  @JsonKey(ignore: true)
   @override
   $SuccessCopyWith<T, Success<T>> get copyWith =>
       _$SuccessCopyWithImpl<T, Success<T>>(this, _$identity);
@@ -191,6 +192,7 @@ abstract class Success<T> extends Result<T> {
   const factory Success({T data}) = _$Success<T>;
 
   T get data;
+  @JsonKey(ignore: true)
   $SuccessCopyWith<T, Success<T>> get copyWith;
 }
 
@@ -256,6 +258,7 @@ class _$Failure<T> extends Failure<T> with DiagnosticableTreeMixin {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(exception);
 
+  @JsonKey(ignore: true)
   @override
   $FailureCopyWith<T, Failure<T>> get copyWith =>
       _$FailureCopyWithImpl<T, Failure<T>>(this, _$identity);
@@ -316,5 +319,6 @@ abstract class Failure<T> extends Result<T> {
   const factory Failure({@required AppException exception}) = _$Failure<T>;
 
   AppException get exception;
+  @JsonKey(ignore: true)
   $FailureCopyWith<T, Failure<T>> get copyWith;
 }

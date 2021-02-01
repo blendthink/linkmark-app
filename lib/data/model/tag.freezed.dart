@@ -42,6 +42,7 @@ mixin _$Tag {
   int get order;
 
   Map<String, dynamic> toJson();
+  @JsonKey(ignore: true)
   $TagCopyWith<Tag> get copyWith;
 }
 
@@ -157,6 +158,7 @@ class _$_Tag with DiagnosticableTreeMixin implements _Tag {
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(order);
 
+  @JsonKey(ignore: true)
   @override
   _$TagCopyWith<_Tag> get copyWith =>
       __$TagCopyWithImpl<_Tag>(this, _$identity);
@@ -182,5 +184,6 @@ abstract class _Tag implements Tag {
   @override
   int get order;
   @override
+  @JsonKey(ignore: true)
   _$TagCopyWith<_Tag> get copyWith;
 }

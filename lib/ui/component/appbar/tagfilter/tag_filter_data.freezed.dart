@@ -40,6 +40,7 @@ mixin _$TagFilterData {
   Tag get tag;
 
   Map<String, dynamic> toJson();
+  @JsonKey(ignore: true)
   $TagFilterDataCopyWith<TagFilterData> get copyWith;
 }
 
@@ -167,6 +168,7 @@ class _$_TagFilterData with DiagnosticableTreeMixin implements _TagFilterData {
       const DeepCollectionEquality().hash(selected) ^
       const DeepCollectionEquality().hash(tag);
 
+  @JsonKey(ignore: true)
   @override
   _$TagFilterDataCopyWith<_TagFilterData> get copyWith =>
       __$TagFilterDataCopyWithImpl<_TagFilterData>(this, _$identity);
@@ -189,5 +191,6 @@ abstract class _TagFilterData implements TagFilterData {
   @override
   Tag get tag;
   @override
+  @JsonKey(ignore: true)
   _$TagFilterDataCopyWith<_TagFilterData> get copyWith;
 }

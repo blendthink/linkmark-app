@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../gen/assets.gen.dart';
 import '../../../../util/ext/async_snapshot.dart';
 import '../../../../util/ext/string.dart';
 import '../../../page/link/index_view_model.dart';
@@ -41,6 +42,19 @@ class LinkListItem extends HookWidget {
     if (!snapshotDetail.isDone) {
       listTile = const LinkListItemShimmer();
     } else {
+      final noImageIcon = Container(
+        width: 80,
+        height: 56,
+        color: Colors.grey[200],
+        child: Center(
+          child: Assets.svgs.noImage.svg(
+            width: 28,
+            height: 28,
+            fit: BoxFit.scaleDown,
+          ),
+        ),
+      );
+
       final previewListItem = ListTile(
         title: Text(
           link.title.trimNewline(),
@@ -55,13 +69,13 @@ class LinkListItem extends HookWidget {
           style: Theme.of(context).textTheme.caption,
         ),
         trailing: link.imageUrl == null
-            ? null
+            ? noImageIcon
             : Image.network(
                 link.imageUrl,
                 width: 80,
                 height: 56,
                 fit: BoxFit.fitHeight,
-                errorBuilder: (context, url, error) => const Icon(Icons.error),
+                errorBuilder: (context, url, error) => noImageIcon,
               ),
         contentPadding: const EdgeInsets.symmetric(
           vertical: 8,
@@ -83,13 +97,13 @@ class LinkListItem extends HookWidget {
           style: Theme.of(context).textTheme.caption,
         ),
         trailing: link.imageUrl == null
-            ? null
+            ? noImageIcon
             : Image.network(
                 link.imageUrl,
                 width: 80,
                 height: 56,
                 fit: BoxFit.fitHeight,
-                errorBuilder: (context, url, error) => const Icon(Icons.error),
+                errorBuilder: (context, url, error) => noImageIcon,
               ),
         contentPadding: const EdgeInsets.symmetric(
           vertical: 8,

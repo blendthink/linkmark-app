@@ -54,6 +54,7 @@ mixin _$Link {
   List<String> get tagIds;
 
   Map<String, dynamic> toJson();
+  @JsonKey(ignore: true)
   $LinkCopyWith<Link> get copyWith;
 }
 
@@ -212,6 +213,7 @@ class _$_Link implements _Link {
       const DeepCollectionEquality().hash(imageUrl) ^
       const DeepCollectionEquality().hash(tagIds);
 
+  @JsonKey(ignore: true)
   @override
   _$LinkCopyWith<_Link> get copyWith =>
       __$LinkCopyWithImpl<_Link>(this, _$identity);
@@ -246,5 +248,6 @@ abstract class _Link implements Link {
   @override
   List<String> get tagIds;
   @override
+  @JsonKey(ignore: true)
   _$LinkCopyWith<_Link> get copyWith;
 }
