@@ -3,8 +3,8 @@ analyzer:
   exclude:
     - "lib/generated_plugin_registrant.dart"
     - "lib/l10n/messages_*.dart"
-    - "lib/data/model/*.g.dart"
-    - "lib/data/model/*.freezed.dart"
+    - "lib/**/*.g.dart"
+    - "lib/**/*.freezed.dart"
 
 linter:
   rules:
