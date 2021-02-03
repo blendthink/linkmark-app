@@ -1,6 +1,6 @@
 # Linkmark
 
-![Flutter CI](https://github.com/blendthink/linkmark-app/workflows/Flutter%20CI/badge.svg)
+[![Flutter CI](https://github.com/blendthink/linkmark-app/workflows/Flutter%20CI/badge.svg)](https://github.com/blendthink/linkmark-app/actions?query=workflow%3A%22Flutter+CI%22)
 [![codecov](https://codecov.io/gh/blendthink/linkmark-app/branch/main/graph/badge.svg?token=FHHCLMU8NN)](https://codecov.io/gh/blendthink/linkmark-app)
 [![Twitter](https://img.shields.io/twitter/follow/linkmark_dev?style=social&label=%40linkmark_dev)](https://twitter.com/intent/follow?screen_name=linkmark_dev)
 
