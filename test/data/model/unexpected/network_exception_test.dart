@@ -47,6 +47,27 @@ void main() {
 
     expect(
         NetworkException(
+          dioError: DioError(
+              type: DioErrorType.RESPONSE, response: Response(statusCode: 502)),
+        ).type,
+        equals(NetworkExceptionType.server));
+
+    expect(
+        NetworkException(
+          dioError: DioError(
+              type: DioErrorType.RESPONSE, response: Response(statusCode: 503)),
+        ).type,
+        equals(NetworkExceptionType.server));
+
+    expect(
+        NetworkException(
+          dioError: DioError(
+              type: DioErrorType.RESPONSE, response: Response(statusCode: 504)),
+        ).type,
+        equals(NetworkExceptionType.server));
+
+    expect(
+        NetworkException(
           dioError: DioError(type: DioErrorType.CANCEL),
         ).type,
         equals(NetworkExceptionType.cancel));
