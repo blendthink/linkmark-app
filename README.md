@@ -1,7 +1,7 @@
 # Linkmark
 
 ![Flutter CI](https://github.com/blendthink/linkmark-app/workflows/Flutter%20CI/badge.svg)
-![codecov](https://codecov.io/gh/blendthink/linkmark-app/branch/main/graph/badge.svg?token=FHHCLMU8NN)](https://codecov.io/gh/blendthink/linkmark-app)
+[![codecov](https://codecov.io/gh/blendthink/linkmark-app/branch/main/graph/badge.svg?token=FHHCLMU8NN)](https://codecov.io/gh/blendthink/linkmark-app)
 
 This project is the code of an application that stores links.
 
