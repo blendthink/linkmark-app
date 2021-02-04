@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Linkmark</string>
+	<string>$(DISPLAY_NAME)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -28,7 +28,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>ShareMedia</string>
-    			<string>com.googleusercontent.apps.821684468744-pf3uod3i9pcgm8qkg3n18ks56t08ku30</string>
+				<string>com.googleusercontent.apps.250178825969-l0e1nrdr6cub550jk0u3bc83l6cfbmjd</string>
 			</array>
 		</dict>
 		<dict/>

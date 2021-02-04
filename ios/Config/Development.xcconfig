@@ -1,0 +1,8 @@
+#include "Flutter/Generated.xcconfig"
+#include "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug-development.xcconfig"
+TRACK_WIDGET_CREATION=
+
+FLUTTER_FLAVOR=development
+FLUTTER_TARGET=$PROJECT_DIR/../lib/main.dart
+PRODUCT_BUNDLE_IDENTIFIER=dev.linkmark.ios.dev
+DISPLAY_NAME=Linkmark-dev
