@@ -72,7 +72,7 @@ jobs:
       - name: Copy google-service
         env:
           GOOGLE_SERVICE: ${{ secrets.GOOGLE_SERVICE_JSON }}
-        run: echo $GOOGLE_SERVICE | base64 --decode --ignore-garbage > ./android/app/google-services.json
+        run: echo $GOOGLE_SERVICE | base64 --decode > ./android/app/google-services.json
 
       - name: Translate secrets of base64 into json
         env:
