@@ -14,7 +14,7 @@
 *.iml
 *.ipr
 *.iws
-.idea/
+.idea/*
 
 # Visual Studio Code related
 .classpath
@@ -120,3 +120,4 @@ app.*.symbols
 # My rules.
 **/ios/Runner/GoogleService-Info.plist
 **/android/**/google-services.json
+!.idea/runConfigurations/
