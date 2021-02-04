@@ -38,7 +38,7 @@ run-prd:
 
 .PHONY: build-android-dev
 build-android-dev:
-	flutter build apk --flavor development --dart-define=FLAVOR=development --target lib/main.dart
+	flutter build apk --debug --flavor development --dart-define=FLAVOR=development --target lib/main.dart
 
 .PHONY: build-android-prd
 build-android-prd:
