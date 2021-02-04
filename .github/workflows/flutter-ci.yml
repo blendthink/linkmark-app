@@ -69,10 +69,27 @@ jobs:
           make unit-test
           make codecov
 
-      - name: Build ipa and apk
+      - name: Copy google-service
+        env:
+          GOOGLE_SERVICE: ${{ secrets.GOOGLE_SERVICE_JSON }}
+        run: echo $GOOGLE_SERVICE | base64 --decode --ignore-garbage > ./android/app/google-services.json
+
+      - name: Translate secrets of base64 into json
+        env:
+          GOOGLE_SERVICE_INFO: ${{ secrets.GOOGLE_SERVICE_INFO_PLIST }}
+        run:
+          echo $GOOGLE_SERVICE_INFO | base64 --decode > ./ios/Runner/output.json
+      - name: Translate json into plist and generate GoogleService-info.plist
+        run:
+          plutil -convert xml1 ./ios/Runner/output.json -o ./ios/Runner/GoogleService-info.plist
+      - name: Remove json file
+        run:
+          rm ./ios/Runner/output.json
+
+      - name: Build apk and ipa
         run: |
-          make build-android-prd
-          make build-ios-prd
+          make build-android-dev
+          make build-ios-dev
 
       - name: Slack Notification
         uses: homoluctus/slatify@master
