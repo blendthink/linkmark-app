@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  test('NetworkException Test', () async {
+  test('NetworkException type Test', () async {
     expect(
         NetworkException(
           dioError: DioError(type: DioErrorType.CONNECT_TIMEOUT),
