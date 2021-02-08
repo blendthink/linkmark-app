@@ -88,8 +88,7 @@ void main() {
   });
 
   test('NetworkException message Test', () async {
-
-    final errorMessage = 'SocketException: Failed host lookup: linkmark.dev';
+    final errorMessage = 'Failed host lookup: linkmark.dev';
     final exception = SocketException(errorMessage);
 
     final dioError = DioError(
@@ -104,5 +103,37 @@ void main() {
           dioError: dioError,
         ).message,
         expectMessage);
+  });
+
+  group('NetworkException toString Test', () {
+    test('DioErrorType.CONNECT_TIMEOUT', () async {
+      final expectMessage = 'NetworkException [NetworkExceptionType.timeout]: ';
+
+      expect(
+          NetworkException(
+            dioError: DioError(type: DioErrorType.CONNECT_TIMEOUT),
+          ).toString(),
+          expectMessage);
+    });
+
+    test('SocketException', () async {
+      final errorMessage = 'Failed host lookup: linkmark.dev';
+      final exception = SocketException(errorMessage);
+
+      final dioError = DioError(
+        error: exception,
+        type: DioErrorType.DEFAULT,
+      );
+
+      final expectMessage = '''
+      NetworkException [NetworkExceptionType.network]: ${exception.runtimeType.toString()}: $errorMessage
+      ''';
+
+      expect(
+          NetworkException(
+            dioError: dioError,
+          ).toString(),
+          expectMessage.trim());
+    });
   });
 }
