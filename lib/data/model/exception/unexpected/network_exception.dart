@@ -69,7 +69,7 @@ class NetworkException implements UnexpectedException {
   }
 
   @override
-  String get message => (_dioError.error?.toString() ?? '');
+  String get message => _dioError.message;
 
   @override
   String toString() {
