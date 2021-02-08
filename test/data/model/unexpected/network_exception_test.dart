@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:linkmark_app/data/model/exception/unexpected/network_exception.dart';
 import 'package:dio/dio.dart';
@@ -116,6 +117,17 @@ void main() {
           expectMessage);
     });
 
+    test('RemoteError', () async {
+      final error = RemoteError('description', 'stackDescription');
+      final expectMessage =
+          '''NetworkException [NetworkExceptionType.unknown]: ${error.toString()}\n${error.stackTrace}''';
+      expect(
+          NetworkException(
+            dioError: DioError(error: error),
+          ).toString(),
+          expectMessage);
+    });
+
     test('SocketException', () async {
       final errorMessage = 'Failed host lookup: linkmark.dev';
       final exception = SocketException(errorMessage);
@@ -125,15 +137,14 @@ void main() {
         type: DioErrorType.DEFAULT,
       );
 
-      final expectMessage = '''
-      NetworkException [NetworkExceptionType.network]: ${exception.runtimeType.toString()}: $errorMessage
-      ''';
+      final expectMessage =
+          '''NetworkException [NetworkExceptionType.network]: ${exception.runtimeType.toString()}: $errorMessage''';
 
       expect(
           NetworkException(
             dioError: dioError,
           ).toString(),
-          expectMessage.trim());
+          expectMessage);
     });
   });
 }
