@@ -75,7 +75,7 @@ void main() {
     expect(
         NetworkException(
           dioError: DioError(
-              error: const SocketException('Failed host lookup: wasabeef.jp'),
+              error: const SocketException('Failed host lookup: linkmark.dev'),
               type: DioErrorType.DEFAULT),
         ).type,
         equals(NetworkExceptionType.network));
