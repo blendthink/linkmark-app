@@ -86,4 +86,23 @@ void main() {
         ).type,
         equals(NetworkExceptionType.unknown));
   });
+
+  test('NetworkException message Test', () async {
+
+    final errorMessage = 'SocketException: Failed host lookup: linkmark.dev';
+    final exception = SocketException(errorMessage);
+
+    final dioError = DioError(
+      error: exception,
+      type: DioErrorType.DEFAULT,
+    );
+
+    final expectMessage = '${exception.runtimeType.toString()}: $errorMessage';
+
+    expect(
+        NetworkException(
+          dioError: dioError,
+        ).message,
+        expectMessage);
+  });
 }
