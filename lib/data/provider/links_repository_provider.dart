@@ -1,4 +1,4 @@
-import 'package:hooks_riverpod/all.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../repository/links_repository.dart';
 import '../repository/links_repository_impl.dart';
 
