@@ -91,6 +91,7 @@ dev_dependencies:
   # For Testing
   mockito:
   image_test_utils:
+  remove_from_coverage: ^1.0.7
 
 flutter_gen:
   integrations:

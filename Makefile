@@ -57,6 +57,7 @@ build-ios-prd:
 .PHONY: unit-test
 unit-test:
 	flutter test --coverage --coverage-path=./coverage/lcov.info
+	flutter pub run remove_from_coverage:remove_from_coverage -f coverage/lcov.info -r '\.g\.dart$','\.freezed\.dart$'
 
 .PHONY: codecov
 codecov:
