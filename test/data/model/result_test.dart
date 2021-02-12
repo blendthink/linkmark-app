@@ -1,3 +1,4 @@
+import 'package:linkmark_app/data/model/exception/app_exception.dart';
 import 'package:linkmark_app/data/model/exception/unexpected/unexpected_call_exception.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -67,8 +68,8 @@ void main() {
           () => result.dataOrThrow, throwsA(isInstanceOf<UnknownException>()));
     });
 
-    test("exception is UnknownException", () {
-      expect(result.exception, isInstanceOf<UnknownException>());
+    test("exception is AppException", () {
+      expect(result.exception, isInstanceOf<AppException>());
     });
   });
 }
