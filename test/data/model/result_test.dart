@@ -72,4 +72,19 @@ void main() {
       expect(result.exception, isInstanceOf<AppException>());
     });
   });
+
+  group('ResultObjectExt Test', () {
+    test('asSuccess is Success', () {
+      final data = 'data';
+      final result = data.asSuccess;
+      expect(result, isInstanceOf<Success>());
+      expect(result.dataOrThrow, data);
+    });
+    test('asFailure is Failure', () {
+      final data = 'data';
+      final result = data.asFailure(Exception());
+      expect(result, isInstanceOf<Failure>());
+      expect(result.exception, isInstanceOf<AppException>());
+    });
+  });
 }
