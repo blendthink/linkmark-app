@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:linkmark_app/data/model/exception/unexpected/unexpected_call_exception.dart';
 
 import 'exception/app_exception.dart';
 import 'exception/ext/exception.dart';
@@ -62,7 +63,7 @@ abstract class Result<T> with _$Result<T> {
   AppException get exception {
     try {
       dataOrThrow;
-      return Exception('Unexpected call').toAppException();
+      return const UnexpectedCallException();
     } on AppException catch (e) {
       return e;
     }
