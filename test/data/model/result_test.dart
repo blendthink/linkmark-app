@@ -7,9 +7,44 @@ import 'package:linkmark_app/data/model/result.dart';
 
 class MockFunction extends Mock {
   void foo();
+  String body();
+  Future<String> future();
 }
 
 void main() {
+
+  group('Result.guard() Test', () {
+    final mock = MockFunction();
+
+    test('mock.body() is natural', () {
+      when(mock.body()).thenReturn('body');
+      final result = Result.guard(mock.body);
+      expect(result, isInstanceOf<Success>());
+    });
+
+    test('mock.string() throw Exception()', () {
+      when(mock.body()).thenThrow(Exception());
+      final result = Result.guard(mock.body);
+      expect(result, isInstanceOf<Failure>());
+    });
+  });
+
+  group('Result.guardFuture() Test', () {
+    final mock = MockFunction();
+
+    test('mock.future() is natural', () async {
+      when(mock.future()).thenAnswer((_) => Future.value());
+      final result = Result.guardFuture(mock.future);
+      expect(await result, isInstanceOf<Success>());
+    });
+
+    test('mock.future() throw Exception()', () async {
+      when(mock.future()).thenThrow(Exception());
+      final result = Result.guardFuture(mock.future);
+      expect(await result, isInstanceOf<Failure>());
+    });
+  });
+
   group('Result.success() Test', () {
     final result = const Result.success(data: 'success');
     final mock = MockFunction();
