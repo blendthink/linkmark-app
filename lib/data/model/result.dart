@@ -60,13 +60,11 @@ abstract class Result<T> with _$Result<T> {
     );
   }
 
-  AppException get exception {
-    try {
-      dataOrThrow;
-      return const UnexpectedCallException();
-    } on AppException catch (e) {
-      return e;
-    }
+  AppException get exceptionOrThrow {
+    return when(
+      success: (data) => throw const UnexpectedCallException(),
+      failure: (e) => e,
+    );
   }
 }
 
