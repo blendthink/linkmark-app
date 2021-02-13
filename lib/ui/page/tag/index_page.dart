@@ -126,7 +126,7 @@ class TagIndexPage extends StatelessWidget {
         );
       }
 
-      final snackBar = createSnackBar(result.exception);
+      final snackBar = createSnackBar(result.exceptionOrThrow);
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }
