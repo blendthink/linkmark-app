@@ -28,10 +28,13 @@ class TagFilterViewModel extends ChangeNotifier {
 
   Future<void> fetchTags() async {
     return _repository.getTags().then((value) {
-      final list = value.dataOrThrow.map((tag) {
-        return TagFilterData(selected: false, tag: tag);
-      }).toList();
-      _tags = Result.guard(() => list);
+      _tags = value.when(
+          success: (data) => Result.success(
+                data: data
+                    .map((tag) => TagFilterData(selected: false, tag: tag))
+                    .toList(),
+              ),
+          failure: (e) => Result.failure(exception: e));
     }).whenComplete(notifyListeners);
   }
 
