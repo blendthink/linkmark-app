@@ -103,8 +103,8 @@ void main() {
           () => result.dataOrThrow, throwsA(isInstanceOf<UnknownException>()));
     });
 
-    test("exception type is AppException", () {
-      expect(result.exception, isInstanceOf<AppException>());
+    test("exception type is UnknownException", () {
+      expect(result.exception, isInstanceOf<UnknownException>());
     });
 
     test("exception is UnknownException", () {
