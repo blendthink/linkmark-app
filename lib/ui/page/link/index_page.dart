@@ -42,7 +42,7 @@ class IndexPage extends StatelessWidget {
             itemCount: data.length,
             itemBuilder: (_, index) {
               return LinkListItem(
-                index: index,
+                link: data[index],
               );
             },
           ),

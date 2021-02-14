@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../data/model/link.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../util/ext/async_snapshot.dart';
 import '../../../../util/ext/string.dart';
@@ -12,11 +13,11 @@ import 'link_list_item_shimmer.dart';
 
 class LinkListItem extends HookWidget {
   LinkListItem({
-    this.index,
+    this.link,
     Key key,
   }) : super(key: key);
 
-  final int index;
+  final Link link;
 
   _launchURL({@required String url}) async {
     if (await canLaunch(url)) {
@@ -30,11 +31,8 @@ class LinkListItem extends HookWidget {
   Widget build(BuildContext context) {
     final indexViewModel = context.read(indexViewModelProvider);
 
-    final link = useProvider(indexViewModelProvider
-        .select((value) => value.filteredLinks.dataOrThrow[index]));
-
     final snapshotDetail = useFuture(useMemoized(() {
-      return indexViewModel.fetchLinkMetadata(index: index);
+      return indexViewModel.fetchLinkMetadata(link: link);
     }, [link.toString()]));
 
     Widget listTile;

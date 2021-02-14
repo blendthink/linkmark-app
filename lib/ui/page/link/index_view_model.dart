@@ -53,11 +53,8 @@ class IndexViewModel extends ChangeNotifier {
   }
 
   Future<void> fetchLinkMetadata({
-    @required int index,
+    @required Link link,
   }) async {
-    final data = filteredLinks.dataOrThrow;
-    final link = data[index];
-
     if (link.title.isNotEmpty || link.description.isNotEmpty) {
       return Future<void>.value();
     }
