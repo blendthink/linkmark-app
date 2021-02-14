@@ -15,15 +15,15 @@ class LinksDataSourceImpl implements LinksDataSource {
   final FirebaseAuth _firebaseAuth;
   final FirebaseDatabase _firebaseDatabase;
 
+  DatabaseReference get _linksRef {
+    final uid = _firebaseAuth.currentUser.uid;
+    final uidRef = _firebaseDatabase.reference().child('users').child(uid);
+    return uidRef.child('links');
+  }
+
   @override
   Future<Map<String, Link>> getLinks() async {
-    final uid = _firebaseAuth.currentUser.uid;
-
-    final uidRef = _firebaseDatabase.reference().child('users').child(uid);
-
-    final linksRef = uidRef.child('links');
-
-    return linksRef.once().then(
+    return _linksRef.once().then(
       (snapshot) {
         final linksMap = Map<String, dynamic>.from(snapshot.value);
         return linksMap.map((key, value) {
@@ -41,13 +41,7 @@ class LinksDataSourceImpl implements LinksDataSource {
 
   @override
   Future<void> createLink({@required String url}) async {
-    final uid = _firebaseAuth.currentUser.uid;
-
-    final uidRef = _firebaseDatabase.reference().child('users').child(uid);
-
-    final linksRef = uidRef.child('links');
-
-    final newLinkRef = linksRef.push();
+    final newLinkRef = _linksRef.push();
     final newLinkKey = newLinkRef.key;
     return newLinkRef.set({
       "id": newLinkKey,
