@@ -20,6 +20,8 @@ class IndexPage extends StatelessWidget {
     final indexViewModel = context.read(indexViewModelProvider);
 
     final hookBuilder = HookBuilder(builder: (context) {
+      final result =
+          useProvider(indexViewModelProvider.select((value) => value.result));
       final links = useProvider(
           indexViewModelProvider.select((value) => value.filteredLinks));
 
@@ -31,18 +33,18 @@ class IndexPage extends StatelessWidget {
 
       if (!snapshot.isDone) return Container();
 
-      return links.when(success: (data) {
-        if (data.isEmpty) {
+      return result.when(success: (_) {
+        if (links.isEmpty) {
           return const Text('Empty screen');
         }
 
         return RefreshIndicator(
           onRefresh: () async => indexViewModel.fetchLinks(),
           child: ListView.builder(
-            itemCount: data.length,
+            itemCount: links.length,
             itemBuilder: (_, index) {
               return LinkListItem(
-                link: data[index],
+                link: links[index],
               );
             },
           ),

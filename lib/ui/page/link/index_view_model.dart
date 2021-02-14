@@ -19,19 +19,22 @@ class IndexViewModel extends ChangeNotifier {
   String _filterText = '';
   List<String> _filterTagIds = List.empty();
 
-  Result<List<Link>> _links;
+  Result<void> _result;
 
-  Result<List<Link>> get filteredLinks {
-    if (_links == null) return Result.guard(() => List.empty());
-    final originalLinks = _links.dataOrThrow;
+  Result<void> get result => _result;
+
+  List<Link> _links;
+
+  List<Link> get filteredLinks {
+    if (_links == null) return List.empty();
 
     List<Link> textFiltered;
     if (_filterText.isEmpty) {
-      textFiltered = originalLinks;
+      textFiltered = _links;
     } else {
       // 半角スペースでフィルターする文字を分割する
       final splitTexts = _filterText.split(' ');
-      textFiltered = originalLinks.where((link) {
+      textFiltered = _links.where((link) {
         return splitTexts.every((element) =>
             link.title.contains(element) || link.description.contains(element));
       }).toList();
@@ -43,12 +46,18 @@ class IndexViewModel extends ChangeNotifier {
       if (tagIds == null) return false;
       return _filterTagIds.every(tagIds.contains);
     }).toList();
-    return Result.guard(() => tagFiltered);
+    return tagFiltered;
   }
 
   Future<void> fetchLinks() async {
     return _repository.getLinks().then((value) {
-      _links = value;
+      _result = value.when(
+        success: (data) {
+          _links = data;
+          return const Result.success();
+        },
+        failure: (e) => Result.failure(exception: e),
+      );
     }).whenComplete(notifyListeners);
   }
 
@@ -65,8 +74,8 @@ class IndexViewModel extends ChangeNotifier {
         description: value.description,
         imageUrl: value.image,
       );
-      final updateIndex = _links.dataOrThrow.indexOf(link);
-      _links.dataOrThrow[updateIndex] = newLink;
+      final updateIndex = _links.indexOf(link);
+      _links[updateIndex] = newLink;
     }).whenComplete(notifyListeners);
   }
 
