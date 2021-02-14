@@ -22,14 +22,17 @@ class LinksDataSourceImpl implements LinksDataSource {
   }
 
   @override
-  Future<Map<String, Link>> getLinks() async {
+  Future<List<Link>> getLinks() async {
     return _linksRef.once().then(
       (snapshot) {
-        final linksMap = Map<String, dynamic>.from(snapshot.value);
-        return linksMap.map((key, value) {
-          final linkMap = Map<String, dynamic>.from(value);
-          return MapEntry(key, Link.fromJson(linkMap));
-        });
+        final value = snapshot.value;
+        if (value == null) return List<Link>.empty();
+
+        final linksMap = Map<String, dynamic>.from(value);
+        final links = linksMap.entries
+            .map((e) => Link.fromJson(Map<String, dynamic>.from(e.value)))
+            .toList();
+        return links;
       },
     ).catchError(
       (error) {

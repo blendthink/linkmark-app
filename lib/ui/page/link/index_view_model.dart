@@ -48,7 +48,7 @@ class IndexViewModel extends ChangeNotifier {
 
   Future<void> fetchLinks() async {
     return _repository.getLinks().then((value) {
-      final links = value.dataOrThrow.entries.map((e) => e.value).toList();
+      final links = value.dataOrThrow;
       _links = Result.guard(() => links);
     }).whenComplete(notifyListeners);
   }
