@@ -14,13 +14,17 @@ class TagFilterViewModel extends ChangeNotifier {
 
   final TagsRepository _repository;
 
-  Result<List<TagFilterData>> _tags;
+  Result<void> _result;
 
-  Result<List<TagFilterData>> get tags => _tags;
+  Result<void> get result => _result;
+
+  List<TagFilterData> _tags;
+
+  List<TagFilterData> get tags => _tags;
 
   List<String> get filterTagIds {
     if (_tags == null) return List.empty();
-    return _tags.dataOrThrow
+    return _tags
         .where((element) => element.selected)
         .map((e) => e.tag.id)
         .toList();
@@ -28,12 +32,13 @@ class TagFilterViewModel extends ChangeNotifier {
 
   Future<void> fetchTags() async {
     return _repository.getTags().then((value) {
-      _tags = value.when(
-          success: (data) => Result.success(
-                data: data
-                    .map((tag) => TagFilterData(selected: false, tag: tag))
-                    .toList(),
-              ),
+      _result = value.when(
+          success: (data) {
+            _tags = data
+                .map((tag) => TagFilterData(selected: false, tag: tag))
+                .toList();
+            return const Result.success();
+          },
           failure: (e) => Result.failure(exception: e));
     }).whenComplete(notifyListeners);
   }
@@ -42,9 +47,8 @@ class TagFilterViewModel extends ChangeNotifier {
     @required int index,
     @required bool selected,
   }) async {
-    final newTagFilterData =
-        _tags.dataOrThrow[index].copyWith.call(selected: selected);
-    _tags.dataOrThrow[index] = newTagFilterData;
+    final newTagFilterData = _tags[index].copyWith.call(selected: selected);
+    _tags[index] = newTagFilterData;
     notifyListeners();
   }
 }

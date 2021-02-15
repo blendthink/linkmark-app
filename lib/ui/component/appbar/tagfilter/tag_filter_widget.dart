@@ -18,16 +18,18 @@ class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
     final indexViewModel = context.read(indexViewModelProvider);
     final tagFilterViewModel = context.read(tagFilterViewModelProvider);
 
-    final tagsResult =
+    final result =
+        useProvider(tagFilterViewModelProvider.select((value) => value.result));
+    final tags =
         useProvider(tagFilterViewModelProvider.select((value) => value.tags));
 
     final snapshot = useFuture(
-        useMemoized(tagFilterViewModel.fetchTags, [tagsResult.toString()]));
+        useMemoized(tagFilterViewModel.fetchTags, [result.toString()]));
 
     if (!snapshot.isDone) return Container();
 
-    return tagsResult.when(success: (data) {
-      if (data.isEmpty) {
+    return result.when(success: (data) {
+      if (tags.isEmpty) {
         return const SizedBox(
           height: kToolbarHeight,
         );
@@ -38,12 +40,12 @@ class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: ListView.separated(
-            itemCount: data.length,
+            itemCount: tags.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return HookBuilder(builder: (context) {
                 final filterData = useProvider(tagFilterViewModelProvider
-                    .select((value) => value.tags.dataOrThrow[index]));
+                    .select((value) => value.tags[index]));
                 final tag = filterData.tag;
 
                 return FilterChip(
