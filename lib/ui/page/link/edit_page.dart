@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:validators/validators.dart';
 
+import '../../../data/model/link.dart';
 import '../../../util/logger.dart';
 import 'edit_view_model.dart';
 
 class EditPage extends StatefulWidget {
-  const EditPage({
+  EditPage({
+    this.link,
     Key key,
   }) : super(key: key);
+
+  final Link link;
 
   @override
   State<StatefulWidget> createState() => _EditPageState();
@@ -17,6 +21,17 @@ class EditPage extends StatefulWidget {
 class _EditPageState extends State<EditPage> {
   final _formKey = GlobalKey<FormFieldState>();
   final _textEditingController = TextEditingController();
+
+  bool get _isUpdate => widget.link != null;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (_isUpdate) {
+      _textEditingController.text = widget.link.url;
+    }
+  }
 
   void _onPop({
     @required BuildContext context,
@@ -35,31 +50,36 @@ class _EditPageState extends State<EditPage> {
     final url = _textEditingController.text;
     logger.info('Edit Link: $url');
 
-    final result = await editViewModel.createLink(url: url);
-
-    SnackBar snackBar;
-    if (result.isSuccess) {
+    if (_isUpdate) {
+      // TODO: update link
       _onPop(context: context, existsUpdate: true);
-      snackBar = const SnackBar(
-        content: Text('New Link has been created.'),
-        duration: Duration(seconds: 3),
-      );
     } else {
-      snackBar = SnackBar(
-        content: const Text('Can‘t create new link. Retry in 5 seconds.'),
-        duration: const Duration(seconds: 5),
-        action: SnackBarAction(
-          label: 'RETRY',
-          onPressed: () {
-            _submit(
-              context: context,
-              editViewModel: editViewModel,
-            );
-          },
-        ),
-      );
+      final result = await editViewModel.createLink(url: url);
+
+      SnackBar snackBar;
+      if (result.isSuccess) {
+        _onPop(context: context, existsUpdate: true);
+        snackBar = const SnackBar(
+          content: Text('New Link has been created.'),
+          duration: Duration(seconds: 3),
+        );
+      } else {
+        snackBar = SnackBar(
+          content: const Text('Can‘t create new link. Retry in 5 seconds.'),
+          duration: const Duration(seconds: 5),
+          action: SnackBarAction(
+            label: 'RETRY',
+            onPressed: () {
+              _submit(
+                context: context,
+                editViewModel: editViewModel,
+              );
+            },
+          ),
+        );
+      }
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override

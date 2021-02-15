@@ -14,10 +14,16 @@ import 'link_list_item_shimmer.dart';
 class LinkListItem extends HookWidget {
   LinkListItem({
     this.link,
+    this.showEditLinkPage,
     Key key,
   }) : super(key: key);
 
   final Link link;
+
+  final Function({
+    @required BuildContext context,
+    Link link,
+  }) showEditLinkPage;
 
   @override
   Widget build(BuildContext context) {
@@ -121,6 +127,10 @@ class LinkListItem extends HookWidget {
             trailingIcon: CupertinoIcons.pencil,
             onPressed: () {
               Navigator.pop(context);
+              showEditLinkPage(
+                context: context,
+                link: link,
+              );
             },
           ),
           CupertinoContextMenuAction(

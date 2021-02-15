@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import '../../../data/model/link.dart';
 import '../../../util/ext/async_snapshot.dart';
 import '../../component/appbar/search_app_bar.dart';
 import '../../component/appbar/tagfilter/tag_filter_view_model.dart';
@@ -24,6 +25,22 @@ class IndexPage extends StatelessWidget {
     void refresh() {
       tagFilterViewModel.fetchTags();
       indexViewModel.fetchLinks();
+    }
+
+    void showEditLinkPage({
+      @required BuildContext context,
+      Link link,
+    }) {
+      showCupertinoModalBottomSheet(
+        context: context,
+        builder: (context) => EditPage(
+          link: link,
+        ),
+      ).then((existsUpdate) {
+        if (existsUpdate) {
+          refresh();
+        }
+      });
     }
 
     final hookBuilder = HookBuilder(builder: (context) {
@@ -54,6 +71,7 @@ class IndexPage extends StatelessWidget {
             itemBuilder: (_, index) {
               return LinkListItem(
                 link: links[index],
+                showEditLinkPage: showEditLinkPage,
               );
             },
           ),
@@ -67,14 +85,7 @@ class IndexPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          showCupertinoModalBottomSheet(
-            context: context,
-            builder: (context) => const EditPage(),
-          ).then((existsUpdate) {
-            if (existsUpdate) {
-              refresh();
-            }
-          });
+          showEditLinkPage(context: context);
         },
       ),
       drawer: const DrawerPage(),
