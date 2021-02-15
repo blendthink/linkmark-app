@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../data/model/link.dart';
 import '../../../../gen/assets.gen.dart';
@@ -18,14 +17,6 @@ class LinkListItem extends HookWidget {
   }) : super(key: key);
 
   final Link link;
-
-  _launchURL({@required String url}) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      print('Could not launch $url');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -147,12 +138,7 @@ class LinkListItem extends HookWidget {
       );
     }
     return Card(
-      child: InkWell(
-        onTap: () {
-          _launchURL(url: link.url);
-        },
-        child: listTile,
-      ),
+      child: listTile,
     );
   }
 }
