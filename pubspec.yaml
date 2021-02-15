@@ -55,6 +55,7 @@ dependencies:
 
   # For Share URL
   receive_sharing_intent: ^1.4.2
+  share: '>=0.6.5+4 <2.0.0'
 
   # For Fetch Metadata
   metadata_fetch: ^0.3.3
