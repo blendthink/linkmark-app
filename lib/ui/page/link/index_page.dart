@@ -5,6 +5,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../util/ext/async_snapshot.dart';
 import '../../component/appbar/search_app_bar.dart';
+import '../../component/appbar/tagfilter/tag_filter_view_model.dart';
 import '../../component/container_with_loading.dart';
 import '../../component/link/list/link_list_item.dart';
 import '../../component/loading/loading_state_view_model.dart';
@@ -18,6 +19,12 @@ class IndexPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final indexViewModel = context.read(indexViewModelProvider);
+    final tagFilterViewModel = context.read(tagFilterViewModelProvider);
+
+    void refresh() {
+      tagFilterViewModel.fetchTags();
+      indexViewModel.fetchLinks();
+    }
 
     final hookBuilder = HookBuilder(builder: (context) {
       final result =
@@ -41,7 +48,7 @@ class IndexPage extends StatelessWidget {
         }
 
         return RefreshIndicator(
-          onRefresh: () async => indexViewModel.fetchLinks(),
+          onRefresh: () async => refresh(),
           child: ListView.builder(
             itemCount: links.length,
             itemBuilder: (_, index) {
@@ -65,7 +72,7 @@ class IndexPage extends StatelessWidget {
             builder: (context) => const EditPage(),
           ).then((existsUpdate) {
             if (existsUpdate) {
-              indexViewModel.fetchLinks();
+              refresh();
             }
           });
         },
