@@ -35,7 +35,9 @@ class IndexPage extends StatelessWidget {
 
       return result.when(success: (_) {
         if (links.isEmpty) {
-          return const Text('Empty screen');
+          return const Center(
+            child: Text('Empty screen'),
+          );
         }
 
         return RefreshIndicator(
