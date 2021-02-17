@@ -53,13 +53,13 @@ class LinkListItem extends HookWidget {
 
       final previewListItem = ListTile(
         title: Text(
-          link.title.trimNewline(),
+          link.title,
           maxLines: 4,
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.subtitle2,
         ),
         subtitle: Text(
-          link.description.trimNewline(),
+          link.description,
           maxLines: 6,
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.caption,
@@ -81,13 +81,13 @@ class LinkListItem extends HookWidget {
 
       final contentListItem = ListTile(
         title: Text(
-          link.title.trimNewline(),
+          link.title,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.subtitle2,
         ),
         subtitle: Text(
-          link.description.trimNewline(),
+          link.description,
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.caption,

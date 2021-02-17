@@ -6,6 +6,7 @@ import '../../../data/model/link.dart';
 import '../../../data/model/result.dart';
 import '../../../data/provider/links_repository_provider.dart';
 import '../../../data/repository/links_repository.dart';
+import '../../../util/ext/string.dart';
 import '../../../util/logger.dart';
 
 final indexViewModelProvider = ChangeNotifierProvider(
@@ -70,8 +71,8 @@ class IndexViewModel extends ChangeNotifier {
 
     return extract(link.url).then((value) {
       final newLink = link.copyWith.call(
-        title: value.title,
-        description: value.description,
+        title: value.title.trimNewline(),
+        description: value.description.trimNewline(),
         imageUrl: value.image,
       );
       final updateIndex = _links.indexOf(link);
