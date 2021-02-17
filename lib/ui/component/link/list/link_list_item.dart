@@ -140,7 +140,33 @@ class LinkListItem extends HookWidget {
             ),
             trailingIcon: CupertinoIcons.delete,
             onPressed: () {
+              void doDelete() {
+                final result = indexViewModel.deleteLink(link: link);
+                result.then((value) {
+                  value.when(
+                    success: (data) {
+                      indexViewModel.fetchLinks();
+                    },
+                    failure: (e) {
+                      final snackBar = SnackBar(
+                        content: const Text(
+                            'Can‘t delete link. Retry in 5 seconds.'),
+                        duration: const Duration(seconds: 5),
+                        action: SnackBarAction(
+                          label: 'RETRY',
+                          onPressed: () {
+                            doDelete();
+                          },
+                        ),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    },
+                  );
+                });
+              }
+
               Navigator.pop(context);
+              doDelete();
             },
           ),
         ],
