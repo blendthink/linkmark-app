@@ -90,4 +90,10 @@ class IndexViewModel extends ChangeNotifier {
     _filterTagIds = filterTagIds;
     notifyListeners();
   }
+
+  Future<Result<void>> deleteLink({
+    @required Link link,
+  }) {
+    return _repository.deleteLink(id: link.id);
+  }
 }

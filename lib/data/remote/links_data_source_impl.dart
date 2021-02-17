@@ -51,4 +51,9 @@ class LinksDataSourceImpl implements LinksDataSource {
       "url": url,
     });
   }
+
+  @override
+  Future<void> deleteLink({@required String id}) {
+    return _linksRef.child(id).remove();
+  }
 }
