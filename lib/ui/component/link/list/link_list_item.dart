@@ -7,7 +7,6 @@ import 'package:share/share.dart';
 import '../../../../data/model/link.dart';
 import '../../../../gen/assets.gen.dart';
 import '../../../../util/ext/async_snapshot.dart';
-import '../../../../util/ext/string.dart';
 import '../../../page/link/index_view_model.dart';
 import 'link_list_item_shimmer.dart';
 
