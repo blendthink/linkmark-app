@@ -37,7 +37,7 @@ class IndexPage extends StatelessWidget {
           link: link,
         ),
       ).then((existsUpdate) {
-        if (existsUpdate) {
+        if (existsUpdate != null && existsUpdate) {
           refresh();
         }
       });
