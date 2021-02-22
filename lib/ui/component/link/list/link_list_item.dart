@@ -50,35 +50,7 @@ class LinkListItem extends HookWidget {
         ),
       );
 
-      final previewListItem = ListTile(
-        title: Text(
-          link.title,
-          maxLines: 4,
-          overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.subtitle2,
-        ),
-        subtitle: Text(
-          link.description,
-          maxLines: 6,
-          overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.caption,
-        ),
-        trailing: link.imageUrl == null
-            ? noImageIcon
-            : Image.network(
-                link.imageUrl,
-                width: 80,
-                height: 56,
-                fit: BoxFit.fitHeight,
-                errorBuilder: (context, url, error) => noImageIcon,
-              ),
-        contentPadding: const EdgeInsets.symmetric(
-          vertical: 8,
-          horizontal: 16,
-        ),
-      );
-
-      final contentListItem = ListTile(
+      listTile = ListTile(
         title: Text(
           link.title,
           maxLines: 2,
@@ -105,77 +77,88 @@ class LinkListItem extends HookWidget {
           horizontal: 16,
         ),
       );
-
-      listTile = CupertinoContextMenu(
-        previewBuilder: (context, animation, widget) {
-          return Material(
-            child: previewListItem,
-          );
-        },
-        actions: [
-          CupertinoContextMenuAction(
-            child: const Text('Share'),
-            trailingIcon: CupertinoIcons.share,
-            onPressed: () {
-              Navigator.pop(context);
-              Share.share(link.url);
-            },
-          ),
-          CupertinoContextMenuAction(
-            child: const Text('Edit'),
-            trailingIcon: CupertinoIcons.pencil,
-            onPressed: () {
-              Navigator.pop(context);
-              showEditLinkPage(
-                context: context,
-                link: link,
-              );
-            },
-          ),
-          CupertinoContextMenuAction(
-            child: const Text(
-              'Delete',
-              style: TextStyle(color: CupertinoColors.destructiveRed),
-            ),
-            trailingIcon: CupertinoIcons.delete,
-            onPressed: () {
-              void doDelete() {
-                final result = indexViewModel.deleteLink(link: link);
-                result.then((value) {
-                  value.when(
-                    success: (data) {
-                      indexViewModel.fetchLinks();
-                    },
-                    failure: (e) {
-                      final snackBar = SnackBar(
-                        content: const Text(
-                            'Can‘t delete link. Retry in 5 seconds.'),
-                        duration: const Duration(seconds: 5),
-                        action: SnackBarAction(
-                          label: 'RETRY',
-                          onPressed: () {
-                            doDelete();
-                          },
-                        ),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    },
-                  );
-                });
-              }
-
-              Navigator.pop(context);
-              doDelete();
-            },
-          ),
-        ],
-        child: Material(
-          child: contentListItem,
-        ),
-      );
     }
-    return Card(
-      child: listTile,
+
+    return GestureDetector(
+      child: Card(
+        child: listTile,
+      ),
+      onLongPress: () {
+        showModalBottomSheet(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: const Icon(CupertinoIcons.share),
+                    title: const Text('Share'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      Share.share(link.url);
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(CupertinoIcons.pencil),
+                    title: const Text('Edit'),
+                    onTap: () {
+                      Navigator.pop(context);
+                      showEditLinkPage(
+                        context: context,
+                        link: link,
+                      );
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(
+                      CupertinoIcons.delete,
+                      color: Colors.red,
+                    ),
+                    title: Text(
+                      'Delete',
+                      style: Theme.of(context).textTheme.subtitle1.copyWith(
+                            color: Colors.red,
+                          ),
+                    ),
+                    onTap: () {
+                      void doDelete() {
+                        final result = indexViewModel.deleteLink(link: link);
+                        result.then((value) {
+                          value.when(
+                            success: (data) {
+                              indexViewModel.fetchLinks();
+                            },
+                            failure: (e) {
+                              final snackBar = SnackBar(
+                                content: const Text(
+                                    'Can‘t delete link. Retry in 5 seconds.'),
+                                duration: const Duration(seconds: 5),
+                                action: SnackBarAction(
+                                  label: 'RETRY',
+                                  onPressed: () {
+                                    doDelete();
+                                  },
+                                ),
+                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(snackBar);
+                            },
+                          );
+                        });
+                      }
+
+                      Navigator.pop(context);
+                      doDelete();
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
