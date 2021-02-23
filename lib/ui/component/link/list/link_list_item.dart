@@ -87,8 +87,7 @@ class LinkListItem extends HookWidget {
         showModalBottomSheet(
           context: context,
           builder: (context) {
-            return Container(
-              padding: const EdgeInsets.all(16.0),
+            return SafeArea(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
