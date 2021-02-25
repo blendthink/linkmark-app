@@ -1,14 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import '../../../constants.dart';
+import 'drawer_view_model.dart';
 
 class DrawerPage extends StatelessWidget {
   const DrawerPage({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final drawerViewModel = context.read(drawerViewModelProvider);
+
+    final currentUser = drawerViewModel.fetchCurrentUser();
+
     return Drawer(
       child: ListView(
+        padding: EdgeInsets.zero,
         children: [
+          UserAccountsDrawerHeader(
+            accountName: Text(currentUser.displayName),
+            accountEmail: Text(currentUser.email),
+            currentAccountPicture: CircleAvatar(
+              backgroundImage: NetworkImage(
+                currentUser.photoURL,
+              ),
+              radius: 25,
+            ),
+          ),
           // TODO(okayama): 後から適切なものに修正する
           ListTile(
             leading: const Icon(Icons.web),
