@@ -22,8 +22,10 @@ class ChosenTagsViewModel extends ChangeNotifier {
 
   List<ChosenTagData> get chosenTagDataList => _chosenTagDataList;
 
-  List<Tag> get chosenTags =>
-      _chosenTagDataList.where((data) => data.isChosen).map((data) => data.tag);
+  List<Tag> get chosenTags => _chosenTagDataList
+      .where((data) => data.isChosen)
+      .map((data) => data.tag)
+      .toList();
 
   Future<void> fetchTags({
     @required List<String> initChosenTagIds,

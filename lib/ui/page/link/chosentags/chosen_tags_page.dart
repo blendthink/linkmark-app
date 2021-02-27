@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../../data/model/tag.dart';
 
 import '../../../../util/ext/async_snapshot.dart';
 import '../../../../util/ext/list.dart';
@@ -13,22 +14,42 @@ class ChosenTagsPage extends StatelessWidget {
 
   ChosenTagsPage({this.initChosenTagIds, Key key}) : super(key: key);
 
+  void _onPop({
+    @required BuildContext context,
+    List<Tag> chosenTags,
+  }) {
+    final chosenTagIds =
+        chosenTags == null ? null : chosenTags.map((e) => e.id).toList();
+    Navigator.of(context).pop(chosenTagIds);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.read(chosenTagsViewModelProvider);
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.close),
           onPressed: () {
-            Navigator.of(context).pop();
+            _onPop(context: context);
           },
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.done),
+            onPressed: () {
+              _onPop(
+                context: context,
+                chosenTags: viewModel.chosenTags,
+              );
+            },
+          ),
+        ],
         title: const Text('Choose Tags'),
       ),
       body: HookBuilder(
         builder: (context) {
-          final viewModel = context.read(chosenTagsViewModelProvider);
-
           final result = useProvider(
               chosenTagsViewModelProvider.select((value) => value.result));
 
