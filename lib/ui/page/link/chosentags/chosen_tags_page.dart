@@ -39,9 +39,16 @@ class ChosenTagsPage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.done),
             onPressed: () {
+              List<Tag> chosenTags;
+              if (viewModel.chosenTagDataList.isEmpty) {
+                chosenTags = null;
+              } else {
+                chosenTags = viewModel.chosenTags;
+              }
+
               _onPop(
                 context: context,
-                chosenTags: viewModel.chosenTags,
+                chosenTags: chosenTags,
               );
             },
           ),
