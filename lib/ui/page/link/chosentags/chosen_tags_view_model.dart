@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../data/model/result.dart';
@@ -30,6 +32,7 @@ class ChosenTagsViewModel extends ChangeNotifier {
   Future<void> fetchTags({
     @required List<String> initChosenTagIds,
   }) async {
+    await Future.delayed(const Duration(milliseconds: 500));
     return _repository.getTags().then((value) {
       _result = value.when(
         success: (data) {
