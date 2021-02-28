@@ -19,9 +19,7 @@ class ChosenTagsPage extends StatelessWidget {
     @required BuildContext context,
     List<Tag> chosenTags,
   }) {
-    final chosenTagIds =
-        chosenTags == null ? null : chosenTags.map((e) => e.id).toList();
-    Navigator.of(context).pop(chosenTagIds);
+    Navigator.of(context).pop(chosenTags);
   }
 
   @override
