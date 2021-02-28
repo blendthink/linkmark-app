@@ -5,6 +5,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../../../util/ext/async_snapshot.dart';
 import '../../../page/link/chosentags/chosen_tags_page.dart';
+import '../search_app_bar_view_model.dart';
 import 'tag_filter_view_model.dart';
 
 class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
@@ -40,16 +41,25 @@ class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
         height: kToolbarHeight,
         child: Row(
           children: [
-            IconButton(
-              icon: const Icon(Icons.tag),
-              onPressed: () {
-                showCupertinoModalBottomSheet(
-                  context: context,
-                  builder: (context) =>
-                      ChosenTagsPage(initChosenTagIds: List.empty()),
-                );
-              },
-            ),
+            HookBuilder(builder: (context) {
+              final isInSearchMode = useProvider(searchAppBarViewModelProvider
+                  .select((value) => value.isInSearchMode));
+
+              final themeData = Theme.of(context);
+              return IconButton(
+                icon: const Icon(Icons.tag),
+                color: isInSearchMode
+                    ? themeData.primaryColor
+                    : themeData.primaryIconTheme.color,
+                onPressed: () {
+                  showCupertinoModalBottomSheet(
+                    context: context,
+                    builder: (context) =>
+                        ChosenTagsPage(initChosenTagIds: List.empty()),
+                  );
+                },
+              );
+            }),
             Flexible(
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
