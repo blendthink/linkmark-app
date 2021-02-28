@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../page/link/index_view_model.dart';
 import 'search_app_bar_painter.dart';
+import 'search_app_bar_view_model.dart';
 import 'tagfilter/tag_filter_widget.dart';
 
 const double _kLeadingWidth = kMinInteractiveDimension;
@@ -30,7 +31,6 @@ class _SearchAppBarState extends State<SearchAppBar>
   final _textEditingController = TextEditingController();
   final _animationDuration = const Duration(milliseconds: 300);
 
-  bool _isInSearchMode = false;
   double _rippleStartX, _rippleStartY;
   AnimationController _animationController;
   Animation _animation;
@@ -46,9 +46,12 @@ class _SearchAppBarState extends State<SearchAppBar>
       begin: 0.0,
       end: 1.0,
     ).animate(_animationController);
+
+    final appBarViewModel = context.read(searchAppBarViewModelProvider);
     _animationController.addStatusListener((status) {
       setState(() {
-        _isInSearchMode = status == AnimationStatus.completed;
+        appBarViewModel.updateIsSearchMode(
+            isInSearchMode: status == AnimationStatus.completed);
       });
     });
 
@@ -84,7 +87,8 @@ class _SearchAppBarState extends State<SearchAppBar>
   }
 
   Future<bool> _onWillPop() async {
-    if (_isInSearchMode) {
+    final appBarViewModel = context.read(searchAppBarViewModelProvider);
+    if (appBarViewModel.isInSearchMode) {
       _cancelSearch();
       return false;
     } else {
@@ -168,53 +172,70 @@ class _SearchAppBarState extends State<SearchAppBar>
       ),
     );
 
-    return AnimatedCrossFade(
-      firstChild: textField,
-      secondChild: text,
-      duration: _animationDuration,
-      crossFadeState: _isInSearchMode
-          ? CrossFadeState.showFirst
-          : CrossFadeState.showSecond,
-    );
+    return HookBuilder(builder: (context) {
+      final isInSearchMode = useProvider(searchAppBarViewModelProvider
+          .select((value) => value.isInSearchMode));
+
+      return AnimatedCrossFade(
+        firstChild: textField,
+        secondChild: text,
+        duration: _animationDuration,
+        crossFadeState: isInSearchMode
+            ? CrossFadeState.showFirst
+            : CrossFadeState.showSecond,
+      );
+    });
   }
 
   Widget _buildLeading(BuildContext context) {
     final themeData = Theme.of(context);
-    return IconButton(
-      icon: AnimatedIcon(
-        icon: AnimatedIcons.menu_arrow,
-        color: _isInSearchMode
-            ? themeData.primaryColor
-            : themeData.primaryIconTheme.color,
-        progress: _animationController,
-      ),
-      onPressed: _isInSearchMode ? _cancelSearch : _handleDrawerButton,
-    );
+
+    return HookBuilder(builder: (context) {
+      final isInSearchMode = useProvider(searchAppBarViewModelProvider
+          .select((value) => value.isInSearchMode));
+
+      return IconButton(
+        icon: AnimatedIcon(
+          icon: AnimatedIcons.menu_arrow,
+          color: isInSearchMode
+              ? themeData.primaryColor
+              : themeData.primaryIconTheme.color,
+          progress: _animationController,
+        ),
+        onPressed: isInSearchMode ? _cancelSearch : _handleDrawerButton,
+      );
+    });
   }
 
   Widget _buildAction(BuildContext context) {
     final themeData = Theme.of(context);
-    return AnimatedCrossFade(
-      firstChild: IconButton(
-        onPressed: _textEditingController.clear,
-        icon: Icon(
-          Icons.clear,
-          color: themeData.primaryColor,
+
+    return HookBuilder(builder: (context) {
+      final isInSearchMode = useProvider(searchAppBarViewModelProvider
+          .select((value) => value.isInSearchMode));
+
+      return AnimatedCrossFade(
+        firstChild: IconButton(
+          onPressed: _textEditingController.clear,
+          icon: Icon(
+            Icons.clear,
+            color: themeData.primaryColor,
+          ),
         ),
-      ),
-      secondChild: IconButton(
-        key: _keySearchIcon,
-        onPressed: _startSearch,
-        icon: Icon(
-          Icons.search,
-          color: themeData.primaryIconTheme.color,
+        secondChild: IconButton(
+          key: _keySearchIcon,
+          onPressed: _startSearch,
+          icon: Icon(
+            Icons.search,
+            color: themeData.primaryIconTheme.color,
+          ),
         ),
-      ),
-      duration: _animationDuration,
-      crossFadeState: _isInSearchMode
-          ? CrossFadeState.showFirst
-          : CrossFadeState.showSecond,
-    );
+        duration: _animationDuration,
+        crossFadeState: isInSearchMode
+            ? CrossFadeState.showFirst
+            : CrossFadeState.showSecond,
+      );
+    });
   }
 
   AnimatedBuilder _buildAnimation(double screenWidth) {
