@@ -35,22 +35,24 @@ class ChosenTagsPage extends StatelessWidget {
           },
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.done),
-            onPressed: () {
-              List<Tag> chosenTags;
-              if (viewModel.chosenTagDataList.isEmpty) {
-                chosenTags = null;
-              } else {
-                chosenTags = viewModel.chosenTags;
-              }
+          HookBuilder(builder: (context) {
+            final chosenTagDataList = useProvider(chosenTagsViewModelProvider
+                .select((value) => value.chosenTagDataList));
 
-              _onPop(
-                context: context,
-                chosenTags: chosenTags,
+            if (chosenTagDataList.isEmpty) {
+              return Container();
+            } else {
+              return IconButton(
+                icon: const Icon(Icons.done),
+                onPressed: () {
+                  _onPop(
+                    context: context,
+                    chosenTags: viewModel.chosenTags,
+                  );
+                },
               );
-            },
-          ),
+            }
+          }),
         ],
         title: const Text('Choose Tags'),
       ),
