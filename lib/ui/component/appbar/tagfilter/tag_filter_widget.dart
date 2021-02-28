@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:linkmark_app/ui/page/link/chosentags/chosen_tags_page.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../../../util/ext/async_snapshot.dart';
 import '../../../page/link/index_view_model.dart';
 import 'tag_filter_view_model.dart';
@@ -37,37 +39,45 @@ class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
 
       return SizedBox(
         height: kToolbarHeight,
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: ListView.separated(
-            itemCount: tags.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return HookBuilder(builder: (context) {
-                final filterData = useProvider(tagFilterViewModelProvider
-                    .select((value) => value.tags[index]));
-                final tag = filterData.tag;
-
-                return FilterChip(
-                  selected: filterData.selected,
-                  label: Text(tag.name),
-                  onSelected: (value) {
-                    tagFilterViewModel.updateTagSelected(
-                      index: index,
-                      selected: value,
-                    );
-                    final newFilterTagIds = tagFilterViewModel.filterTagIds;
-                    indexViewModel.updateFilterTagIds(newFilterTagIds);
-                  },
+        child: Row(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.tag),
+              onPressed: () {
+                showCupertinoModalBottomSheet(
+                  context: context,
+                  builder: (context) =>
+                      ChosenTagsPage(initChosenTagIds: List.empty()),
                 );
-              });
-            },
-            separatorBuilder: (context, index) {
-              return const SizedBox(
-                width: 4,
-              );
-            },
-          ),
+              },
+            ),
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: ListView.separated(
+                  itemCount: tags.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return HookBuilder(builder: (context) {
+                      final filterData = useProvider(tagFilterViewModelProvider
+                          .select((value) => value.tags[index]));
+                      final tag = filterData.tag;
+
+                      return Chip(
+                        label: Text(tag.name),
+                        onDeleted: () {},
+                      );
+                    });
+                  },
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(
+                      width: 4,
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
       );
     }, failure: (e) {
