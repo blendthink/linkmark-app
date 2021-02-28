@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:linkmark_app/ui/page/link/chosentags/chosen_tags_page.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
 import '../../../../util/ext/async_snapshot.dart';
-import '../../../page/link/index_view_model.dart';
+import '../../../page/link/chosentags/chosen_tags_page.dart';
 import 'tag_filter_view_model.dart';
 
 class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
@@ -17,7 +17,6 @@ class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final indexViewModel = context.read(indexViewModelProvider);
     final tagFilterViewModel = context.read(tagFilterViewModelProvider);
 
     final result =
