@@ -22,7 +22,8 @@ class ChosenTagsViewModel extends ChangeNotifier {
 
   List<ChosenTagData> _chosenTagDataList;
 
-  List<ChosenTagData> get chosenTagDataList => _chosenTagDataList;
+  List<ChosenTagData> get chosenTagDataList =>
+      _chosenTagDataList ?? List.empty();
 
   List<Tag> get chosenTags => _chosenTagDataList
       .where((data) => data.isChosen)
