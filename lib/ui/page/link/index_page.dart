@@ -6,6 +6,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '../../../data/model/link.dart';
 import '../../../util/ext/async_snapshot.dart';
 import '../../component/appbar/search_app_bar.dart';
+import '../../component/appbar/tagfilter/tag_filter_view_model.dart';
 import '../../component/container_with_loading.dart';
 import '../../component/link/list/link_list_item.dart';
 import '../../component/loading/loading_state_view_model.dart';
@@ -43,8 +44,10 @@ class IndexPage extends StatelessWidget {
     final hookBuilder = HookBuilder(builder: (context) {
       final result =
           useProvider(indexViewModelProvider.select((value) => value.result));
-      final links = useProvider(
-          indexViewModelProvider.select((value) => value.filteredLinks));
+      final chosenTags = useProvider(
+          tagFilterViewModelProvider.select((value) => value.chosenTags));
+      final links = useProvider(indexViewModelProvider
+          .select((value) => value.filteredLinks(chosenTags)));
 
       final snapshot = useFuture(useMemoized(() {
         return context

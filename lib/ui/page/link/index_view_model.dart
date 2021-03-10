@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:linkmark_app/data/model/tag.dart';
 import 'package:metadata_fetch/metadata_fetch.dart';
 
 import '../../../data/model/link.dart';
@@ -18,7 +19,6 @@ class IndexViewModel extends ChangeNotifier {
   final LinksRepository _repository;
 
   String _filterText = '';
-  List<String> _filterTagIds = List.empty();
 
   Result<void> _result;
 
@@ -26,7 +26,7 @@ class IndexViewModel extends ChangeNotifier {
 
   List<Link> _links;
 
-  List<Link> get filteredLinks {
+  List<Link> filteredLinks(List<Tag> chosenTags) {
     if (_links == null) return List.empty();
 
     List<Link> textFiltered;
@@ -41,11 +41,17 @@ class IndexViewModel extends ChangeNotifier {
       }).toList();
     }
 
+    // 選択したタグがなければそのまま返却
+    final chosenTagIds = chosenTags.map((e) => e.id).toList();
+    if (chosenTagIds.isEmpty) return textFiltered;
+
     final tagFiltered = textFiltered.where((element) {
+      // tagIds が存在しない Link はリストから除外する
       final tagIds = element.tagIds;
-      if (_filterTagIds.isEmpty) return true;
-      if (tagIds == null) return false;
-      return _filterTagIds.every(tagIds.contains);
+      if (tagIds == null || tagIds.isEmpty) return false;
+
+      // 選択したタグを全て含んでいる Link はリストに追加する
+      return chosenTagIds.every(tagIds.contains);
     }).toList();
     return tagFiltered;
   }
@@ -83,12 +89,6 @@ class IndexViewModel extends ChangeNotifier {
   void updateFilterText(String filterText) {
     logger.info('FilterText: $filterText');
     _filterText = filterText;
-    notifyListeners();
-  }
-
-  void updateFilterTagIds(List<String> filterTagIds) {
-    logger.info('FilterTagIds: $filterTagIds');
-    _filterTagIds = filterTagIds;
     notifyListeners();
   }
 
