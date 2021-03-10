@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-import '../../../../util/ext/async_snapshot.dart';
 import '../../../page/link/chosentags/chosen_tags_page.dart';
 import '../search_app_bar_view_model.dart';
 import 'tag_filter_view_model.dart';
@@ -20,77 +19,65 @@ class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final tagFilterViewModel = context.read(tagFilterViewModelProvider);
 
-    final result =
-        useProvider(tagFilterViewModelProvider.select((value) => value.result));
-    final tags =
-        useProvider(tagFilterViewModelProvider.select((value) => value.tags));
+    return SizedBox(
+      height: kToolbarHeight,
+      child: Row(
+        children: [
+          HookBuilder(builder: (context) {
+            final isInSearchMode = useProvider(searchAppBarViewModelProvider
+                .select((value) => value.isInSearchMode));
 
-    final snapshot = useFuture(
-        useMemoized(tagFilterViewModel.fetchTags, [result.toString()]));
-
-    if (!snapshot.isDone) return Container();
-
-    return result.when(success: (data) {
-      if (tags.isEmpty) {
-        return const SizedBox(
-          height: kToolbarHeight,
-        );
-      }
-
-      return SizedBox(
-        height: kToolbarHeight,
-        child: Row(
-          children: [
-            HookBuilder(builder: (context) {
-              final isInSearchMode = useProvider(searchAppBarViewModelProvider
-                  .select((value) => value.isInSearchMode));
-
-              final themeData = Theme.of(context);
-              return IconButton(
-                icon: const Icon(Icons.tag),
-                color: isInSearchMode
-                    ? themeData.primaryColor
-                    : themeData.primaryIconTheme.color,
-                onPressed: () {
-                  showCupertinoModalBottomSheet(
-                    context: context,
-                    builder: (context) =>
-                        ChosenTagsPage(initChosenTagIds: List.empty()),
-                  );
-                },
-              );
-            }),
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: ListView.separated(
-                  itemCount: tags.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    return HookBuilder(builder: (context) {
-                      final filterData = useProvider(tagFilterViewModelProvider
-                          .select((value) => value.tags[index]));
-                      final tag = filterData.tag;
-
+            final themeData = Theme.of(context);
+            return IconButton(
+              icon: const Icon(Icons.tag),
+              color: isInSearchMode
+                  ? themeData.primaryColor
+                  : themeData.primaryIconTheme.color,
+              onPressed: () {
+                showCupertinoModalBottomSheet(
+                  context: context,
+                  builder: (context) => ChosenTagsPage(
+                      initChosenTagIds: tagFilterViewModel.chosenTags
+                          .map((e) => e.id)
+                          .toList()),
+                ).then((chosenTags) {
+                  if (chosenTags == null) return;
+                  tagFilterViewModel.updateChosenTags(chosenTags: chosenTags);
+                });
+              },
+            );
+          }),
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: HookBuilder(
+                builder: (context) {
+                  final chosenTags = useProvider(tagFilterViewModelProvider
+                      .select((value) => value.chosenTags));
+                  return ListView.separated(
+                    itemCount: chosenTags.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      final tag = chosenTags[index];
                       return Chip(
                         label: Text(tag.name),
-                        onDeleted: () {},
+                        onDeleted: () {
+                          tagFilterViewModel.removeChosenTag(tag: tag);
+                        },
                       );
-                    });
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(
-                      width: 4,
-                    );
-                  },
-                ),
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(
+                        width: 4,
+                      );
+                    },
+                  );
+                },
               ),
             ),
-          ],
-        ),
-      );
-    }, failure: (e) {
-      return Text('Error Screen: $e');
-    });
+          ),
+        ],
+      ),
+    );
   }
 }
