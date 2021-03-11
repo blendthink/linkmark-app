@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:linkmark_app/data/model/tag.dart';
 import 'package:metadata_fetch/metadata_fetch.dart';
 
 import '../../../data/model/link.dart';
 import '../../../data/model/result.dart';
+import '../../../data/model/tag.dart';
 import '../../../data/provider/links_repository_provider.dart';
 import '../../../data/repository/links_repository.dart';
 import '../../../util/ext/string.dart';
