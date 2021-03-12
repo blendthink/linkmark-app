@@ -69,10 +69,14 @@ class IndexPage extends StatelessWidget {
           child: ListView.builder(
             itemCount: links.length,
             itemBuilder: (_, index) {
-              return LinkListItem(
-                link: links[index],
-                showEditLinkPage: showEditLinkPage,
-              );
+              return HookBuilder(builder: (context) {
+                final link = useProvider(indexViewModelProvider
+                    .select((value) => value.filteredLinks(chosenTags)[index]));
+                return LinkListItem(
+                  link: link,
+                  showEditLinkPage: showEditLinkPage,
+                );
+              });
             },
           ),
         );
