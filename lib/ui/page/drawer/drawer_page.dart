@@ -30,7 +30,7 @@ class DrawerPage extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.tag),
             title: Text(
-              'Tag',
+              'Tags',
               style: Theme.of(context).textTheme.subtitle1,
             ),
             onTap: () {

@@ -263,7 +263,7 @@ class TagIndexPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tag List'),
+        title: const Text('Tags'),
       ),
       body: SafeArea(
         child: Column(
