@@ -74,7 +74,7 @@ class TagIndexPage extends StatelessWidget {
           trailing: const Handle(
             delay: Duration(milliseconds: 100),
             child: Icon(
-              Icons.drag_handle,
+              CupertinoIcons.bars,
               color: Colors.grey,
             ),
           ),
