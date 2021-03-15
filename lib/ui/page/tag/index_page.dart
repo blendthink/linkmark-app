@@ -249,7 +249,7 @@ class TagIndexPage extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Icon(
-                Icons.add_circle,
+                Icons.arrow_circle_up,
                 color: Theme.of(context).primaryColor,
               ),
             ),
