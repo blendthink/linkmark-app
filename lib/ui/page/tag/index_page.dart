@@ -309,7 +309,9 @@ class TagIndexPage extends StatelessWidget {
                     child: SizedBox(
                       width: 24,
                       height: 24,
-                      child: FadeInImage.assetNetwork(placeholder: cupertinoActivityIndicator, image: "image.png"),
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                      ),
                     ),
                   ),
                 );
