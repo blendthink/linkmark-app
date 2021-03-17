@@ -65,12 +65,28 @@ class TagIndexPage extends StatelessWidget {
         // For testing different size item. You can comment this line
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: ListTile(
-          title: Text(
-            tag.name,
-            style: textTheme.bodyText2.copyWith(
-              fontSize: 16,
-            ),
-          ),
+          title: HookBuilder(builder: (context) {
+            final state = useProvider(
+                tagIndexViewModelProvider.select((value) => value.state));
+
+            switch (state) {
+              case TagsState.editing:
+                return TextField(
+                  controller: TextEditingController(text: tag.name),
+                  decoration: InputDecoration(
+                    hintText: tag.name,
+                    border: InputBorder.none,
+                  ),
+                );
+              default:
+                return Text(
+                  tag.name,
+                  style: textTheme.bodyText2.copyWith(
+                    fontSize: 16,
+                  ),
+                );
+            }
+          }),
           trailing: const Handle(
             delay: Duration(milliseconds: 100),
             child: Icon(
@@ -264,6 +280,42 @@ class TagIndexPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Tags'),
+        actions: [
+          HookBuilder(builder: (context) {
+            final state = useProvider(
+                tagIndexViewModelProvider.select((value) => value.state));
+
+            switch (state) {
+              case TagsState.edited:
+                return IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: () {
+                    viewModel.updateState(state: TagsState.editing);
+                  },
+                );
+              case TagsState.editing:
+                return IconButton(
+                  icon: const Icon(Icons.done),
+                  onPressed: () {
+                    viewModel.updateState(state: TagsState.loading);
+                  },
+                );
+              default:
+                return Container(
+                  width: 48,
+                  height: 48,
+                  padding: const EdgeInsets.all(8.0),
+                  child: const Center(
+                    child: SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: FadeInImage.assetNetwork(placeholder: cupertinoActivityIndicator, image: "image.png"),
+                    ),
+                  ),
+                );
+            }
+          })
+        ],
       ),
       body: SafeArea(
         child: Column(

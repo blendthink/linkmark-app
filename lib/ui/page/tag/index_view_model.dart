@@ -18,11 +18,16 @@ class TagIndexViewModel extends ChangeNotifier {
   final TagsRepository _repository;
 
   final _textEditingController = TextEditingController();
+
   TextEditingController get textEditingController => _textEditingController;
 
   List<Tag> _tags;
 
   UnmodifiableListView<Tag> get tags => UnmodifiableListView(_tags);
+
+  TagsState _state = TagsState.edited;
+
+  TagsState get state => _state;
 
   Result<void> _result;
 
@@ -102,4 +107,17 @@ class TagIndexViewModel extends ChangeNotifier {
 
     return _repository.createTag(name: text, order: _tags.length);
   }
+
+  void updateState({
+    @required TagsState state,
+  }) {
+    _state = state;
+    notifyListeners();
+  }
+}
+
+enum TagsState {
+  edited,
+  editing,
+  loading,
 }
