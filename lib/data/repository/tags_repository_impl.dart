@@ -1,12 +1,10 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
-
 import '../model/result.dart';
 import '../model/tag.dart';
 import '../remote/tags_data_source.dart';
 import 'tags_repository.dart';
 
 class TagsRepositoryImpl extends TagsRepository {
-  TagsRepositoryImpl({@required TagsDataSource dataSource})
+  TagsRepositoryImpl({required TagsDataSource dataSource})
       : _dataSource = dataSource;
 
   final TagsDataSource _dataSource;
@@ -18,8 +16,8 @@ class TagsRepositoryImpl extends TagsRepository {
 
   @override
   Future<Result<void>> createTag({
-    @required String name,
-    @required int order,
+    required String name,
+    required int order,
   }) {
     return Result.guardFuture(
       () => _dataSource.createTag(
@@ -31,8 +29,8 @@ class TagsRepositoryImpl extends TagsRepository {
 
   @override
   Future<Result<void>> updateTagName({
-    @required String id,
-    @required String name,
+    required String id,
+    required String name,
   }) {
     return Result.guardFuture(
       () => _dataSource.updateTagName(
@@ -44,7 +42,7 @@ class TagsRepositoryImpl extends TagsRepository {
 
   @override
   Future<Result<void>> updateTagsOrder({
-    @required List<Tag> orderedTags,
+    required List<Tag> orderedTags,
   }) {
     return Result.guardFuture(
         () => _dataSource.updateTagsOrder(orderedTags: orderedTags));
@@ -52,7 +50,7 @@ class TagsRepositoryImpl extends TagsRepository {
 
   @override
   Future<Result<void>> deleteTag({
-    @required String id,
+    required String id,
   }) {
     return Result.guardFuture(
       () => _dataSource.deleteTag(

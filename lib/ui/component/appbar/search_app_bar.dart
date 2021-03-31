@@ -11,7 +11,7 @@ const double _kLeadingWidth = kMinInteractiveDimension;
 
 class SearchAppBar extends StatefulHookWidget implements PreferredSizeWidget {
   const SearchAppBar({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -31,9 +31,9 @@ class _SearchAppBarState extends State<SearchAppBar>
   final _textEditingController = TextEditingController();
   final _animationDuration = const Duration(milliseconds: 300);
 
-  double _rippleStartX, _rippleStartY;
-  AnimationController _animationController;
-  Animation _animation;
+  double? _rippleStartX, _rippleStartY;
+  late AnimationController _animationController;
+  late Animation _animation;
 
   @override
   void initState() {
@@ -69,8 +69,12 @@ class _SearchAppBarState extends State<SearchAppBar>
   }
 
   void _startSearch() {
-    final RenderBox renderBox =
-        _keySearchIcon.currentContext.findRenderObject();
+    final renderBox =
+        _keySearchIcon.currentContext?.findRenderObject() as RenderBox?;
+
+    if (renderBox == null) {
+      return;
+    }
 
     final size = renderBox.size;
     final position = renderBox.localToGlobal(Offset.zero);
@@ -161,7 +165,7 @@ class _SearchAppBarState extends State<SearchAppBar>
       style: Theme.of(context)
           .primaryTextTheme
           .subtitle1
-          .copyWith(color: Colors.black),
+          ?.copyWith(color: Colors.black),
     );
 
     final text = Center(

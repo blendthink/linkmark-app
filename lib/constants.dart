@@ -10,7 +10,7 @@ class Constants {
 
   factory Constants.of() {
     if (_instance != null) {
-      return _instance;
+      return _instance!;
     }
 
     final flavor = EnumToString.fromString(
@@ -26,7 +26,7 @@ class Constants {
       default:
         _instance = Constants._prd();
     }
-    return _instance;
+    return _instance!;
   }
 
   factory Constants._dev() {
@@ -43,5 +43,5 @@ class Constants {
 
   static const bool isDebugMode = kDebugMode;
 
-  static Constants _instance;
+  static Constants? _instance;
 }

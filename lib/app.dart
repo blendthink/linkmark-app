@@ -10,7 +10,7 @@ import 'ui/page/tag/index_page.dart';
 class App extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
+    final User? user = FirebaseAuth.instance.currentUser;
 
     Widget home;
     if (user == null) {

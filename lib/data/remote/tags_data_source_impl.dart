@@ -43,8 +43,8 @@ class TagsDataSourceImpl implements TagsDataSource {
 
   @override
   Future<void> createTag({
-    @required String name,
-    @required int order,
+    required String name,
+    required int order,
   }) {
     final newTagRef = _tagsRef.push();
     final newTagKey = newTagRef.key;
@@ -63,7 +63,7 @@ class TagsDataSourceImpl implements TagsDataSource {
 
   @override
   Future<void> deleteTag({
-    @required String id,
+    required String id,
   }) {
     return _tagsRef.child(id).remove().catchError(
       (error) {
@@ -75,8 +75,8 @@ class TagsDataSourceImpl implements TagsDataSource {
 
   @override
   Future<void> updateTagName({
-    @required String id,
-    @required String name,
+    required String id,
+    required String name,
   }) {
     return _tagsRef.child(id).child("name").set(name).catchError(
       (error) {
@@ -88,9 +88,9 @@ class TagsDataSourceImpl implements TagsDataSource {
 
   @override
   Future<void> updateTagsOrder({
-    @required List<Tag> orderedTags,
+    required List<Tag> orderedTags,
   }) {
-    final updateData = {};
+    final updateData = <String, dynamic>{};
 
     orderedTags.asMap().forEach((index, tag) {
       final tagId = tag.id;

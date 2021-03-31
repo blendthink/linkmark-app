@@ -12,16 +12,16 @@ import 'link_list_item_shimmer.dart';
 
 class LinkListItem extends HookWidget {
   LinkListItem({
-    this.link,
-    this.showEditLinkPage,
-    Key key,
+    required this.link,
+    required this.showEditLinkPage,
+    Key? key,
   }) : super(key: key);
 
   final Link link;
 
   final Function({
-    @required BuildContext context,
-    Link link,
+    required BuildContext context,
+    Link? link,
   }) showEditLinkPage;
 
   @override
@@ -117,7 +117,7 @@ class LinkListItem extends HookWidget {
                     ),
                     title: Text(
                       'Delete',
-                      style: Theme.of(context).textTheme.subtitle1.copyWith(
+                      style: Theme.of(context).textTheme.subtitle1?.copyWith(
                             color: Colors.red,
                           ),
                     ),
@@ -125,26 +125,21 @@ class LinkListItem extends HookWidget {
                       void doDelete() {
                         final result = indexViewModel.deleteLink(link: link);
                         result.then((value) {
-                          value.when(
-                            success: (data) {
-                              indexViewModel.fetchLinks();
-                            },
-                            failure: (e) {
-                              final snackBar = SnackBar(
-                                content: const Text(
-                                    'Can‘t delete link. Retry in 5 seconds.'),
-                                duration: const Duration(seconds: 5),
-                                action: SnackBarAction(
-                                  label: 'RETRY',
-                                  onPressed: () {
-                                    doDelete();
-                                  },
-                                ),
-                              );
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(snackBar);
-                            },
-                          );
+                          if (value.isSuccess) {
+                            indexViewModel.fetchLinks();
+                          } else {
+                            final snackBar = SnackBar(
+                              content: const Text(
+                                  'Can‘t delete link. Retry in 5 seconds.'),
+                              duration: const Duration(seconds: 5),
+                              action: SnackBarAction(
+                                label: 'RETRY',
+                                onPressed: doDelete,
+                              ),
+                            );
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(snackBar);
+                          }
                         });
                       }
 

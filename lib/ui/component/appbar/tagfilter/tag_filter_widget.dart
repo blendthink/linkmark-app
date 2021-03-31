@@ -9,7 +9,7 @@ import 'tag_filter_view_model.dart';
 
 class TagFilterWidget extends HookWidget implements PreferredSizeWidget {
   const TagFilterWidget({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

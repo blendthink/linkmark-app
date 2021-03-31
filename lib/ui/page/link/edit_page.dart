@@ -9,10 +9,10 @@ import 'edit_view_model.dart';
 class EditPage extends StatefulWidget {
   EditPage({
     this.link,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
-  final Link link;
+  final Link? link;
 
   @override
   State<StatefulWidget> createState() => _EditPageState();
@@ -29,22 +29,22 @@ class _EditPageState extends State<EditPage> {
     super.initState();
 
     if (_isUpdate) {
-      _textEditingController.text = widget.link.url;
+      _textEditingController.text = widget.link?.url ?? '';
     }
   }
 
   void _onPop({
-    @required BuildContext context,
-    @required bool existsUpdate,
+    required BuildContext context,
+    required bool existsUpdate,
   }) {
     Navigator.of(context).pop(existsUpdate);
   }
 
   void _submit({
-    @required BuildContext context,
-    @required EditViewModel editViewModel,
+    required BuildContext context,
+    required EditViewModel editViewModel,
   }) async {
-    final isValid = _formKey.currentState.validate();
+    final isValid = _formKey.currentState?.validate() ?? false;
     if (!isValid) return;
 
     final url = _textEditingController.text;

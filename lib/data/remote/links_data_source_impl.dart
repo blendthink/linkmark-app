@@ -43,7 +43,7 @@ class LinksDataSourceImpl implements LinksDataSource {
   }
 
   @override
-  Future<void> createLink({@required String url}) async {
+  Future<void> createLink({required String url}) async {
     final newLinkRef = _linksRef.push();
     final newLinkKey = newLinkRef.key;
     return newLinkRef.set({
@@ -53,7 +53,7 @@ class LinksDataSourceImpl implements LinksDataSource {
   }
 
   @override
-  Future<void> deleteLink({@required String id}) {
+  Future<void> deleteLink({required String id}) {
     return _linksRef.child(id).remove();
   }
 }

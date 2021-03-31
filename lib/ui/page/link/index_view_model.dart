@@ -20,14 +20,14 @@ class IndexViewModel extends ChangeNotifier {
 
   String _filterText = '';
 
-  Result<void> _result;
+  Result<void>? _result;
 
-  Result<void> get result => _result;
+  Result<void>? get result => _result;
 
-  List<Link> _links;
+  List<Link> _links = List.empty();
 
   List<Link> filteredLinks(List<Tag> chosenTags) {
-    if (_links == null) return List.empty();
+    if (_links.isEmpty) return List.empty();
 
     List<Link> textFiltered;
     if (_filterText.isEmpty) {
@@ -69,7 +69,7 @@ class IndexViewModel extends ChangeNotifier {
   }
 
   Future<void> fetchLinkMetadata({
-    @required Link link,
+    required Link link,
   }) async {
     if (link.title.isNotEmpty || link.description.isNotEmpty) {
       return Future<void>.value();
@@ -93,7 +93,7 @@ class IndexViewModel extends ChangeNotifier {
   }
 
   Future<Result<void>> deleteLink({
-    @required Link link,
+    required Link link,
   }) {
     return _repository.deleteLink(id: link.id);
   }

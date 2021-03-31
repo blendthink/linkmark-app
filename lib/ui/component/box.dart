@@ -17,29 +17,29 @@ enum ShadowDirection {
 class Box extends StatelessWidget {
   final double borderRadius;
   final double elevation;
-  final double height;
-  final double width;
-  final Border border;
-  final BorderRadius customBorders;
-  final EdgeInsets margin;
+  final double? height;
+  final double? width;
+  final Border? border;
+  final BorderRadius? customBorders;
+  final EdgeInsets? margin;
   final EdgeInsets padding;
   final Widget child;
   final Color color;
-  final Color shadowColor;
-  final List<BoxShadow> boxShadows;
-  final VoidCallback onTap;
-  final VoidCallback onLongPress;
-  final VoidCallback onDoubleTap;
+  final Color? shadowColor;
+  final List<BoxShadow>? boxShadows;
+  final VoidCallback? onTap;
+  final VoidCallback? onLongPress;
+  final VoidCallback? onDoubleTap;
   final BoxShape boxShape;
-  final AlignmentGeometry alignment;
+  final AlignmentGeometry? alignment;
   final ShadowDirection shadowDirection;
-  final Color splashColor;
-  final Duration duration;
-  final BoxConstraints constraints;
+  final Color? splashColor;
+  final Duration? duration;
+  final BoxConstraints? constraints;
 
   const Box({
-    Key key,
-    this.child,
+    Key? key,
+    required this.child,
     this.border,
     this.color = Colors.transparent,
     this.borderRadius = 0.0,
@@ -118,17 +118,18 @@ class Box extends StatelessWidget {
       );
     }
 
-    final boxShadow =
-        boxShadows ?? (elevation > 0 && (shadowColor?.opacity ?? 0) > 0)
-            ? [
-                BoxShadow(
-                  color: shadowColor ?? Colors.black12,
-                  offset: _getShadowOffset(min(elevation / 5.0, 1.0)),
-                  blurRadius: elevation,
-                  spreadRadius: 0,
-                ),
-              ]
-            : null;
+    final defaultBoxShadow = elevation > 0 && (shadowColor?.opacity ?? 0) > 0
+        ? [
+            BoxShadow(
+              color: shadowColor ?? Colors.black12,
+              offset: _getShadowOffset(min(elevation / 5.0, 1.0)),
+              blurRadius: elevation,
+              spreadRadius: 0,
+            ),
+          ]
+        : null;
+
+    final boxShadow = boxShadows ?? defaultBoxShadow;
 
     final boxDecoration = BoxDecoration(
       color: color,
@@ -144,7 +145,7 @@ class Box extends StatelessWidget {
             width: w,
             margin: margin,
             alignment: alignment,
-            duration: duration,
+            duration: duration!,
             decoration: boxDecoration,
             constraints: constraints,
             child: content,
@@ -166,31 +167,22 @@ class Box extends StatelessWidget {
     switch (shadowDirection) {
       case ShadowDirection.topLeft:
         return Offset(-1 * xm, -1 * ym);
-        break;
       case ShadowDirection.top:
         return Offset(0, -1 * ym);
-        break;
       case ShadowDirection.topRight:
         return Offset(xm, -1 * ym);
-        break;
       case ShadowDirection.right:
         return Offset(xm, 0);
-        break;
       case ShadowDirection.bottomRight:
         return Offset(xm, ym);
-        break;
       case ShadowDirection.bottom:
         return Offset(0, ym);
-        break;
       case ShadowDirection.bottomLeft:
         return Offset(-1 * xm, ym);
-        break;
       case ShadowDirection.left:
         return Offset(-1 * xm, 0);
-        break;
       default:
         return Offset.zero;
-        break;
     }
   }
 }

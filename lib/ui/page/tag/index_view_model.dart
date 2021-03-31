@@ -21,7 +21,7 @@ class TagIndexViewModel extends ChangeNotifier {
 
   TextEditingController get textEditingController => _textEditingController;
 
-  List<Tag> _tags;
+  late List<Tag> _tags;
 
   UnmodifiableListView<Tag> get tags => UnmodifiableListView(_tags);
 
@@ -29,27 +29,27 @@ class TagIndexViewModel extends ChangeNotifier {
 
   TagsState get state => _state;
 
-  Result<void> _result;
+  late Result<void> _result;
 
   Result<void> get result => _result;
 
   Future<void> fetchTags() async {
     return _repository.getTags().then((value) {
-      value.when(
+      _result = value.when(
         success: (tags) {
-          _result = const Result.success();
           _tags = tags;
+          return const Result.success();
         },
         failure: (e) {
-          _result = Result.failure(exception: e);
+          return Result.failure(exception: e);
         },
       );
     }).whenComplete(notifyListeners);
   }
 
   void reorder({
-    @required int oldIndex,
-    @required int newIndex,
+    required int oldIndex,
+    required int newIndex,
   }) {
     int insertIndex;
     if (newIndex > oldIndex) {
@@ -65,8 +65,8 @@ class TagIndexViewModel extends ChangeNotifier {
   }
 
   Future<void> updateTagName({
-    @required String id,
-    @required String name,
+    required String id,
+    required String name,
   }) {
     return _repository
         .updateTagName(id: id, name: name)
@@ -78,7 +78,7 @@ class TagIndexViewModel extends ChangeNotifier {
   }
 
   void deleteTag({
-    @required int index,
+    required int index,
   }) {
     _tags.removeAt(index);
     notifyListeners();
@@ -88,7 +88,7 @@ class TagIndexViewModel extends ChangeNotifier {
     final text = _textEditingController.text;
     if (text.isEmpty) return Future.value();
 
-    TagCreateException extractException() {
+    TagCreateException? extractException() {
       if (text.length > 20) {
         return const TagCreateException.nameTooLong();
       }
@@ -109,7 +109,7 @@ class TagIndexViewModel extends ChangeNotifier {
   }
 
   void updateState({
-    @required TagsState state,
+    required TagsState state,
   }) {
     _state = state;
     notifyListeners();

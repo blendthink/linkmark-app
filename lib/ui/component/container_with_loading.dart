@@ -6,7 +6,7 @@ import 'loading/loading.dart';
 import 'loading/loading_state_view_model.dart';
 
 class ContainerWithLoading extends StatelessWidget {
-  ContainerWithLoading({Widget child}) : _child = child;
+  ContainerWithLoading({required Widget child}) : _child = child;
 
   final Widget _child;
 

@@ -14,14 +14,14 @@ class SearchAppBarPainter extends CustomPainter {
   final BuildContext context;
 
   final Color color;
-  double statusBarHeight, screenWidth;
+  late double statusBarHeight, screenWidth;
 
   SearchAppBarPainter({
-    this.context,
-    this.containerHeight,
-    this.center,
-    this.radius,
-    this.color,
+    required this.context,
+    required this.containerHeight,
+    required this.center,
+    required this.radius,
+    required this.color,
   }) {
     statusBarHeight = MediaQuery.of(context).padding.top;
     screenWidth = MediaQuery.of(context).size.width;

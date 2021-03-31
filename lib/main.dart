@@ -16,10 +16,12 @@ Future<void> main() async {
   // Crashlytics
   await FirebaseCrashlytics.instance
       .setCrashlyticsCollectionEnabled(Constants.isDebugMode);
-  Function originalOnError = FlutterError.onError;
+  Function? originalOnError = FlutterError.onError;
   FlutterError.onError = (errorDetails) async {
     await FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
-    originalOnError(errorDetails);
+    if (originalOnError != null) {
+      originalOnError(errorDetails);
+    }
   };
 
   runZonedGuarded(() {

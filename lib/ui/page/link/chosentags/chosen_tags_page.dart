@@ -13,11 +13,11 @@ import 'chosen_tags_view_model.dart';
 class ChosenTagsPage extends StatelessWidget {
   final List<String> initChosenTagIds;
 
-  ChosenTagsPage({this.initChosenTagIds, Key key}) : super(key: key);
+  ChosenTagsPage({required this.initChosenTagIds, Key? key}) : super(key: key);
 
   void _onPop({
-    @required BuildContext context,
-    List<Tag> chosenTags,
+    required BuildContext context,
+    List<Tag>? chosenTags,
   }) {
     Navigator.of(context).pop(chosenTags);
   }

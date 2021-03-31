@@ -5,7 +5,7 @@ import '../../../constants.dart';
 import 'drawer_view_model.dart';
 
 class DrawerPage extends StatelessWidget {
-  const DrawerPage({Key key}) : super(key: key);
+  const DrawerPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

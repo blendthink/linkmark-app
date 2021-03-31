@@ -9,19 +9,19 @@ final tagFilterViewModelProvider =
 class TagFilterViewModel extends ChangeNotifier {
   TagFilterViewModel();
 
-  List<Tag> _chosenTags;
+  late List<Tag> _chosenTags;
 
   List<Tag> get chosenTags => _chosenTags ?? List.empty();
 
   void updateChosenTags({
-    @required List<Tag> chosenTags,
+    required List<Tag> chosenTags,
   }) {
     _chosenTags = chosenTags;
     notifyListeners();
   }
 
   void removeChosenTag({
-    @required Tag tag,
+    required Tag tag,
   }) async {
     _chosenTags.removeWhere((element) => element.id == tag.id);
     _chosenTags = List.of(_chosenTags);

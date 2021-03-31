@@ -13,7 +13,7 @@ class SignInPage extends StatelessWidget {
   ]);
 
   void _signIn({
-    @required BuildContext context,
+    required BuildContext context,
   }) async {
     final signInAccount = await googleSignIn.signIn();
     if (signInAccount == null) return;

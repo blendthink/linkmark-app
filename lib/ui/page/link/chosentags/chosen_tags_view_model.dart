@@ -16,11 +16,11 @@ class ChosenTagsViewModel extends ChangeNotifier {
 
   final TagsRepository _repository;
 
-  Result<void> _result;
+  late Result<void> _result;
 
   Result<void> get result => _result;
 
-  List<ChosenTagData> _chosenTagDataList;
+  late List<ChosenTagData> _chosenTagDataList;
 
   List<ChosenTagData> get chosenTagDataList =>
       _chosenTagDataList ?? List.empty();
@@ -31,7 +31,7 @@ class ChosenTagsViewModel extends ChangeNotifier {
       .toList();
 
   Future<void> fetchTags({
-    @required List<String> initChosenTagIds,
+    required List<String> initChosenTagIds,
   }) async {
     await Future.delayed(const Duration(milliseconds: 500));
     return _repository.getTags().then((value) {
@@ -49,8 +49,8 @@ class ChosenTagsViewModel extends ChangeNotifier {
   }
 
   void updateChoiceState({
-    @required int index,
-    @required bool isChosen,
+    required int index,
+    required bool isChosen,
   }) {
     final newTagData = _chosenTagDataList[index].copyWith.call(
           isChosen: isChosen,

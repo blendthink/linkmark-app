@@ -18,14 +18,14 @@ import '../../component/loading/loading_state_view_model.dart';
 import 'index_view_model.dart';
 
 class TagIndexPage extends StatelessWidget {
-  const TagIndexPage({Key key}) : super(key: key);
+  const TagIndexPage({Key? key}) : super(key: key);
 
   Widget _buildTile(BuildContext context, double t, Tag tag) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
-    final color = Color.lerp(Colors.white, Colors.grey.shade100, t);
-    final elevation = lerpDouble(0, 8, t);
+    final color = Color.lerp(Colors.white, Colors.grey.shade100, t)!;
+    final elevation = lerpDouble(0, 8, t)!;
 
     final actions = [
       SlideAction(
@@ -43,7 +43,7 @@ class TagIndexPage extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 'Delete',
-                style: textTheme.bodyText2.copyWith(
+                style: textTheme.bodyText2?.copyWith(
                   color: Colors.white,
                 ),
               ),
@@ -81,7 +81,7 @@ class TagIndexPage extends StatelessWidget {
               default:
                 return Text(
                   tag.name,
-                  style: textTheme.bodyText2.copyWith(
+                  style: textTheme.bodyText2?.copyWith(
                     fontSize: 16,
                   ),
                 );
@@ -100,8 +100,8 @@ class TagIndexPage extends StatelessWidget {
   }
 
   void _onSubmitAddTagButton({
-    @required BuildContext context,
-    @required TagIndexViewModel viewModel,
+    required BuildContext context,
+    required TagIndexViewModel viewModel,
   }) async {
     final result = await viewModel.createTag();
     if (result == null) {
@@ -115,7 +115,7 @@ class TagIndexPage extends StatelessWidget {
       // AppError によって SnackBar を作り分ける
       SnackBar createSnackBar(AppException exception) {
         String snackBarContent;
-        SnackBarAction snackBarAction;
+        SnackBarAction? snackBarAction;
         Duration snackBarDuration;
         if (exception is ExpectedException) {
           final message = exception.message;
@@ -174,9 +174,9 @@ class TagIndexPage extends StatelessWidget {
             );
           }
 
-          Widget buildReorderable({
-            Tag tag,
-            Widget Function(Widget tile) transitionBuilder,
+          Reorderable buildReorderable({
+            required Tag tag,
+            required Widget Function(Widget tile) transitionBuilder,
           }) {
             return Reorderable(
               key: Key(tag.id),
@@ -206,7 +206,7 @@ class TagIndexPage extends StatelessWidget {
           return ImplicitlyAnimatedReorderableList(
             items: tags,
             shrinkWrap: true,
-            itemBuilder: (context, itemAnimation, tag, index) {
+            itemBuilder: (context, itemAnimation, Tag tag, index) {
               return buildReorderable(
                 tag: tag,
                 transitionBuilder: (tile) {
@@ -221,7 +221,7 @@ class TagIndexPage extends StatelessWidget {
             },
             areItemsTheSame: (oldItem, newItem) => oldItem == newItem,
             onReorderFinished: (movedTag, from, to, newItems) {},
-            updateItemBuilder: (context, itemAnimation, tag) {
+            updateItemBuilder: (context, itemAnimation, Tag tag) {
               return buildReorderable(
                 tag: tag,
                 transitionBuilder: (tile) {

@@ -11,7 +11,7 @@ class SearchAppBarViewModel extends ChangeNotifier {
 
   bool get isInSearchMode => _isInSearchMode;
 
-  void updateIsSearchMode({@required bool isInSearchMode}) {
+  void updateIsSearchMode({required bool isInSearchMode}) {
     _isInSearchMode = isInSearchMode;
     notifyListeners();
   }

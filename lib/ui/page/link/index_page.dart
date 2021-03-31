@@ -26,8 +26,8 @@ class IndexPage extends StatelessWidget {
     }
 
     void showEditLinkPage({
-      @required BuildContext context,
-      Link link,
+      required BuildContext context,
+      Link? link,
     }) {
       showCupertinoModalBottomSheet(
         context: context,

@@ -8,10 +8,12 @@ import '../unexpected/unknown_exception.dart';
 extension ExceptionExt on Exception {
   AppException toAppException() {
     logger.info(toString());
-    if (this is AppException) {
-      return this;
-    } else if (this is DioError) {
-      return NetworkException(dioError: this);
+    final exception = this;
+
+    if (exception is AppException) {
+      return exception;
+    } else if (exception is DioError) {
+      return NetworkException(dioError: exception);
     } else {
       return const UnknownException();
     }

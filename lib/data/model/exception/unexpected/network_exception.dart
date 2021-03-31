@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import '../unexpected_exception.dart';
 
 enum NetworkExceptionType {
@@ -18,7 +17,7 @@ class NetworkException implements UnexpectedException {
   final DioError _dioError;
 
   NetworkException({
-    @required DioError dioError,
+    required DioError dioError,
   }) : _dioError = dioError;
 
   NetworkExceptionType get type {

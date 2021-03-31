@@ -13,7 +13,7 @@ class EditViewModel extends ChangeNotifier {
   final LinksRepository _repository;
 
   Future<Result<void>> createLink({
-    @required String url,
+    required String url,
   }) {
     return _repository.createLink(url: url);
   }

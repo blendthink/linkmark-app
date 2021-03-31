@@ -3,7 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:shimmer/shimmer.dart';
 
 class LinkListItemShimmer extends StatelessWidget {
-  const LinkListItemShimmer({Key key}) : super(key: key);
+  const LinkListItemShimmer({Key? key}) : super(key: key);
 
   static const _titleShimmerHeight = 12.0;
   static const _titleVerticalGap = Gap(4);
