@@ -11,9 +11,9 @@ part 'result.freezed.dart';
 abstract class Result<T> with _$Result<T> {
   const Result._();
 
-  const factory Result.success({T data}) = Success<T>;
+  const factory Result.success({required T data}) = Success<T>;
 
-  const factory Result.failure({@required AppException exception}) = Failure<T>;
+  const factory Result.failure({required AppException exception}) = Failure<T>;
 
   static Result<T> guard<T>(T Function() body) {
     try {

@@ -10,10 +10,11 @@ _$_Link _$_$_LinkFromJson(Map<String, dynamic> json) {
   return _$_Link(
     id: json['id'] as String,
     url: json['url'] as String,
-    title: json['title'] as String ?? '',
-    description: json['description'] as String ?? '',
-    imageUrl: json['imageUrl'] as String,
-    tagIds: (json['tagIds'] as List)?.map((e) => e as String)?.toList(),
+    title: json['title'] as String? ?? '',
+    description: json['description'] as String? ?? '',
+    imageUrl: json['imageUrl'] as String?,
+    tagIds:
+        (json['tagIds'] as List<dynamic>?)?.map((e) => e as String).toList(),
   );
 }
 

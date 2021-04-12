@@ -13,6 +13,6 @@ class DrawerViewModel extends ChangeNotifier {
   final FirebaseAuth _firebaseAuth;
 
   User fetchCurrentUser() {
-    return _firebaseAuth.currentUser;
+    return _firebaseAuth.currentUser!;
   }
 }

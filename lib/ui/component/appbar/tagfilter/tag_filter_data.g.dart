@@ -9,9 +9,7 @@ part of 'tag_filter_data.dart';
 _$_TagFilterData _$_$_TagFilterDataFromJson(Map<String, dynamic> json) {
   return _$_TagFilterData(
     selected: json['selected'] as bool,
-    tag: json['tag'] == null
-        ? null
-        : Tag.fromJson(json['tag'] as Map<String, dynamic>),
+    tag: Tag.fromJson(json['tag'] as Map<String, dynamic>),
   );
 }
 

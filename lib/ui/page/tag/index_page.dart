@@ -155,11 +155,14 @@ class TagIndexPage extends StatelessWidget {
       final result = useProvider(
           tagIndexViewModelProvider.select((value) => value.result));
 
-      final snapshot = useFuture(useMemoized(() {
-        return context
-            .read(loadingStateProvider)
-            .whileLoading(viewModel.fetchTags);
-      }, [result.toString()]));
+      final snapshot = useFuture(
+        useMemoized(() {
+          return context
+              .read(loadingStateProvider)
+              .whileLoading(viewModel.fetchTags);
+        }, [result.toString()]),
+        initialData: null,
+      );
 
       if (!snapshot.isDone) return Container();
 

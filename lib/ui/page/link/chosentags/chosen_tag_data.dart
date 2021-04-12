@@ -6,7 +6,7 @@ part 'chosen_tag_data.freezed.dart';
 @freezed
 abstract class ChosenTagData with _$ChosenTagData {
   const factory ChosenTagData({
-    @required Tag tag,
-    @required bool isChosen,
+    required Tag tag,
+    required bool isChosen,
   }) = _ChosenTagData;
 }

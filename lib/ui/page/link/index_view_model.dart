@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:metadata_fetch/metadata_fetch.dart';
 
 import '../../../data/model/link.dart';
 import '../../../data/model/result.dart';
 import '../../../data/model/tag.dart';
 import '../../../data/provider/links_repository_provider.dart';
 import '../../../data/repository/links_repository.dart';
-import '../../../util/ext/string.dart';
 import '../../../util/logger.dart';
 
 final indexViewModelProvider = ChangeNotifierProvider(
@@ -61,7 +59,7 @@ class IndexViewModel extends ChangeNotifier {
       _result = value.when(
         success: (data) {
           _links = data;
-          return const Result.success();
+          return const Result.success(data: null);
         },
         failure: (e) => Result.failure(exception: e),
       );
@@ -75,15 +73,17 @@ class IndexViewModel extends ChangeNotifier {
       return Future<void>.value();
     }
 
-    return extract(link.url).then((value) {
-      final newLink = link.copyWith.call(
-        title: value.title.trimNewline(),
-        description: value.description.trimNewline(),
-        imageUrl: value.image,
-      );
-      final updateIndex = _links.indexOf(link);
-      _links[updateIndex] = newLink;
-    }).whenComplete(notifyListeners);
+    // TODO: metadata_fetch
+    // return extract(link.url).then((value) {
+    //   final newLink = link.copyWith.call(
+    //     title: value.title.trimNewline(),
+    //     description: value.description.trimNewline(),
+    //     imageUrl: value.image,
+    //   );
+    //   final updateIndex = _links.indexOf(link);
+    //   _links[updateIndex] = newLink;
+    // }).whenComplete(notifyListeners);
+    return Future<void>.value();
   }
 
   void updateFilterText(String filterText) {

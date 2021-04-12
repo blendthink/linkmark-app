@@ -8,12 +8,6 @@ environment:
   sdk: '>=2.12.0 <3.0.0'
   flutter: '>=2.0.0'
 
-dependency_overrides:
-  sqflite: 1.3.1+2
-
-  # For DateTime and l10n
-  intl: 0.17.0
-
 dependencies:
   flutter:
     sdk: flutter
@@ -21,26 +15,32 @@ dependencies:
     sdk: flutter
 
   # For Architecture
-  flutter_hooks: ^0.15.0
-  hooks_riverpod: ^0.12.1
+  flutter_hooks: ^0.16.0
+  hooks_riverpod: ^0.13.0
 
   # For Networking
-  dio: ^3.0.10
-  dio_firebase_performance: ^0.3.0
+  dio: ^4.0.0-beta4
+  # TODO: dio_firebase_performance does not yet support NNBD.
+  # dio_firebase_performance: ^0.3.0
+  # For User-Agent Client Hints
+  ua_client_hints: ^1.0.3
 
   # For Model
-  json_serializable: ^3.5.0
-  freezed_annotation: ^0.12.0
+  json_serializable: ^4.0.2
+  freezed_annotation: ^0.14.0
+
+  # For DateTime and l10n
+  intl: 0.17.0
 
   # Convert between Enum and String
-  enum_to_string: ^1.0.14
+  enum_to_string: ^2.0.0-nullsafety.1
 
   # For UIs
-  gap: ^1.2.0
+  gap: ^2.0.0-nullsafety.1
   cupertino_icons: ^1.0.0
-  google_fonts: ^1.1.1
+  google_fonts: ^2.0.0
   cached_network_image: ^2.3.3
-  flutter_svg: ^0.19.2+1
+  flutter_svg: ^0.21.0-nullsafety.0
   animations: ^1.1.2
   modal_bottom_sheet: ^1.0.0+1
   flutter_signin_button: ^1.1.0
@@ -49,42 +49,44 @@ dependencies:
   flutter_slidable: ^0.5.7
 
   # For Utilities
-  get: ^3.17.1
-  simple_logger: ^1.7.0
+  get: ^4.1.1
+  simple_logger: ^1.8.0+1
 
   # For Share URL
-  receive_sharing_intent: ^1.4.2
-  share: '>=0.6.5+4 <2.0.0'
+  receive_sharing_intent: ^1.4.5
+  share: 2.0.1
 
   # For Fetch Metadata
-  metadata_fetch: ^0.3.3
+  # TODO: validators does not yet support NNBD.
+  # metadata_fetch: ^0.3.4
 
   # For Launch URL
-  url_launcher: ^5.7.10
+  url_launcher: ^6.0.3
 
   # For Validate
-  validators: ^2.0.1
+  # TODO: validators does not yet support NNBD.
+  # validators: ^2.0.1
 
   # For Firebase
-  firebase_core: ^0.7.0
-  firebase_analytics: ^7.0.1
-  firebase_auth: ^0.20.1
-  firebase_crashlytics: ^0.4.0+1
-  firebase_database: ^6.0.0
+  firebase_core: ^1.0.3
+  firebase_analytics: ^7.1.1
+  firebase_auth: ^1.0.3
+  firebase_crashlytics: ^2.0.0
+  firebase_database: ^6.1.2
 
   # For Google SignIn
-  google_sign_in: ^4.5.9
-  path_provider: ^1.6.27
+  google_sign_in: ^5.0.1
+  path_provider: ^2.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  build_runner: ^1.10.4
-  flutter_gen: ^1.3.1
+  build_runner: ^1.11.1
+  flutter_gen_runner: ^3.0.2
 
   # For Model
-  freezed: ^0.12.2
+  freezed: ^0.14.0
 
   # For Analyzer
   effective_dart: ^1.3.0
@@ -92,7 +94,8 @@ dev_dependencies:
   # For Testing
   mockito:
   image_test_utils:
-  remove_from_coverage: ^1.0.7
+  # TODO: remove_from_coverage does not yet support NNBD.
+  # remove_from_coverage: ^1.0.7
 
 flutter_gen:
   integrations:

@@ -26,7 +26,7 @@ class SignInPage extends StatelessWidget {
 
     final userCredential =
         await FirebaseAuth.instance.signInWithCredential(credential);
-    print(userCredential.user.uid);
+    print(userCredential.user?.uid);
 
     Navigator.of(context).pushNamed(Constants.pageLinkIndex);
   }

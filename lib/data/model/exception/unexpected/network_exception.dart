@@ -23,7 +23,7 @@ class NetworkException implements UnexpectedException {
   NetworkExceptionType get type {
     NetworkExceptionType type;
     switch (_dioError.type) {
-      case DioErrorType.DEFAULT:
+      case DioErrorType.other:
         if (_dioError.error is SocketException) {
           // SocketException: Failed host lookup: '***'
           // (OS Error: No address associated with hostname, errno = 7)
@@ -32,15 +32,16 @@ class NetworkException implements UnexpectedException {
           type = NetworkExceptionType.unknown;
         }
         break;
-      case DioErrorType.CONNECT_TIMEOUT:
-      case DioErrorType.RECEIVE_TIMEOUT:
+      case DioErrorType.connectTimeout:
+      case DioErrorType.receiveTimeout:
         type = NetworkExceptionType.timeout;
         break;
-      case DioErrorType.SEND_TIMEOUT:
+      case DioErrorType.sendTimeout:
         type = NetworkExceptionType.network;
         break;
-      case DioErrorType.RESPONSE:
-        switch (_dioError.response.statusCode) {
+      case DioErrorType.response:
+        // TODO(api): need define more http status;
+        switch (_dioError.response?.statusCode) {
           case HttpStatus.badRequest: // 400
             type = NetworkExceptionType.badRequest;
             break;
@@ -58,7 +59,7 @@ class NetworkException implements UnexpectedException {
             break;
         }
         break;
-      case DioErrorType.CANCEL:
+      case DioErrorType.cancel:
         type = NetworkExceptionType.cancel;
         break;
       default:

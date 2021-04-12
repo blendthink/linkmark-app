@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:validators/validators.dart';
 
 import '../../../data/model/link.dart';
 import '../../../util/logger.dart';
@@ -121,9 +120,11 @@ class _EditPageState extends State<EditPage> {
         ),
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: (value) {
-          return !isURL(value, allowUnderscore: true)
-              ? 'Please enter URL'
-              : null;
+          // TODO: isURL
+          return null;
+          // return !isURL(value, allowUnderscore: true)
+          //     ? 'Please enter URL'
+          //     : null;
         },
         onFieldSubmitted: (_) {
           _submit(

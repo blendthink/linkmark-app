@@ -65,12 +65,15 @@ class ChosenTagsPage extends StatelessWidget {
             final chosenTagDataList = useProvider(chosenTagsViewModelProvider
                 .select((value) => value.chosenTagDataList));
 
-            final snapshot = useFuture(useMemoized(() {
-              return context.read(loadingStateProvider).whileLoading(() =>
-                  viewModel.fetchTags(initChosenTagIds: initChosenTagIds));
-            }));
+            final snapshot = useFuture(
+              useMemoized(() {
+                return context.read(loadingStateProvider).whileLoading(() =>
+                    viewModel.fetchTags(initChosenTagIds: initChosenTagIds));
+              }),
+              initialData: null,
+            );
 
-            if (!snapshot.isDone) return Container();
+            if (!snapshot.isDone || result == null) return Container();
 
             return result.when(
               success: (_) {

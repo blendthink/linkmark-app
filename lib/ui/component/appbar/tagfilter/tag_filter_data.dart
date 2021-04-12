@@ -8,8 +8,8 @@ part 'tag_filter_data.g.dart';
 @freezed
 abstract class TagFilterData with _$TagFilterData {
   const factory TagFilterData({
-    @required bool selected,
-    @required Tag tag,
+    required bool selected,
+    required Tag tag,
   }) = _TagFilterData;
 
   factory TagFilterData.fromJson(Map<String, dynamic> json) =>

@@ -17,12 +17,13 @@ class DrawerPage extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
+          // TODO: NNBD
           UserAccountsDrawerHeader(
-            accountName: Text(currentUser.displayName),
-            accountEmail: Text(currentUser.email),
+            accountName: Text(currentUser.displayName ?? ""),
+            accountEmail: Text(currentUser.email ?? ""),
             currentAccountPicture: CircleAvatar(
               backgroundImage: NetworkImage(
-                currentUser.photoURL,
+                currentUser.photoURL ?? "",
               ),
               radius: 25,
             ),

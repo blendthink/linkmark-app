@@ -6,84 +6,139 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  final requestOptions = RequestOptions(path: "");
+
   test('NetworkException type Test', () async {
     expect(
         NetworkException(
-          dioError: DioError(type: DioErrorType.CONNECT_TIMEOUT),
+          dioError: DioError(
+            type: DioErrorType.connectTimeout,
+            requestOptions: requestOptions,
+          ),
         ).type,
         equals(NetworkExceptionType.timeout));
 
     expect(
         NetworkException(
-          dioError: DioError(type: DioErrorType.RECEIVE_TIMEOUT),
+          dioError: DioError(
+            type: DioErrorType.receiveTimeout,
+            requestOptions: requestOptions,
+          ),
         ).type,
         equals(NetworkExceptionType.timeout));
 
     expect(
         NetworkException(
-          dioError: DioError(type: DioErrorType.SEND_TIMEOUT),
+          dioError: DioError(
+            type: DioErrorType.sendTimeout,
+            requestOptions: requestOptions,
+          ),
         ).type,
         equals(NetworkExceptionType.network));
 
     expect(
         NetworkException(
           dioError: DioError(
-              type: DioErrorType.RESPONSE, response: Response(statusCode: 400)),
+            type: DioErrorType.response,
+            response: Response(
+              statusCode: 400,
+              requestOptions: requestOptions,
+            ),
+            requestOptions: requestOptions,
+          ),
         ).type,
         equals(NetworkExceptionType.badRequest));
 
     expect(
         NetworkException(
           dioError: DioError(
-              type: DioErrorType.RESPONSE, response: Response(statusCode: 401)),
+            type: DioErrorType.response,
+            response: Response(
+              statusCode: 401,
+              requestOptions: requestOptions,
+            ),
+            requestOptions: requestOptions,
+          ),
         ).type,
         equals(NetworkExceptionType.unauthorized));
 
     expect(
         NetworkException(
           dioError: DioError(
-              type: DioErrorType.RESPONSE, response: Response(statusCode: 500)),
+            type: DioErrorType.response,
+            response: Response(
+              statusCode: 500,
+              requestOptions: requestOptions,
+            ),
+            requestOptions: requestOptions,
+          ),
         ).type,
         equals(NetworkExceptionType.server));
 
     expect(
         NetworkException(
           dioError: DioError(
-              type: DioErrorType.RESPONSE, response: Response(statusCode: 502)),
+            type: DioErrorType.response,
+            response: Response(
+              statusCode: 502,
+              requestOptions: requestOptions,
+            ),
+            requestOptions: requestOptions,
+          ),
         ).type,
         equals(NetworkExceptionType.server));
 
     expect(
         NetworkException(
           dioError: DioError(
-              type: DioErrorType.RESPONSE, response: Response(statusCode: 503)),
+            type: DioErrorType.response,
+            response: Response(
+              statusCode: 503,
+              requestOptions: requestOptions,
+            ),
+            requestOptions: requestOptions,
+          ),
         ).type,
         equals(NetworkExceptionType.server));
 
     expect(
         NetworkException(
           dioError: DioError(
-              type: DioErrorType.RESPONSE, response: Response(statusCode: 504)),
+            type: DioErrorType.response,
+            response: Response(
+              statusCode: 504,
+              requestOptions: requestOptions,
+            ),
+            requestOptions: requestOptions,
+          ),
         ).type,
         equals(NetworkExceptionType.server));
 
     expect(
         NetworkException(
-          dioError: DioError(type: DioErrorType.CANCEL),
+          dioError: DioError(
+            type: DioErrorType.cancel,
+            requestOptions: requestOptions,
+          ),
         ).type,
         equals(NetworkExceptionType.cancel));
 
     expect(
         NetworkException(
           dioError: DioError(
-              error: const SocketException('Failed host lookup: linkmark.dev'),
-              type: DioErrorType.DEFAULT),
+            error: const SocketException('Failed host lookup: linkmark.dev'),
+            type: DioErrorType.other,
+            requestOptions: requestOptions,
+          ),
         ).type,
         equals(NetworkExceptionType.network));
 
     expect(
         NetworkException(
-          dioError: DioError(type: DioErrorType.DEFAULT),
+          dioError: DioError(
+            type: DioErrorType.other,
+            requestOptions: requestOptions,
+          ),
         ).type,
         equals(NetworkExceptionType.unknown));
   });
@@ -94,7 +149,8 @@ void main() {
 
     final dioError = DioError(
       error: exception,
-      type: DioErrorType.DEFAULT,
+      type: DioErrorType.other,
+      requestOptions: requestOptions,
     );
 
     final expectMessage = '${exception.runtimeType.toString()}: $errorMessage';
@@ -112,7 +168,10 @@ void main() {
 
       expect(
           NetworkException(
-            dioError: DioError(type: DioErrorType.CONNECT_TIMEOUT),
+            dioError: DioError(
+              type: DioErrorType.connectTimeout,
+              requestOptions: requestOptions,
+            ),
           ).toString(),
           expectMessage);
     });
@@ -123,7 +182,10 @@ void main() {
           '''NetworkException [NetworkExceptionType.unknown]: ${error.toString()}\n${error.stackTrace}''';
       expect(
           NetworkException(
-            dioError: DioError(error: error),
+            dioError: DioError(
+              error: error,
+              requestOptions: requestOptions,
+            ),
           ).toString(),
           expectMessage);
     });
@@ -134,7 +196,8 @@ void main() {
 
       final dioError = DioError(
         error: exception,
-        type: DioErrorType.DEFAULT,
+        type: DioErrorType.other,
+        requestOptions: requestOptions,
       );
 
       final expectMessage =

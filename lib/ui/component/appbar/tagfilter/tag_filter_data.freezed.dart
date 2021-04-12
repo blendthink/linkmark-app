@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'tag_filter_data.dart';
 
@@ -8,6 +8,10 @@ part of 'tag_filter_data.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 TagFilterData _$TagFilterDataFromJson(Map<String, dynamic> json) {
   return _TagFilterData.fromJson(json);
 }
@@ -16,32 +20,30 @@ TagFilterData _$TagFilterDataFromJson(Map<String, dynamic> json) {
 class _$TagFilterDataTearOff {
   const _$TagFilterDataTearOff();
 
-// ignore: unused_element
-  _TagFilterData call({@required bool selected, @required Tag tag}) {
+  _TagFilterData call({required bool selected, required Tag tag}) {
     return _TagFilterData(
       selected: selected,
       tag: tag,
     );
   }
 
-// ignore: unused_element
   TagFilterData fromJson(Map<String, Object> json) {
     return TagFilterData.fromJson(json);
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $TagFilterData = _$TagFilterDataTearOff();
 
 /// @nodoc
 mixin _$TagFilterData {
-  bool get selected;
-  Tag get tag;
+  bool get selected => throw _privateConstructorUsedError;
+  Tag get tag => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TagFilterDataCopyWith<TagFilterData> get copyWith;
+  $TagFilterDataCopyWith<TagFilterData> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -65,20 +67,23 @@ class _$TagFilterDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object selected = freezed,
-    Object tag = freezed,
+    Object? selected = freezed,
+    Object? tag = freezed,
   }) {
     return _then(_value.copyWith(
-      selected: selected == freezed ? _value.selected : selected as bool,
-      tag: tag == freezed ? _value.tag : tag as Tag,
+      selected: selected == freezed
+          ? _value.selected
+          : selected // ignore: cast_nullable_to_non_nullable
+              as bool,
+      tag: tag == freezed
+          ? _value.tag
+          : tag // ignore: cast_nullable_to_non_nullable
+              as Tag,
     ));
   }
 
   @override
   $TagCopyWith<$Res> get tag {
-    if (_value.tag == null) {
-      return null;
-    }
     return $TagCopyWith<$Res>(_value.tag, (value) {
       return _then(_value.copyWith(tag: value));
     });
@@ -111,12 +116,18 @@ class __$TagFilterDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object selected = freezed,
-    Object tag = freezed,
+    Object? selected = freezed,
+    Object? tag = freezed,
   }) {
     return _then(_TagFilterData(
-      selected: selected == freezed ? _value.selected : selected as bool,
-      tag: tag == freezed ? _value.tag : tag as Tag,
+      selected: selected == freezed
+          ? _value.selected
+          : selected // ignore: cast_nullable_to_non_nullable
+              as bool,
+      tag: tag == freezed
+          ? _value.tag
+          : tag // ignore: cast_nullable_to_non_nullable
+              as Tag,
     ));
   }
 }
@@ -125,9 +136,7 @@ class __$TagFilterDataCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_TagFilterData with DiagnosticableTreeMixin implements _TagFilterData {
-  const _$_TagFilterData({@required this.selected, @required this.tag})
-      : assert(selected != null),
-        assert(tag != null);
+  const _$_TagFilterData({required this.selected, required this.tag});
 
   factory _$_TagFilterData.fromJson(Map<String, dynamic> json) =>
       _$_$_TagFilterDataFromJson(json);
@@ -180,17 +189,18 @@ class _$_TagFilterData with DiagnosticableTreeMixin implements _TagFilterData {
 }
 
 abstract class _TagFilterData implements TagFilterData {
-  const factory _TagFilterData({@required bool selected, @required Tag tag}) =
+  const factory _TagFilterData({required bool selected, required Tag tag}) =
       _$_TagFilterData;
 
   factory _TagFilterData.fromJson(Map<String, dynamic> json) =
       _$_TagFilterData.fromJson;
 
   @override
-  bool get selected;
+  bool get selected => throw _privateConstructorUsedError;
   @override
-  Tag get tag;
+  Tag get tag => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$TagFilterDataCopyWith<_TagFilterData> get copyWith;
+  _$TagFilterDataCopyWith<_TagFilterData> get copyWith =>
+      throw _privateConstructorUsedError;
 }

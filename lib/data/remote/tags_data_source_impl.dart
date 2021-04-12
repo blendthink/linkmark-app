@@ -14,7 +14,7 @@ class TagsDataSourceImpl implements TagsDataSource {
   final FirebaseDatabase _firebaseDatabase;
 
   DatabaseReference get _tagsRef {
-    final uid = _firebaseAuth.currentUser.uid;
+    final uid = _firebaseAuth.currentUser?.uid;
     final uidRef = _firebaseDatabase.reference().child('users').child(uid);
     return uidRef.child('tags');
   }

@@ -28,9 +28,12 @@ class LinkListItem extends HookWidget {
   Widget build(BuildContext context) {
     final indexViewModel = context.read(indexViewModelProvider);
 
-    final snapshotDetail = useFuture(useMemoized(() {
-      return indexViewModel.fetchLinkMetadata(link: link);
-    }, [link.toString()]));
+    final snapshotDetail = useFuture(
+      useMemoized(() {
+        return indexViewModel.fetchLinkMetadata(link: link);
+      }, [link.toString()]),
+      initialData: null,
+    );
 
     Widget listTile;
 
@@ -50,6 +53,8 @@ class LinkListItem extends HookWidget {
         ),
       );
 
+      final linkImageUrl = link.imageUrl;
+
       listTile = ListTile(
         title: Text(
           link.title,
@@ -63,10 +68,10 @@ class LinkListItem extends HookWidget {
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.caption,
         ),
-        trailing: link.imageUrl == null
+        trailing: linkImageUrl == null
             ? noImageIcon
             : Image.network(
-                link.imageUrl,
+                linkImageUrl,
                 width: 80,
                 height: 56,
                 fit: BoxFit.fitHeight,

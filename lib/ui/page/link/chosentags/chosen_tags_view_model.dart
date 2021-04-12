@@ -16,14 +16,14 @@ class ChosenTagsViewModel extends ChangeNotifier {
 
   final TagsRepository _repository;
 
-  late Result<void> _result;
+  late Result<void>? _result;
 
-  Result<void> get result => _result;
+  Result<void>? get result => _result;
 
   late List<ChosenTagData> _chosenTagDataList;
 
   List<ChosenTagData> get chosenTagDataList =>
-      _chosenTagDataList ?? List.empty();
+      _chosenTagDataList;
 
   List<Tag> get chosenTags => _chosenTagDataList
       .where((data) => data.isChosen)
@@ -41,7 +41,7 @@ class ChosenTagsViewModel extends ChangeNotifier {
             final isChosen = initChosenTagIds.contains(tag.id);
             return ChosenTagData(tag: tag, isChosen: isChosen);
           }).toList();
-          return const Result.success();
+          return const Result.success(data: null);
         },
         failure: (e) => Result.failure(exception: e),
       );

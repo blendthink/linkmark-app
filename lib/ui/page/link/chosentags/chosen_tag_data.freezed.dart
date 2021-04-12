@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'chosen_tag_data.dart';
 
@@ -9,12 +9,14 @@ part of 'chosen_tag_data.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$ChosenTagDataTearOff {
   const _$ChosenTagDataTearOff();
 
-// ignore: unused_element
-  _ChosenTagData call({@required Tag tag, @required bool isChosen}) {
+  _ChosenTagData call({required Tag tag, required bool isChosen}) {
     return _ChosenTagData(
       tag: tag,
       isChosen: isChosen,
@@ -23,16 +25,16 @@ class _$ChosenTagDataTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $ChosenTagData = _$ChosenTagDataTearOff();
 
 /// @nodoc
 mixin _$ChosenTagData {
-  Tag get tag;
-  bool get isChosen;
+  Tag get tag => throw _privateConstructorUsedError;
+  bool get isChosen => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $ChosenTagDataCopyWith<ChosenTagData> get copyWith;
+  $ChosenTagDataCopyWith<ChosenTagData> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -56,20 +58,23 @@ class _$ChosenTagDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object tag = freezed,
-    Object isChosen = freezed,
+    Object? tag = freezed,
+    Object? isChosen = freezed,
   }) {
     return _then(_value.copyWith(
-      tag: tag == freezed ? _value.tag : tag as Tag,
-      isChosen: isChosen == freezed ? _value.isChosen : isChosen as bool,
+      tag: tag == freezed
+          ? _value.tag
+          : tag // ignore: cast_nullable_to_non_nullable
+              as Tag,
+      isChosen: isChosen == freezed
+          ? _value.isChosen
+          : isChosen // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 
   @override
   $TagCopyWith<$Res> get tag {
-    if (_value.tag == null) {
-      return null;
-    }
     return $TagCopyWith<$Res>(_value.tag, (value) {
       return _then(_value.copyWith(tag: value));
     });
@@ -102,21 +107,25 @@ class __$ChosenTagDataCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object tag = freezed,
-    Object isChosen = freezed,
+    Object? tag = freezed,
+    Object? isChosen = freezed,
   }) {
     return _then(_ChosenTagData(
-      tag: tag == freezed ? _value.tag : tag as Tag,
-      isChosen: isChosen == freezed ? _value.isChosen : isChosen as bool,
+      tag: tag == freezed
+          ? _value.tag
+          : tag // ignore: cast_nullable_to_non_nullable
+              as Tag,
+      isChosen: isChosen == freezed
+          ? _value.isChosen
+          : isChosen // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
 /// @nodoc
 class _$_ChosenTagData implements _ChosenTagData {
-  const _$_ChosenTagData({@required this.tag, @required this.isChosen})
-      : assert(tag != null),
-        assert(isChosen != null);
+  const _$_ChosenTagData({required this.tag, required this.isChosen});
 
   @override
   final Tag tag;
@@ -152,14 +161,15 @@ class _$_ChosenTagData implements _ChosenTagData {
 }
 
 abstract class _ChosenTagData implements ChosenTagData {
-  const factory _ChosenTagData({@required Tag tag, @required bool isChosen}) =
+  const factory _ChosenTagData({required Tag tag, required bool isChosen}) =
       _$_ChosenTagData;
 
   @override
-  Tag get tag;
+  Tag get tag => throw _privateConstructorUsedError;
   @override
-  bool get isChosen;
+  bool get isChosen => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$ChosenTagDataCopyWith<_ChosenTagData> get copyWith;
+  _$ChosenTagDataCopyWith<_ChosenTagData> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../model/link.dart';
 import 'links_data_source.dart';
@@ -16,7 +15,7 @@ class LinksDataSourceImpl implements LinksDataSource {
   final FirebaseDatabase _firebaseDatabase;
 
   DatabaseReference get _linksRef {
-    final uid = _firebaseAuth.currentUser.uid;
+    final uid = _firebaseAuth.currentUser?.uid;
     final uidRef = _firebaseDatabase.reference().child('users').child(uid);
     return uidRef.child('links');
   }

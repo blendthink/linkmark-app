@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'link.dart';
 
@@ -8,6 +8,10 @@ part of 'link.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 Link _$LinkFromJson(Map<String, dynamic> json) {
   return _Link.fromJson(json);
 }
@@ -16,14 +20,13 @@ Link _$LinkFromJson(Map<String, dynamic> json) {
 class _$LinkTearOff {
   const _$LinkTearOff();
 
-// ignore: unused_element
   _Link call(
-      {@required String id,
-      @required String url,
+      {required String id,
+      required String url,
       String title = '',
       String description = '',
-      String imageUrl,
-      List<String> tagIds}) {
+      String? imageUrl,
+      List<String>? tagIds}) {
     return _Link(
       id: id,
       url: url,
@@ -34,28 +37,26 @@ class _$LinkTearOff {
     );
   }
 
-// ignore: unused_element
   Link fromJson(Map<String, Object> json) {
     return Link.fromJson(json);
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $Link = _$LinkTearOff();
 
 /// @nodoc
 mixin _$Link {
-  String get id;
-  String get url;
-  String get title;
-  String get description;
-  String get imageUrl;
-  List<String> get tagIds;
+  String get id => throw _privateConstructorUsedError;
+  String get url => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
+  List<String>? get tagIds => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $LinkCopyWith<Link> get copyWith;
+  $LinkCopyWith<Link> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -67,8 +68,8 @@ abstract class $LinkCopyWith<$Res> {
       String url,
       String title,
       String description,
-      String imageUrl,
-      List<String> tagIds});
+      String? imageUrl,
+      List<String>? tagIds});
 }
 
 /// @nodoc
@@ -81,21 +82,38 @@ class _$LinkCopyWithImpl<$Res> implements $LinkCopyWith<$Res> {
 
   @override
   $Res call({
-    Object id = freezed,
-    Object url = freezed,
-    Object title = freezed,
-    Object description = freezed,
-    Object imageUrl = freezed,
-    Object tagIds = freezed,
+    Object? id = freezed,
+    Object? url = freezed,
+    Object? title = freezed,
+    Object? description = freezed,
+    Object? imageUrl = freezed,
+    Object? tagIds = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as String,
-      url: url == freezed ? _value.url : url as String,
-      title: title == freezed ? _value.title : title as String,
-      description:
-          description == freezed ? _value.description : description as String,
-      imageUrl: imageUrl == freezed ? _value.imageUrl : imageUrl as String,
-      tagIds: tagIds == freezed ? _value.tagIds : tagIds as List<String>,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: url == freezed
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageUrl: imageUrl == freezed
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tagIds: tagIds == freezed
+          ? _value.tagIds
+          : tagIds // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -110,8 +128,8 @@ abstract class _$LinkCopyWith<$Res> implements $LinkCopyWith<$Res> {
       String url,
       String title,
       String description,
-      String imageUrl,
-      List<String> tagIds});
+      String? imageUrl,
+      List<String>? tagIds});
 }
 
 /// @nodoc
@@ -125,21 +143,38 @@ class __$LinkCopyWithImpl<$Res> extends _$LinkCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object url = freezed,
-    Object title = freezed,
-    Object description = freezed,
-    Object imageUrl = freezed,
-    Object tagIds = freezed,
+    Object? id = freezed,
+    Object? url = freezed,
+    Object? title = freezed,
+    Object? description = freezed,
+    Object? imageUrl = freezed,
+    Object? tagIds = freezed,
   }) {
     return _then(_Link(
-      id: id == freezed ? _value.id : id as String,
-      url: url == freezed ? _value.url : url as String,
-      title: title == freezed ? _value.title : title as String,
-      description:
-          description == freezed ? _value.description : description as String,
-      imageUrl: imageUrl == freezed ? _value.imageUrl : imageUrl as String,
-      tagIds: tagIds == freezed ? _value.tagIds : tagIds as List<String>,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: url == freezed
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      imageUrl: imageUrl == freezed
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tagIds: tagIds == freezed
+          ? _value.tagIds
+          : tagIds // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -148,17 +183,13 @@ class __$LinkCopyWithImpl<$Res> extends _$LinkCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_Link implements _Link {
-  _$_Link(
-      {@required this.id,
-      @required this.url,
+  const _$_Link(
+      {required this.id,
+      required this.url,
       this.title = '',
       this.description = '',
       this.imageUrl,
-      this.tagIds})
-      : assert(id != null),
-        assert(url != null),
-        assert(title != null),
-        assert(description != null);
+      this.tagIds});
 
   factory _$_Link.fromJson(Map<String, dynamic> json) =>
       _$_$_LinkFromJson(json);
@@ -174,9 +205,9 @@ class _$_Link implements _Link {
   @override
   final String description;
   @override
-  final String imageUrl;
+  final String? imageUrl;
   @override
-  final List<String> tagIds;
+  final List<String>? tagIds;
 
   @override
   String toString() {
@@ -225,29 +256,29 @@ class _$_Link implements _Link {
 }
 
 abstract class _Link implements Link {
-  factory _Link(
-      {@required String id,
-      @required String url,
+  const factory _Link(
+      {required String id,
+      required String url,
       String title,
       String description,
-      String imageUrl,
-      List<String> tagIds}) = _$_Link;
+      String? imageUrl,
+      List<String>? tagIds}) = _$_Link;
 
   factory _Link.fromJson(Map<String, dynamic> json) = _$_Link.fromJson;
 
   @override
-  String get id;
+  String get id => throw _privateConstructorUsedError;
   @override
-  String get url;
+  String get url => throw _privateConstructorUsedError;
   @override
-  String get title;
+  String get title => throw _privateConstructorUsedError;
   @override
-  String get description;
+  String get description => throw _privateConstructorUsedError;
   @override
-  String get imageUrl;
+  String? get imageUrl => throw _privateConstructorUsedError;
   @override
-  List<String> get tagIds;
+  List<String>? get tagIds => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$LinkCopyWith<_Link> get copyWith;
+  _$LinkCopyWith<_Link> get copyWith => throw _privateConstructorUsedError;
 }

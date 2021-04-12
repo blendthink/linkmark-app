@@ -38,7 +38,7 @@ class TagIndexViewModel extends ChangeNotifier {
       _result = value.when(
         success: (tags) {
           _tags = tags;
-          return const Result.success();
+          return const Result.success(data: null);
         },
         failure: (e) {
           return Result.failure(exception: e);

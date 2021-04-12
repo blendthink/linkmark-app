@@ -20,7 +20,9 @@ void main() {
     });
 
     test('DioError is NetworkException', () {
-      expect(DioError().toAppException(), isInstanceOf<NetworkException>());
+      expect(
+          DioError(requestOptions: RequestOptions(path: '')).toAppException(),
+          isInstanceOf<NetworkException>());
     });
 
     test('Exception is UnknownException', () {

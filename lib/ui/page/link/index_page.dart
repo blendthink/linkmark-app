@@ -49,13 +49,16 @@ class IndexPage extends StatelessWidget {
       final links = useProvider(indexViewModelProvider
           .select((value) => value.filteredLinks(chosenTags)));
 
-      final snapshot = useFuture(useMemoized(() {
-        return context
-            .read(loadingStateProvider)
-            .whileLoading(indexViewModel.fetchLinks);
-      }));
+      final snapshot = useFuture(
+        useMemoized(() {
+          return context
+              .read(loadingStateProvider)
+              .whileLoading(indexViewModel.fetchLinks);
+        }),
+        initialData: null,
+      );
 
-      if (!snapshot.isDone) return Container();
+      if (!snapshot.isDone || result == null) return Container();
 
       return result.when(success: (_) {
         if (links.isEmpty) {

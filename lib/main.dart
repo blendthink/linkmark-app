@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'dart:async';
 
 import 'package:firebase_core/firebase_core.dart';
@@ -16,7 +18,7 @@ Future<void> main() async {
   // Crashlytics
   await FirebaseCrashlytics.instance
       .setCrashlyticsCollectionEnabled(Constants.isDebugMode);
-  Function? originalOnError = FlutterError.onError;
+  Function originalOnError = FlutterError.onError;
   FlutterError.onError = (errorDetails) async {
     await FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
     if (originalOnError != null) {
